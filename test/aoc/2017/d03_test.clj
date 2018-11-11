@@ -1,5 +1,5 @@
-(ns aoc-2017.d03-test
-  (:require [aoc-2017.d03 :as sut]
+(ns aoc.2017.d03-test
+  (:require [aoc.2017.d03 :as sut]
             [clojure.test :refer :all]))
 
 (deftest part-1-examples

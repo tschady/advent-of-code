@@ -1,5 +1,5 @@
-(ns aoc-2017.d02-test
-  (:require [aoc-2017.d02 :as sut]
+(ns aoc.2017.d02-test
+  (:require [aoc.2017.d02 :as sut]
             [clojure.test :refer :all]))
 
 (def example-input '((5 1 9 5)

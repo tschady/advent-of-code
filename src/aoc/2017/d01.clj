@@ -1,7 +1,7 @@
-(ns aoc-2017.d01
-  (:require [aoc-2017.util :as util]))
+(ns aoc.2017.d01
+  (:require [aoc.util :as util]))
 
-(def input (util/read-file "d01.txt"))
+(def input (util/read-file "2017/d01.txt"))
 
 (defn- solve-captcha
   "Returns the captcha 'checksum' of a given collection of paired 2-tuple
