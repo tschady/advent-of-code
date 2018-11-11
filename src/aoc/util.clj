@@ -22,3 +22,8 @@
   [s]
   (map #(Character/getNumericValue %) s))
 
+(def alphagram (comp sort str/lower-case))
+
+(defn anagram? [word candidate]
+  (and (not= (str/lower-case word) (str/lower-case candidate))
+       (= (alphagram word) (alphagram candidate))))
