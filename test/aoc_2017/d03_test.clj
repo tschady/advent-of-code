@@ -10,4 +10,5 @@
     1024 31))
 
 (deftest challenge
-  (is (= 371 (sut/part-1 sut/input))))
+  (is (= 371 (sut/part-1 sut/input)))
+  (is (= 369601 (sut/part-2 sut/input))))
