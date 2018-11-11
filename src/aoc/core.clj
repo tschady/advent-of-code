@@ -1,4 +1,4 @@
-(ns aoc-2017.core
+(ns aoc.core
   (:gen-class))
 
 (defn -main

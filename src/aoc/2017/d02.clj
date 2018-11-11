@@ -1,8 +1,7 @@
-(ns aoc-2017.d02
-  (:require [aoc-2017.util :as util]
-            [clojure.string :as str]))
+(ns aoc.2017.d02
+  (:require [aoc.util :as util]))
 
-(def input-str (util/read-tsv "d02.tsv"))
+(def input-str (util/read-tsv "2017/d02.tsv"))
 (def input (map (fn [row] (map #(Integer/parseInt %) row)) input-str))
 
 (defn part-1
