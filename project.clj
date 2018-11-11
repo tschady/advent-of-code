@@ -3,7 +3,8 @@
   :url "http://adventofcode.com"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.9.0"]]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.flatland/ordered "1.5.6"]]
   :main ^:skip-aot aoc-2017.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
