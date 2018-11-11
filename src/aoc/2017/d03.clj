@@ -1,4 +1,4 @@
-(ns aoc-2017.d03
+(ns aoc.2017.d03
   (:require [flatland.ordered.map :refer [ordered-map]]))
 
 (def input 368078)
