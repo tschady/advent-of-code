@@ -1,7 +1,7 @@
 (ns aoc.2017.d04-test
   (:require [aoc.2017.d04 :as sut]
             [clojure.test :refer :all]
-            [aoc.util :as util]))
+            [aoc.string-util :as string-util]))
 
 (deftest part-1-examples
   (are [output input] (= output (sut/valid-phrase? identity input))
@@ -10,7 +10,7 @@
     true  "aa bb cc dd aaa"))
 
 (deftest part-2-examples
-  (are [output input] (= output (sut/valid-phrase? util/alphagram input))
+  (are [output input] (= output (sut/valid-phrase? string-util/alphagram input))
     true  "abcde fghij"
     false "abcde xyz ecdab"
     true  "a ab abc abd abf abj"

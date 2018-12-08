@@ -1,7 +1,7 @@
 (ns aoc.2018.d01
-  (:require [aoc.util :as util]))
+  (:require [aoc.file-util :as file-util]))
 
-(def input (util/read-values "2018/d01.txt"))
+(def input (file-util/read-values "2018/d01.txt"))
 
 (defn part-1
   "Return the sum of a given a collection `coll` of integers."

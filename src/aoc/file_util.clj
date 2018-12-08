@@ -1,4 +1,4 @@
-(ns aoc.util
+(ns aoc.file-util
   (:require [clojure.java.io :as io]
             [clojure.string :as str]))
 

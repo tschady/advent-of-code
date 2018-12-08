@@ -1,7 +1,7 @@
 (ns aoc.2017.d02
-  (:require [aoc.util :as util]))
+  (:require [aoc.file-util :as file-util]))
 
-(def input-str (util/read-tsv "2017/d02.tsv"))
+(def input-str (file-util/read-tsv "2017/d02.tsv"))
 (def input (map (fn [row] (map #(Integer/parseInt %) row)) input-str))
 
 (defn part-1

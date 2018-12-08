@@ -1,8 +1,9 @@
 (ns aoc.2017.d04
-  (:require [aoc.util :as util]
+  (:require [aoc.file-util :as file-util]
+            [aoc.string-util :as string-util]
             [clojure.string :as str]))
 
-(def input (util/read-lines "2017/d04.txt"))
+(def input (file-util/read-lines "2017/d04.txt"))
 
 (defn valid-phrase?
   "Boolean to determine if a particular passphrase is valid.
@@ -25,4 +26,4 @@
 
 (defn part-2
   [input]
-  (count-valids util/alphagram input))
+  (count-valids string-util/alphagram input))
