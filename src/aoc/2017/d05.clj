@@ -1,7 +1,7 @@
 (ns aoc.2017.d05
-  (:require [aoc.util :as util]))
+  (:require [aoc.file-util :as file-util]))
 
-(def input (->> "2017/d05.txt" util/read-lines (mapv #(Integer/parseInt %))))
+(def input (->> "2017/d05.txt" file-util/read-lines (mapv #(Integer/parseInt %))))
 
 (defn steps-to-exit
   [tape update-fn]
