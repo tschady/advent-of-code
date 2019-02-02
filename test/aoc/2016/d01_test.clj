@@ -10,5 +10,4 @@
 
 (deftest challenge
   (is (= 230 (sut/part-1 sut/input)))
-;  (is (= false (sut/part-2 sut/input)))
-  )
+  (is (= 154 (sut/part-2 sut/input))))
