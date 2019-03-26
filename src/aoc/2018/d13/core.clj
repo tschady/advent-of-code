@@ -22,6 +22,7 @@
                                   \\ \>}}})
 
 (defn cart? [c] (contains? cart-map c))
+(defn turn? [t] (contains? #{\/ \\ \+}))
 
 (defn- make-cart
   ""
@@ -48,15 +49,28 @@
                               :carts cart
                               :crashes []}))))
 
+(defn- update-cart
+  ""
+  [cart track]
+  (let [loc (key cart)
+        delta (get-in cart-map [(:dir cart) :move])
+        new-pos (mapv + loc delta)
+        turn? ()]))
+
+(mapv + [1 3] [20 40])
+
 
 (defn update-world
   "Tick time once in world.  Carts move, turn, and sometimes crash.
   Return new world object one time-step later."
   [world]
   (reduce (fn [acc cart]
-            (let )
-            )
-          world
+            (let [new-cart (update-cart cart (:track acc))
+                  crash? ()]
+              (if crash?
+                (update acc :crashes conj (key new-cart))
+                (update acc :carts conj new-cart))))
+          (dissoc world :carts)
           (:carts world)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -68,10 +82,35 @@
          "\\-+-/  \\-+--/"
          "\\------/"])
 
-(make-world ti)
+(def w (make-world ti))
+
+(:track w)
+
+(first (:carts w))
+
+(:carts w)
+
+(def c (make-cart [1 1] \t))
+
+(:carts (assoc w :carts c))
+
+(keys (:carts (into (sorted-map) (update w :carts conj c))))
+
+
+
+
+
+w
+
 
 (def d (make-cart [0 0] \>))
 d
 
 (first (get-in d [[0 0] :turns]))
 (update-in d [[0 0] :turns] rest)
+
+
+(defn print-cart
+  ""
+  [{} cart]
+  )
