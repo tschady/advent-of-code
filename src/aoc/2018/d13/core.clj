@@ -21,8 +21,23 @@
                    :corner->turn {\/ \<,
                                   \\ \>}}})
 
-(defn cart? [c] (contains? cart-map c))
-(defn turn? [t] (contains? #{\/ \\ \+}))
+(defn- cart? [c] (contains? cart-map c))
+(defn- corner? [c] (contains? (-> cart-map first val :corner->turn keys set) c))
+(defn- intersection? [c] (= c \+))
+
+(defn turn-cart
+  ""
+  [dir turn]
+  (case [dir turn]
+    [\< :left] \v
+    [\v :left] \>
+    [\> :left] \^
+    [\^ :left] \<
+    [\< :right] \^
+    [\v :right] \<
+    [\> :right] \v
+    [\^ :right] \>
+    dir))
 
 (defn- make-cart
   ""
@@ -52,13 +67,22 @@
 (defn- update-cart
   ""
   [cart track]
-  (let [loc (key cart)
-        delta (get-in cart-map [(:dir cart) :move])
-        new-pos (mapv + loc delta)
-        turn? ()]))
+  (let [pos (key cart)
+        delta (get-in cart-map [(:dir (val cart)) :move])
+        new-pos (mapv + pos delta)
+        new-cart (sorted-map new-pos (val cart))
+        new-segment (track new-pos)
+        next-turn (-> cart val :turns first)]
+    (cond
+      (corner? new-segment)
+      (update-in new-cart [new-pos :dir] #((:corner->turn (cart-map %)) new-segment))
 
-(mapv + [1 3] [20 40])
+      (intersection? new-segment)
+      (-> new-cart
+          (update-in [new-pos :dir] turn-cart next-turn)
+          (update-in [new-pos :turns] rest))
 
+      :else new-cart)))
 
 (defn update-world
   "Tick time once in world.  Carts move, turn, and sometimes crash.
@@ -66,9 +90,19 @@
   [world]
   (reduce (fn [acc cart]
             (let [new-cart (update-cart cart (:track acc))
-                  crash? ()]
-              (if crash?
-                (update acc :crashes conj (key new-cart))
+                  old-pos (key cart)
+                  new-pos (key (first new-cart))
+                  objects (set (conj (:crashes acc) (keys (:carts acc))))
+                  old-crash? (contains? (:crashes acc) old-pos)
+                  new-crash? (contains? objects new-pos)]
+              (cond
+                old-crash?
+                acc
+
+                new-crash?
+                (update acc :crashes conj new-pos)
+
+                :else
                 (update acc :carts conj new-cart))))
           (dissoc world :carts)
           (:carts world)))
@@ -84,30 +118,18 @@
 
 (def w (make-world ti))
 
-(:track w)
+(update-world w)
 
-(first (:carts w))
+(type (first (:carts w)))
 
-(:carts w)
+(def t (:track w))
 
-(def c (make-cart [1 1] \t))
+(def c (first (:carts w)))
+c
 
-(:carts (assoc w :carts c))
+(def c2 (update-cart c t))
+(key (first c2))
 
-(keys (:carts (into (sorted-map) (update w :carts conj c))))
-
-
-
-
-
-w
-
-
-(def d (make-cart [0 0] \>))
-d
-
-(first (get-in d [[0 0] :turns]))
-(update-in d [[0 0] :turns] rest)
 
 
 (defn print-cart
