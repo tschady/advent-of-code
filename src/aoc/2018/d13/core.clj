@@ -3,7 +3,6 @@
 
 (def input (file-util/read-lines "2018/d13.txt"))
 
-
 (def cart-map {\> {:underlying-track \-
                    :move [1 0]
                    :corner->turn {\/ \^,
@@ -42,7 +41,7 @@
 (defn- make-cart
   ""
   [[x y] c]
-  (sorted-map [x y] {:dir c :turns (cycle [:left :straight :right])}))
+  [[x y] {:dir c :turns (cycle [:left :straight :right])}])
 
 (defn- make-world
   "Return a world structure, which is a map of three elements:
@@ -61,26 +60,25 @@
                                          (get-in cart-map [c :underlying-track])
                                          c)]
                              {:track (sorted-map [x y] track)
-                              :carts cart
+                              :carts (apply hash-map cart)
                               :crashes []}))))
 
 (defn- update-cart
   ""
-  [cart track]
-  (let [pos (key cart)
-        delta (get-in cart-map [(:dir (val cart)) :move])
+  [[pos {:keys [dir turns] :as detail} :as cart] track]
+  (let [delta (get-in cart-map [dir :move])
         new-pos (mapv + pos delta)
-        new-cart (sorted-map new-pos (val cart))
+        new-cart (make-cart new-pos detail)
         new-segment (track new-pos)
-        next-turn (-> cart val :turns first)]
+        next-turn (first turns)]
     (cond
       (corner? new-segment)
-      (update-in new-cart [new-pos :dir] #((:corner->turn (cart-map %)) new-segment))
+      (update-in new-cart [1 :dir] #((:corner->turn (cart-map %)) new-segment))
 
       (intersection? new-segment)
       (-> new-cart
-          (update-in [new-pos :dir] turn-cart next-turn)
-          (update-in [new-pos :turns] rest))
+          (update-in [1 :dir] turn-cart next-turn)
+          (update-in [1 :turns] rest))
 
       :else new-cart)))
 
@@ -88,11 +86,10 @@
   "Tick time once in world.  Carts move, turn, and sometimes crash.
   Return new world object one time-step later."
   [world]
-  (reduce (fn [acc cart]
+  (reduce (fn [acc [old-pos _ :as cart]]
             (let [new-cart (update-cart cart (:track acc))
-                  old-pos (key cart)
-                  new-pos (key (first new-cart))
-                  objects (set (conj (:crashes acc) (keys (:carts acc))))
+                  new-pos (first new-cart)
+                  objects (set (conj (:crashes acc) (map first (:carts acc))))
                   old-crash? (contains? (:crashes acc) old-pos)
                   new-crash? (contains? objects new-pos)]
               (cond
@@ -105,7 +102,28 @@
                 :else
                 (update acc :carts conj new-cart))))
           (dissoc world :carts)
-          (:carts world)))
+          (into (sorted-map) (:carts world))))
+
+
+(defn part-1
+  ""
+  [input]
+  (let [world (make-world input)]
+    (->> (iterate update-world world)
+         (drop-while #(empty? (:crashes %)))
+         :crashes
+         first
+         key)))
+
+(defn part-2
+  ""
+  [input]
+  (let [world (make-world input)]
+    (->> (iterate update-world world)
+         (drop-while #(> 1 (count (:carts %))))
+         :carts
+         first
+         key)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -118,21 +136,37 @@
 
 (def w (make-world ti))
 
-(update-world w)
-
-(type (first (:carts w)))
-
+(def c (first (:carts w)))
 (def t (:track w))
 
-(def c (first (:carts w)))
-c
+
+(defn test-update-c [[pos {:keys [dir turns]} :as cart]]
+  {:pos pos
+   :dir dir
+   :turns turns
+   :cart cart}
+  )
+
+
+
 
 (def c2 (update-cart c t))
-(key (first c2))
+
+c
+
+(-> c
+    (update-cart t))
+
+
+c2
+
+(first c2)
 
 
 
-(defn print-cart
-  ""
-  [{} cart]
-  )
+(update-in c [1 :turns] rest)
+
+
+; (update-world w)
+
+
