@@ -64,7 +64,7 @@
   [[pos {:keys [dir turns] :as detail} :as cart] track]
   (let [delta (get-in cart-map [dir :move])
         new-pos (mapv + pos delta)
-        new-cart (make-cart new-pos detail)
+        new-cart [new-pos detail]
         new-segment (track new-pos)
         next-turn (first turns)]
     (cond
@@ -85,21 +85,15 @@
   (reduce (fn [acc [old-pos _ :as cart]]
             (let [new-cart (update-cart cart (:track acc))
                   new-pos (first new-cart)
-                  objects (set (conj (:crashes acc) (map first (:carts acc))))
+                  objects (set (concat (:crashes acc) (map first (:carts world))))
                   old-crash? (contains? (:crashes acc) old-pos)
                   new-crash? (contains? objects new-pos)]
               (cond
-                old-crash?
-                acc
-
-                new-crash?
-                (update acc :crashes conj new-pos)
-
-                :else
-                (update acc :carts conj new-cart))))
-          (dissoc world :carts)
+                old-crash? acc ; another aleardy processed cart crashed into this one, just skip
+                new-crash? (update acc :crashes conj new-pos)
+                :else (update acc :carts conj new-cart))))
+          (assoc world :carts {})
           (into (sorted-map) (:carts world))))
-
 
 (defn part-1
   ""
@@ -135,35 +129,38 @@
 
 (def c (first (:carts w)))
 (def t (:track w))
+(def m (make-cart [4 1] \v))
+m
 
-
-(defn test-update-c [[pos {:keys [dir turns]} :as cart]]
-  {:pos pos
-   :dir dir
-   :turns turns
-   :cart cart}
-  )
-
-
+(type m)
 
 
 (def c2 (update-cart c t))
-
-c
-
-(-> c
-    (update-cart t))
-
+(type c)
+(type c2)
 
 c2
 
-(first c2)
+(update-cart m t)
 
 
+(map first (:carts w))
 
-(update-in c [1 :turns] rest)
+(update-world w)
 
 
-; (update-world w)
+(update w :carts conj cn)
+
+(def c3 (first (into (sorted-map) (:carts w))))
+
+(def cn (update-cart c3 t))
+(first cn)
+
+
+(cond
+  true "foo"
+  false "boo"
+  :else 1)
+
 
 
