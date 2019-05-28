@@ -28,14 +28,10 @@
   ""
   [dir turn]
   (case [dir turn]
-    [\< :left] \v
-    [\v :left] \>
-    [\> :left] \^
-    [\^ :left] \<
-    [\< :right] \^
-    [\v :right] \<
-    [\> :right] \v
-    [\^ :right] \>
+    [\< :left] \v, [\< :right] \^
+    [\v :left] \>, [\v :right] \<
+    [\> :left] \^, [\> :right] \v
+    [\^ :left] \<, [\^ :right] \>
     dir))
 
 (defn- make-cart
@@ -111,6 +107,7 @@
   (let [world (make-world input)]
     (->> (iterate update-world world)
          (drop-while #(empty? (:crashes %)))
+         first
          :crashes
          first
          key)))
