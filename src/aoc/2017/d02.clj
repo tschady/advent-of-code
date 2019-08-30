@@ -4,15 +4,13 @@
 (def input-str (file-util/read-tsv "2017/d02.tsv"))
 (def input (map (fn [row] (map #(Integer/parseInt %) row)) input-str))
 
-(defn part-1
-  "Given a collection `coll` of lists, sum the max difference for each list."
+(defn- max-diff
+  "Return the maximum difference between elements of a collection."
   [coll]
-  (->> coll
-       (map #(- (apply max %) (apply min %)))
-       (reduce +)))
+  (- (apply max coll) (apply min coll)))
 
 (defn- max-quotient
-  "Return the greatest integer quotient from the input collection."
+  "Return the greatest integer quotient between elements of a collection."
   [coll]
   (apply max
          (for [x coll
@@ -21,7 +19,7 @@
                           (zero? (mod x y)))]
            (/ x y))))
 
-(defn part-2
-  "Given a collection `coll` of lists, sum the max integer quotients from each list."
-  [coll]
-  (reduce + (map max-quotient coll)))
+(defn solve- [f coll] (reduce + (map f coll)))
+
+(defn part-1 [coll] (solve max-diff coll))
+(defn part-2 [coll] (solve max-quotient coll))
