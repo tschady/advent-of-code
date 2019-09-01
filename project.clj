@@ -9,7 +9,8 @@
                  [pandect "0.6.1"]
                  [aysylu/loom "1.0.2"]
                  [org.clojure/math.combinatorics "0.1.4"]
-                 [medley "1.2.0"]]
+                 [medley "1.2.0"]
+                 [org.clojure/data.json "0.2.6"]]
   :main ^:skip-aot aoc.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
