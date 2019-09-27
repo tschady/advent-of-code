@@ -7,7 +7,7 @@
                           "London to Belfast = 518"
                           "Dublin to Belfast = 141"]))))
 
-(deftest part-1-examples
+(deftest part-2-examples
   (is (= 982 (sut/part-2 ["London to Dublin = 464"
                           "London to Belfast = 518"
                           "Dublin to Belfast = 141"]))))
