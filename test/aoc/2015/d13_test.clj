@@ -20,5 +20,5 @@
   (is (= 330 (sut/part-1 test-input))))
 
 (deftest challenge
-  (is (= 618 (sut/part-1 sut/input))
-      (= 601 (sut/part-2 sut/input))))
+  (is (= 618 (sut/part-1 sut/input)))
+  (is (= 601 (sut/part-2 sut/input))))
