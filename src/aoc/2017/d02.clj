@@ -19,7 +19,7 @@
                           (zero? (mod x y)))]
            (/ x y))))
 
-(defn solve- [f coll] (reduce + (map f coll)))
+(defn- solve [f coll] (reduce + (map f coll)))
 
 (defn part-1 [coll] (solve max-diff coll))
 (defn part-2 [coll] (solve max-quotient coll))
