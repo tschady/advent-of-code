@@ -10,9 +10,9 @@
 
 (deftest part-2-examples
   (are [output input] (= output (sut/part-2 input))
-    1 ["turn on 0,0 though 0,0"]
+    1 ["turn on 0,0 through 0,0"]
     2000000 ["toggle 0,0 through 999,999"]))
 
-(deftest challenge
+(deftest ^:slow challenge
   (is (= 543903 (sut/part-1 sut/input)))
   (is (= 14687245 (sut/part-2 sut/input))))
