@@ -23,9 +23,9 @@
 (deftest part1-examples
   (is (= 7 (sut/part-1 test-input1))))
 
-(deftest part2-examples
+#_(deftest part2-examples
   (is (= 36 (sut/part-2 test-input2))))
 
 (deftest challenge
   (is (= 410 (sut/part-1 sut/input)))
-  (is (= false (sut/part-2 sut/input))))
+  #_(is (= false (sut/part-2 sut/input))))
