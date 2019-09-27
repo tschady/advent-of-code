@@ -5,8 +5,7 @@
 (defn parse-triangle [line]
   (read-string (str "[" line "]")))
 
-(def input (->> (file-util/read-lines "2016/d03.txt")
-                (map parse-triangle)))
+(def input (map parse-triangle (file-util/read-lines "2016/d03.txt")))
 
 (defn valid-triangle? [[a b c]]
   (and (> (+ a b) c)

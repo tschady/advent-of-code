@@ -46,7 +46,7 @@
   Each side of the spiral gets longer each rotation."
   (let [step-len (mapcat #(repeat 2 %) (map inc (range)))
         step-dir (cycle [[1 0] [0 1] [-1 0] [0 -1]])]
-    (mapcat #(repeat %1 %2) step-len step-dir)))
+    (mapcat repeat step-len step-dir)))
 
 (defn- neighbor-coords
   "Given a node `loc`'s coords, return the coords of its 8 cartesian neighbors."
