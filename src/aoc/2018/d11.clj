@@ -63,7 +63,6 @@
 (defn max-power
   ""
   [matrix subgrid-size]
-  (println subgrid-size)
   (apply max-key val (power-grid matrix subgrid-size)))
 
 (defn part-1
