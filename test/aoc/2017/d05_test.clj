@@ -6,7 +6,7 @@
   (are [output input] (= output (sut/part-1 input))
     5 [0 3 0 1 -3]))
 
-(deftest part-1-examples
+(deftest part-2-examples
   (are [output input] (= output (sut/part-2 input))
     10 [0 3 0 1 -3]))
 
