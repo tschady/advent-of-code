@@ -29,7 +29,7 @@
 (defn get-units
   "Return set of all units in input polymer, normalized to lowercase."
   [polymer]
-  (into #{} (map str/lower-case polymer)))
+  (set (map str/lower-case polymer)))
 
 (defn strip-unit
   "Remove all variations of unit from polymer."
