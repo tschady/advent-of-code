@@ -15,5 +15,5 @@
             (if-let [v (get acc x)]
               (reduced [x (conj v idx)])
               (assoc acc x [idx])))
-          {} (map-indexed #(vector % %2) coll)))
+          {} (map-indexed vector coll)))
 

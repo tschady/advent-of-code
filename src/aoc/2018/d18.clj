@@ -35,8 +35,8 @@
     :trees (if (> (get surrounds :lumberyard 0) 2)
              :lumberyard
              :trees)
-    :lumberyard (if (and (> (get surrounds :lumberyard 0) 0)
-                         (> (get surrounds :trees 0) 0))
+    :lumberyard (if (and (pos? (get surrounds :lumberyard 0))
+                         (pos? (get surrounds :trees 0)))
                   :lumberyard
                   :open)))
 

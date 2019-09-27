@@ -25,4 +25,4 @@
   "Return the common letters between two input strings, where common
   letters must occur in the same corresponding position."
   [a b]
-  (apply str (map #(when (= %1 %2) %1) a b)))
+  (str/join (map #(when (= %1 %2) %1) a b)))

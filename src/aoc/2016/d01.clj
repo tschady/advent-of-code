@@ -15,8 +15,9 @@
   the direction of turn (\\R or \\L) and the distance to move.
   e.g. 'R5, L2' => [[\\R 5] [\\L 2]]"
   [move-str]
-  (->> (str/split move-str #", ")
-       (map (juxt first #(Integer/parseInt (apply str (rest %)))))))
+  (map
+   (juxt first #(Integer/parseInt (str/join (rest %))))
+   (str/split move-str #", ")))
 
 (defn steps
   "Determine series of cartesian deltas from list of moves."
@@ -27,7 +28,7 @@
                      (reductions #(mod ((dir->adjust-bearing %2) %1) 4) 0)
                      rest)
         deltas (map bearings indexes)]
-    (mapcat #(repeat %1 %2) dists deltas)))
+    (mapcat repeat dists deltas)))
 
 (defn walk
   "Return every location reached by applying steps given by deltas."

@@ -9,7 +9,7 @@
   [s]
   (let [normal-num (->> s
                         (map #(char (- (int %) (if (<= (int %) (int \j)) 49 10))))
-                        (apply str))]
+                        str/join)]
     (Long/parseLong normal-num 26)))
 
 (defn int->pass
@@ -28,7 +28,7 @@
   "Regex pattern matching any 3-letter consecutive runs in alphabet"
   (->> "abcdefghijklmnopqrstuvwxyz"
                    (partition 3 1)
-                   (map #(apply str %))
+                   (map str/join)
                    (str/join "|")
                    re-pattern))
 
