@@ -11,7 +11,10 @@
   (is (= 1514 (sut/part-1 test-input))))
 
 (deftest decrypt
-  (is (= "veryencryptedname" (sut/decrypt "qzmtzixmtkozyivhz" 343))))
+  (is (= "veryencryptedname" (-> "qzmt-zixmtkozy-ivhz-343[foo]"
+                                 sut/parse-room
+                                 sut/decrypt
+                                 :clear))))
 
 (deftest challenge
   (is (= 173787 (sut/part-1 sut/input)))
