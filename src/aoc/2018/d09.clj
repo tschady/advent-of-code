@@ -61,7 +61,6 @@
         next-player (get-next-player player num-players)
         next-marble (inc marble)
         game (assoc game :player next-player :marble next-marble)]
-    (println next-marble)
     (if (special-marble? next-marble)
       (let [remove-loc (get-remove-loc board cur-loc)
             removed-val (get board remove-loc)]
