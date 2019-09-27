@@ -22,4 +22,4 @@
 (defn solve [f input] (reduce + (map #(- (count %) (f %)) input)))
 
 (defn part-1 [input] (solve decode-count input))
-(defn part-2 [input] (solve recode-count input))
+(defn part-2 [input] (* -1 (solve recode-count input)))
