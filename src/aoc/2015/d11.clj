@@ -27,10 +27,10 @@
 (def straight
   "Regex pattern matching any 3-letter consecutive runs in alphabet"
   (->> "abcdefghijklmnopqrstuvwxyz"
-                   (partition 3 1)
-                   (map str/join)
-                   (str/join "|")
-                   re-pattern))
+       (partition 3 1)
+       (map str/join)
+       (str/join "|")
+       re-pattern))
 
 (s/def ::password (s/and string?
                          #(re-find #"(.)\1.*(.)(?!\1)\2" %) ; diff double-repeat

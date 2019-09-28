@@ -65,13 +65,13 @@
       (let [remove-loc (get-remove-loc board cur-loc)
             removed-val (get board remove-loc)]
         (assoc game
-            :board (remove-marble remove-loc board)
-            :cur-loc remove-loc
-            :scores (update scores player + next-marble removed-val)))
+               :board (remove-marble remove-loc board)
+               :cur-loc remove-loc
+               :scores (update scores player + next-marble removed-val)))
       (let [next-loc (get-next-loc board cur-loc)]
         (assoc game
-            :board (add-marble next-loc board next-marble)
-            :cur-loc next-loc)))))
+               :board (add-marble next-loc board next-marble)
+               :cur-loc next-loc)))))
 
 (defn play-game
   "Iterate through game's specified number of turns, given starting conditions."
