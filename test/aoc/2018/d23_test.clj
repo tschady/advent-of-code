@@ -24,7 +24,7 @@
   (is (= 7 (sut/part-1 test-input1))))
 
 #_(deftest part2-examples
-  (is (= 36 (sut/part-2 test-input2))))
+    (is (= 36 (sut/part-2 test-input2))))
 
 (deftest challenge
   (is (= 410 (sut/part-1 sut/input)))

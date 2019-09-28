@@ -9,8 +9,9 @@
 (defn- parse-claim
   "Given an input claim string, parse into hashmap"
   [claim-str]
-  (let [[id x y dx dy] (map read-string (rest (re-find claim-pattern claim-str)))]
-       {:id id :x x :y y :dx dx :dy dy}))
+  (let [[id x y dx dy] (map read-string
+                            (rest (re-find claim-pattern claim-str)))]
+    {:id id :x x :y y :dx dx :dy dy}))
 
 (defn- claim-locs
   "Return all the Cartesian coords for the area of a claim"
