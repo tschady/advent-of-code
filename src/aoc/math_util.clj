@@ -33,3 +33,11 @@
        neighbor-coords
        (map grid)
        (remove nil?)))
+
+(defn build-grid
+  "Return map of coordinates to a value, given list of strings of glyphs,
+  and a mapping of glyph->val."
+  [lines glyph->val]
+  (into {} (for [y (range (count lines))
+                 x (range (count (nth lines y)))]
+             {[x y] (glyph->val (get-in lines [y x]))})))

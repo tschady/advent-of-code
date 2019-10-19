@@ -1,22 +1,12 @@
 (ns aoc.2018.d18
   (:require [aoc.file-util :as file-util]
-            [aoc.math-util :refer [neighbors]]))
+            [aoc.math-util :refer [build-grid neighbors]]))
 
 (def input (file-util/read-lines "2018/d18.txt"))
 
 (def glyph->terrain {\. :open
                      \| :trees
                      \# :lumberyard})
-
-(defn- build-parcel
-  "Map cartesian coord tuple to terrain, given list of strings of glyphs."
-  [lines]
-  (apply merge (flatten
-                (map-indexed (fn [y row]
-                               (map-indexed (fn [x char]
-                                              {[x y] (glyph->terrain char)})
-                                            row))
-                             lines))))
 
 (defn- age-acre
   "Transform an acre based on its surroundings."
@@ -73,14 +63,14 @@
   "Returns resource-value of input parcel after t minutes."
   [input t]
   (-> input
-      build-parcel
+      (build-grid glyph->terrain)
       (resources-after-time t)
       resource-value))
 
 (defn part-2
   "Returns resource-value of input parcel after t minutes."
   [input t]
-  (let [parcel (build-parcel input)
+  (let [parcel (build-grid input glyph->terrain)
         [offset period] (cycle-stats parcel)
         iter (+ offset (mod (- t offset) period))
         resources (resources-after-time parcel iter)]
