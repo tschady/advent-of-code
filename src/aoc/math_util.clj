@@ -17,3 +17,19 @@
               (assoc acc x [idx])))
           {} (map-indexed vector coll)))
 
+(defn neighbor-coords
+  "Return the 8 cartesian coord tuples surrounding input coord."
+  [[x y]]
+  (for [dx [-1 0 1]
+        dy [-1 0 1]
+        :when (not= 0 dx dy)]
+    [(+ x dx) (+ y dy)]))
+
+(defn neighbors
+  "Return the contents of the 8 surrounding neighbors in the grid.
+  Off grid cells are not returned."
+  [grid loc]
+  (->> loc
+       neighbor-coords
+       (map grid)
+       (remove nil?)))

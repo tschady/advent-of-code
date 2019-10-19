@@ -1,5 +1,6 @@
 (ns aoc.2017.d03
-  (:require [flatland.ordered.map :refer [ordered-map]]))
+  (:require [flatland.ordered.map :refer [ordered-map]]
+            [aoc.math-util :refer [neighbors]]))
 
 (def input 368078)
 
@@ -48,20 +49,11 @@
         step-dir (cycle [[1 0] [0 1] [-1 0] [0 -1]])]
     (mapcat repeat step-len step-dir)))
 
-(defn- neighbor-coords
-  "Given a node `loc`'s coords, return the coords of its 8 cartesian neighbors."
-  [loc]
-  (let [deltas '([-1  1] [0  1] [ 1  1]
-                 [-1  0]  ,,,   [ 1  0]
-                 [-1 -1] [0 -1] [ 1 -1])]
-    (map #(mapv + loc %) deltas)))
-
 (defn- neighbor-sum
   "Given the coords `loc` of a node in `spiral`, compute the sum of it's
   nearest 8 neigbors."
   [loc spiral]
-  (let [locs (neighbor-coords loc)]
-    (reduce + 0 (remove nil? (map spiral locs)))))
+  (reduce + 0 (neighbors spiral loc)))
 
 (defn- add-next-node
   "Return a new spiral with next node added."
