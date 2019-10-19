@@ -1,19 +1,12 @@
 (ns aoc.2018.d18
-  (:require [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [aoc.math-util :refer [neighbors]]))
 
 (def input (file-util/read-lines "2018/d18.txt"))
 
 (def glyph->terrain {\. :open
                      \| :trees
                      \# :lumberyard})
-
-(defn neighbor-coords
-  "Return the 8 cartesian coord tuples surrounding input coord."
-  [[x y]]
-  (for [dx [-1 0 1]
-        dy [-1 0 1]
-        :when (not= 0 dx dy)]
-    [(+ x dx) (+ y dy)]))
 
 (defn- build-parcel
   "Map cartesian coord tuple to terrain, given list of strings of glyphs."
@@ -44,10 +37,11 @@
   "Advance time one minute, evolving each acre."
   [parcel]
   (into {} (map (fn [[coord terrain]]
-                  (let [surrounds (->> (neighbor-coords coord)
-                                       (map #(get parcel %))
-                                       frequencies)]
-                    [coord (age-acre terrain surrounds)]))
+                  [coord
+                   (->> coord
+                        (neighbors parcel)
+                        frequencies
+                        (age-acre terrain))])
                 parcel)))
 
 (defn- resources-after-time
