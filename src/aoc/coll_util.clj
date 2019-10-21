@@ -21,3 +21,7 @@
     (repeat pad)
     (lazy-seq (cons (first xs) (lazy-pad pad (rest xs))))))
 
+(defn vec-remove
+  "Return the `coll` input vector with the `i`th item removed."
+  [coll i]
+  (vec (concat (subvec coll 0 i) (subvec coll (inc i)))))
