@@ -30,3 +30,16 @@
   letters must occur in the same corresponding position."
   [a b]
   (str/join (map #(when (= %1 %2) %1) a b)))
+
+(defn substring-replace
+  "Replaces text from index `start` to `end` of `s` with `replacement`."
+  [s [start end] replacement]
+  (str (subs s 0 start) replacement (subs s end)))
+
+(defn match-indices
+  "Returns a coll of [start end] indices of all matches of `pattern` in `s`"
+  [pattern s]
+  (let [matcher (re-matcher (re-pattern pattern) s)]
+    (for [x (repeatedly #(re-find matcher))
+          :while (some? x)]
+      [(.start matcher) (.end matcher)])))
