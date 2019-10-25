@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [digest "1.4.9"]
-                 [org.flatland/ordered "1.5.6"]
+                 [org.flatland/ordered "1.5.7"]
                  [pandect "0.6.1"]
                  [aysylu/loom "1.0.2"]
                  [org.clojure/math.combinatorics "0.1.4"]
