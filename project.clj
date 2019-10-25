@@ -11,6 +11,7 @@
                  [org.clojure/math.combinatorics "0.1.4"]
                  [medley "1.2.0"]
                  [org.clojure/data.json "0.2.6"]]
+  :plugins [[lein-cloverage "1.0.7-SNAPSHOT"]]
   :main ^:skip-aot aoc.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}}
