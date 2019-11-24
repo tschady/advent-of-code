@@ -1,0 +1,15 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: circleci/clojure:tools-deps
+    environment:
+      JAVA_TOOL_OPTIONS: -Xmx3200m
+    steps:
+      - checkout
+      - run: clojure -Atest --skip-meta :slow
+
+workflows:
+  workflow:
+    jobs:
+      - test
