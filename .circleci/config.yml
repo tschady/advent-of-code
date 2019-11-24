@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  codecov: codecov/codecov@1.0.5
+
 jobs:
   test:
     docker:
@@ -7,7 +11,9 @@ jobs:
       JAVA_TOOL_OPTIONS: -Xmx3200m
     steps:
       - checkout
-      - run: clojure -Atest --skip-meta :slow
+      - run: clojure -Atest --skip-meta :slow --plugin cloverage --codecov
+      - codecov/upload:
+          file: target/coverage/codecov.json
 
 workflows:
   workflow:
