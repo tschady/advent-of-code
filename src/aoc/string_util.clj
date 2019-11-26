@@ -1,6 +1,5 @@
 (ns aoc.string-util
-  (:require [clojure.java.io :as io]
-            [clojure.string :as str]))
+  (:require [clojure.string :as str]))
 
 (defn explode-digits
   "Turn input string of digits into sequence of numbers they represent."

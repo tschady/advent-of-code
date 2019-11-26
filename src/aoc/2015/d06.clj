@@ -1,7 +1,5 @@
 (ns aoc.2015.d06
-  (:require [aoc.file-util :as file-util]
-            [clojure.string :as str])
-  (:import java.util.BitSet))
+  (:require [aoc.file-util :as file-util]))
 
 (def input (file-util/read-lines "2015/d06.txt"))
 
