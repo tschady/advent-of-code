@@ -22,9 +22,9 @@
   (let [parts (->> ingred-stats
                    (map (fn [tsp stat] (map #(* tsp %) stat)) tsps)
                    (apply map +)
-                   (map #(max 0 %)))
-        cal (last parts)
-        score (reduce * (butlast parts))]
+                   (mapv #(max 0 %)))
+        cal (peek parts)
+        score (reduce * (pop parts))]
     {:score score :cal cal}))
 
 (defn- bake-all-batches [input]

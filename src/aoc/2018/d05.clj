@@ -15,7 +15,7 @@
   "Squeeze the input polymer by removing reacting pairs with one pass."
   [polymer]
   (reduce (fn [existing-chain next-unit]
-            (if (react? (last existing-chain) next-unit)
+            (if (react? (peek existing-chain) next-unit)
               (pop existing-chain)
               (conj existing-chain next-unit)))
           []
