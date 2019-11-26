@@ -1,6 +1,5 @@
 (ns aoc.2016.d03
-  (:require [aoc.file-util :as file-util]
-            [clojure.string :as str]))
+  (:require [aoc.file-util :as file-util]))
 
 (defn parse-triangle [line]
   (read-string (str "[" line "]")))
