@@ -9,9 +9,9 @@
 
 (def alphagram (comp sort str/lower-case))
 
-(defn anagram? [word candidate]
-  (and (not= (str/lower-case word) (str/lower-case candidate))
-       (= (alphagram word) (alphagram candidate))))
+(defn anagram? [a b]
+  (and (not= (str/lower-case a) (str/lower-case b))
+       (= (alphagram a) (alphagram b))))
 
 (defn hamming-distance
   "The Hamming distance between two strings of equal length is the
