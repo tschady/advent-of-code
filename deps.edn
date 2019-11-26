@@ -7,11 +7,13 @@
         medley                         {:mvn/version "1.2.0"}
         pandect                        {:mvn/version "0.6.1"}}
  :paths ["src" "resources"]
- :aliases {:test     {:extra-paths ["test"]
-                      :extra-deps  {lambdaisland/kaocha           {:mvn/version "0.0-529"}
-                                    lambdaisland/kaocha-cloverage {:mvn/version "0.0-41"}
-                                    org.clojure/test.check        {:mvn/version "RELEASE"}}
-                      :main-opts   ["-m" "kaocha.runner"]}
-           :outdated {:extra-deps {olical/depot {:mvn/version "1.8.4"}}
-                      :main-opts  ["-m" "depot.outdated.main" "-a" "outdated"]}
-           :bench    {:extra-deps {criterium {:mvn/version "0.4.4"}}}}}
+ :aliases {:test      {:extra-paths ["test"]
+                       :extra-deps  {lambdaisland/kaocha           {:mvn/version "0.0-529"}
+                                     lambdaisland/kaocha-cloverage {:mvn/version "0.0-41"}
+                                     org.clojure/test.check        {:mvn/version "RELEASE"}}
+                       :main-opts   ["-m" "kaocha.runner"]}
+           :outdated  {:extra-deps {olical/depot {:mvn/version "1.8.4"}}
+                       :main-opts  ["-m" "depot.outdated.main" "-a" "outdated"]}
+           :bench     {:extra-deps {criterium {:mvn/version "0.4.4"}}}
+           :clj-kondo {:extra-deps {clj-kondo {:mvn/version "RELEASE"}}
+                       :main-opts  ["-m" "clj-kondo.main"]}}}
