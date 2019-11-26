@@ -9,7 +9,7 @@
   ([amt denoms] (change-combos amt denoms [[]]))
   ([amt denoms acc]
    (cond (zero? amt) acc
-         (or (neg? amt) (empty? denoms)) (butlast acc)
+         (or (neg? amt) (empty? denoms)) (pop acc)
          :else (concat (change-combos amt (rest denoms) acc)
                        (change-combos (- amt (first denoms))
                                       (rest denoms)
