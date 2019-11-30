@@ -6,9 +6,14 @@
   [s]
   (map #(Character/getNumericValue %) s))
 
-(def alphagram (comp sort str/lower-case))
+(def alphagram
+  "The lowercased letters of a string arranged in alphabetical order"
+  (comp sort str/lower-case))
 
-(defn anagram? [a b]
+(defn anagram?
+  "Return true if the input strings `a` and `b` are non-identical,
+  case-insensitive permutations of each other, else false."
+  [a b]
   (and (not= (str/lower-case a) (str/lower-case b))
        (= (alphagram a) (alphagram b))))
 
