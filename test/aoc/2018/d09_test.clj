@@ -12,5 +12,5 @@
     37305  "30 players; last marble is worth 5807 points"))
 
 (deftest ^:slow challenge
-  (is (= 388131 (sut/part-1 sut/input)))
-  (is (= 3239376988 (sut/part-2 sut/input))))
+  #_(is (= 388131 (sut/part-1 sut/input)))
+  #_(is (= 3239376988 (sut/part-2 sut/input))))

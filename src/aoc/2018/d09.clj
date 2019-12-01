@@ -3,14 +3,10 @@
 
 (def input (file-util/read-file "2018/d09.txt"))
 
-(def ^:private game-pattern #"(\d+) players; last marble is worth (\d+) points")
-
 (defn- make-game
   "Create an initial game data structure from descriptive string."
   [game-str]
-  (let [matches (re-matches game-pattern game-str)
-        num-players (read-string (nth matches 1))
-        max-turns (read-string (nth matches 2))]
+  (let [[num-players max-turns] (map read-string (re-seq #"\d+" game-str))]
     {:num-players num-players
      :max-turns max-turns
      :player 0
@@ -72,6 +68,27 @@
         (assoc game
                :board (add-marble next-loc board next-marble)
                :cur-loc next-loc)))))
+
+(defn play-game2
+  [num-players max-turn]
+  (loop [player-rotation (cycle (range num-players))
+         marble       1
+         cur-loc      0
+         board (java.util.ArrayList. '(0))
+         scores       (vec (repeat num-players 0))]
+    (if (> marble max-turn)
+      scores ;; terminate with score list
+      (if (special-marble? marble)
+        ;; remove item (update board), set location, and update scores
+        ;; else add marble (update board), and advance location
+        )
+      (recur [(rest player-rotation)
+              (inc marble)
+              (update-loc cur-loc)
+              (update-board board)
+              (update-scores scores)]))))
+
+(identity '(2 3))
 
 (defn play-game
   "Iterate through game's specified number of turns, given starting conditions."
