@@ -1,6 +1,6 @@
 (ns aoc.2018.d23
   (:require [aoc.file-util :as file-util]
-            [aoc.math-util :as math-util]))
+            [aoc.grid :as grid]))
 
 (def input (file-util/read-lines "2018/d23.txt"))
 
@@ -15,7 +15,7 @@
   the subject bot's range, inclusively."
   [subject candidate]
   (>= (:r subject)
-      (math-util/manhattan-dist (:loc candidate) (:loc subject))))
+      (grid/manhattan-dist (:loc candidate) (:loc subject))))
 
 (defn part-1
   "Calculate the number of bots within manhattan-distance of the nanobot
