@@ -1,5 +1,6 @@
 (ns aoc.file-util
-  (:require [clojure.java.io :as io]
+  (:require [clojure.data.csv :as csv]
+            [clojure.java.io :as io]
             [clojure.string :as str]))
 
 (defn read-file
@@ -22,3 +23,10 @@
   "Return a list of rows, with each row as a list of values from the TSV."
   [path]
   (->> path read-lines (map #(str/split %1 #"\t"))))
+
+(defn read-csv
+  "Return a list of rows, with each row as a list of values from the TSV."
+  [path]
+  (->> path read-file csv/read-csv))
+
+
