@@ -1,6 +1,6 @@
 (ns aoc.2017.d03
   (:require [flatland.ordered.map :refer [ordered-map]]
-            [aoc.math-util :refer [neighbors]]))
+            [aoc.grid :as grid]))
 
 (def input 368078)
 
@@ -53,7 +53,7 @@
   "Given the coords `loc` of a node in `spiral`, compute the sum of it's
   nearest 8 neigbors."
   [loc spiral]
-  (reduce + 0 (neighbors spiral loc)))
+  (reduce + 0 (grid/neighbors spiral loc)))
 
 (defn- add-next-node
   "Return a new spiral with next node added."
