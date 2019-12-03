@@ -3,7 +3,7 @@
             [aoc.math-util :as math-util]
             [aoc.grid :as grid]))
 
-(def input (file-util/read-file "2016/d01.txt"))
+(def input (first (file-util/read-csv "2016/d01.txt")))
 
 (defn part-1
   "Return Manhattan distance from origin determined by walking input."
