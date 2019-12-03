@@ -1,6 +1,6 @@
 (ns aoc.2018.d18
   (:require [aoc.file-util :as file-util]
-            [aoc.math-util :refer [build-grid neighbors]]))
+            [aoc.grid :as grid]))
 
 (def input (file-util/read-lines "2018/d18.txt"))
 
@@ -29,7 +29,7 @@
   (into {} (map (fn [[coord terrain]]
                   [coord
                    (->> coord
-                        (neighbors parcel)
+                        (grid/neighbors parcel)
                         frequencies
                         (age-acre terrain))])
                 parcel)))
@@ -63,14 +63,14 @@
   "Returns resource-value of input parcel after t minutes."
   [input t]
   (-> input
-      (build-grid glyph->terrain)
+      (grid/build-grid glyph->terrain)
       (resources-after-time t)
       resource-value))
 
 (defn part-2
   "Returns resource-value of input parcel after t minutes."
   [input t]
-  (let [parcel (build-grid input glyph->terrain)
+  (let [parcel (grid/build-grid input glyph->terrain)
         [offset period] (cycle-stats parcel)
         iter (+ offset (mod (- t offset) period))
         resources (resources-after-time parcel iter)]

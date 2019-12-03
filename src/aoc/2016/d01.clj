@@ -9,7 +9,7 @@
   "Return Manhattan distance from origin determined by walking input."
   [input]
   (let [dest (last (grid/turns->path input))]
-    (math-util/manhattan-dist grid/origin dest)))
+    (grid/manhattan-dist grid/origin dest)))
 
 (defn part-2
   "Return Manhattan distance from origin of first location reached twice
@@ -17,4 +17,4 @@
   [input]
   (let [locs (grid/turns->path input)
         dup (first (math-util/first-duplicate locs))]
-    (math-util/manhattan-dist grid/origin dup)))
+    (grid/manhattan-dist grid/origin dup)))

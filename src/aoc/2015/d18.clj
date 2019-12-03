@@ -1,6 +1,6 @@
 (ns aoc.2015.d18
-  (:require [aoc.math-util :refer [build-grid neighbors]]
-            [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [aoc.grid :as grid]))
 
 (def input (file-util/read-lines "2015/d18.txt"))
 
@@ -13,7 +13,7 @@
   - A light which is off turns on if exactly 3 neighbors are on, and stays off otherwise."
   [grid]
   (reduce (fn [new-grid [loc val]]
-            (let [neighbors-on (reduce + 0 (neighbors grid loc))
+            (let [neighbors-on (reduce + 0 (grid/neighbors grid loc))
                   new-val (cond
                             (and (pos? val) (< 1 neighbors-on 4)) 1
                             (and (zero? val) (= 3 neighbors-on)) 1
@@ -23,7 +23,7 @@
           grid))
 
 (defn solve [input step-fn]
-  (->> (build-grid input glyph->val)
+  (->> (grid/build-grid input glyph->val)
        (iterate step-fn)
        (take (inc 100))
        last
