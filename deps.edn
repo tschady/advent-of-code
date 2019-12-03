@@ -5,7 +5,8 @@
         org.clojure/math.combinatorics {:mvn/version "0.1.6"}
         org.flatland/ordered           {:mvn/version "1.5.7"}
         medley                         {:mvn/version "1.2.0"}
-        pandect                        {:mvn/version "0.6.1"}}
+        pandect                        {:mvn/version "0.6.1"}
+        org.clojure/data.csv {:mvn/version "0.1.4"}}
  :paths ["src" "resources"]
  :aliases {:test      {:extra-paths ["test"]
                        :extra-deps  {lambdaisland/kaocha           {:mvn/version "0.0-529"}
