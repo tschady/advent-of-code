@@ -1,4 +1,5 @@
-(ns aoc.math-util)
+(ns aoc.math-util
+  (:require [clojure.string :as str]))
 
 (defn first-duplicate
   "For given coll, return a vector of first duplicate entry, and the two
@@ -18,3 +19,8 @@
        (filter #(zero? (rem n %)))
        (mapcat #(vector % (/ n %)))
        (into (sorted-set))))
+
+(defn digits->num
+  "Given a sequence of digits, join them together into one integer."
+  [xs]
+  (->> xs (map str) str/join read-string))
