@@ -10,7 +10,7 @@
                          intcode/make-prog
                          intcode/run-prog
                          :mem
-                         first))
+                         (get 0)))
 
 (defn part-2 [input]
   (let [magic-output 19690720]
@@ -21,5 +21,5 @@
                                 intcode/make-prog
                                 intcode/run-prog
                                 :mem)]
-                 :when (= magic-output (first mem))]
+                 :when (= magic-output (get mem 0))]
              (+ verb (* 100 noun))))))

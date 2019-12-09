@@ -8,7 +8,7 @@
 
 (defn set-noun-verb [prog noun verb] (assoc prog 1 noun 2 verb))
 
-(defn parse-inst [inst]
+(defn- parse-inst [inst]
   (let [opcode (rem inst 100)
         mode1 (-> inst (quot 100) (mod 10))
         mode2 (-> inst (quot 1000))]

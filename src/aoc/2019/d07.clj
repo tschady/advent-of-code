@@ -38,4 +38,4 @@
 
 #_(pipeline tp [8 7 6 5 9])
 
-(intcode/run-prog (intcode/make-prog tp [5 0]))
+#_(intcode/run-prog (intcode/make-prog tp [5 0]))
