@@ -4,7 +4,10 @@
 
 (deftest run-prog
   (testing "2019 Day 2 examples, part1"
-    (are [input output] (= output (sut/run-prog input))
+    (are [input output] (= output (-> input
+                                      sut/make-prog
+                                      sut/run-prog
+                                      :mem))
       [1,0,0,0,99]          [2,0,0,0,99]
       [2,3,0,3,99]          [2,3,0,6,99]
       [2,4,4,5,99,0]        [2,4,4,5,99,9801]
