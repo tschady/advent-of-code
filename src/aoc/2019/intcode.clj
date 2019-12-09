@@ -1,14 +1,8 @@
 (ns aoc.2019.intcode)
 
 (defn make-prog
-  ([tape] (make-prog tape 0))
+  ([tape] (make-prog tape [0]))
   ([tape input] {:ptr 0 :mem tape :in input :out []}))
-
-(def opcodes {1 {:fn +, :size 4}
-              2 {:fn *, :size 4}
-              3 {:fn identity, :size 2}
-              4 {:fn identity, :size 2}
-              99 {:fn :halt, :size 1}})
 
 (defn set-noun-verb [prog noun verb] (assoc prog 1 noun 2 verb))
 
@@ -20,7 +14,6 @@
         v1 (get mem (+ 1 ptr))
         v2 (get mem (+ 2 ptr))
         v3 (get mem (+ 3 ptr))
-        op-param (get opcodes opcode)
         arg1 (if (pos? mode1) v1 (get mem v1))
         arg2 (if (pos? mode2) v2 (get mem v2))]
     (if (= 99 opcode)
@@ -33,8 +26,9 @@
                               (assoc-in [:mem v3] (* arg1 arg2))
                               (update :ptr #(+ % 4)))
                         3 (-> prog
-                              (assoc-in [:mem v1] in)
-                              (update :ptr #(+ % 2)))
+                              (assoc-in [:mem v1] (first in))
+                              (update :ptr #(+ % 2))
+                              (assoc :in (rest in)))
                         4 (-> prog
                               (update :out #(conj % (get mem v1)))
                               (update :ptr #(+ % 2)))

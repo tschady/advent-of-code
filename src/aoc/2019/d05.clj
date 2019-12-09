@@ -5,8 +5,8 @@
 
 (def input (mapv read-string (str/split ( file-util/read-file "2019/d05.txt") #",")))
 
-(:out (intcode/run-prog (intcode/make-prog input 1)))
+(:out (intcode/run-prog (intcode/make-prog input [1])))
 
-(:out (intcode/run-prog (intcode/make-prog input 5)))
+(:out (intcode/run-prog (intcode/make-prog input [5])))
 
 
