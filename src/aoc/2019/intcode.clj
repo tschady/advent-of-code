@@ -37,10 +37,9 @@
                               (assoc-in [:mem v3] (*' arg1 arg2))
                               (update :ptr #(+ % 4)))
                         3 (-> prog
-                              (assoc-in [:mem v1]
-                                        (first in))
+                              (assoc-in [:mem arg1] (first in))
                               (update :ptr #(+ % 2))
-                              (assoc :in (rest in)))
+                              (update :in rest))
                         4 (-> prog
                               (update :out #(conj % arg1))
                               (update :ptr #(+ % 2)))
