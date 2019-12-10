@@ -13,3 +13,11 @@
   "Returns true if `m1` is a proper subset of `m2`, else false."
   [m1 m2]
   (clojure.set/subset? (set m1) (set m2)))
+
+(defn lazy-pad
+  "Return a lazy sequence which pads sequence `xs` with `pad` value."
+  [pad xs]
+  (if (empty? xs)
+    (repeat pad)
+    (lazy-seq (cons (first xs) (lazy-pad pad (rest xs))))))
+
