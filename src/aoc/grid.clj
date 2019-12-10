@@ -1,5 +1,6 @@
 (ns aoc.grid
-  (:require [clojure.string :as str]))
+  (:require [aoc.coll-util :as coll-util]
+            [clojure.string :as str]))
 
 (defn parse-move
   "Transform a move, represented by a concatenated string of dir and dist,
@@ -14,6 +15,30 @@
                  \R [1 0]})
 
 (def origin [0 0])
+
+(defn theta
+  "Return the fractional gradient between two Cartesian points"
+  [[x y]]
+  (Math/atan2 y x))
+
+(defn angle
+  "Returns degrees from 0->360 of angle between origin and point
+  using arctan2, normalized to 360"
+  [point]
+  (let [deg (Math/toDegrees (theta point))]
+    (if (neg? deg)
+      (+ 360 deg)
+      deg)))
+
+(defn vector-diff
+  "Return the vector difference of the second arg subtracted from the first,
+  given 2 Cartesian points.  e.g. (vector-diff [10 10] [1 2]) => [9 8]"
+  [[x1 y1] [x2 y2]]
+  [(- x1 x2) (- y1 y2)])
+
+(defn distance [[x1 y1] [x2 y2]]
+  (Math/sqrt (+ (Math/pow (- x2 x1) 2)
+                (Math/pow (- y2 y1) 2))))
 
 (defn step-turns
   "Determine series of cartesian deltas from list of moves, where each
@@ -78,3 +103,11 @@
   (into {} (for [y (range (count lines))
                  x (range (count (nth lines y)))]
              {[x y] (glyph->val (get-in lines [y x]))})))
+
+(defn transpose-pad
+  "Return a transposed matrix, where input matrix is made square
+  by padding with `pad` at end of input rows as neccesary"
+  [pad matrix]
+  (->> matrix
+       (map (partial coll-util/lazy-pad pad))
+       (apply mapcat list)))
