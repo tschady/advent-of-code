@@ -9,6 +9,7 @@
            org.clojure/data.csv           {:mvn/version "1.0.0"}
            org.clojure/data.json          {:mvn/version "1.0.0"}
            org.clojure/math.combinatorics {:mvn/version "0.1.6"}
+           org.clojure/math.numeric-tower {:mvn/version "0.0.4"}
            org.flatland/ordered           {:mvn/version "1.5.9"}
            org.slf4j/slf4j-nop            {:mvn/version "RELEASE"}
            pandect                        {:mvn/version "0.6.1"}
