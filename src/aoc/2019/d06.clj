@@ -1,7 +1,7 @@
 (ns aoc.2019.d06
   (:require [aoc.file-util :as file-util]
-            [clojure.string :as str]
-            [clojure.set :as set]))
+            [clojure.set :as set]
+            [clojure.string :as str]))
 
 (def input (file-util/read-lines "2019/d06.txt"))
 

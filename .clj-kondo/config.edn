@@ -1,0 +1,3 @@
+{:linters {:missing-docstring {:level :off}
+           :refer-all {:exclude [clojure.test]}
+           :unsorted-required-namespaces {:level :warning}}}

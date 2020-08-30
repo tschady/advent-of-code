@@ -38,7 +38,7 @@
 (defn- overlapping-squares
   "Return subset of fabric with overlapping claims."
   [fabric]
-  (into {} (filter (fn [[k v]] (< 1 (count v))) fabric)))
+  (into {} (filter (fn [[_ v]] (< 1 (count v))) fabric)))
 
 (defn part-1
   "Return number of squares of fabric within 2 or more claims."

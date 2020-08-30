@@ -1,6 +1,6 @@
 (ns aoc.2015.d04
-  (:require [pandect.algo.md5 :refer [md5]]
-            [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [pandect.algo.md5 :refer [md5]]))
 
 (def input "iwrupvqb")
 

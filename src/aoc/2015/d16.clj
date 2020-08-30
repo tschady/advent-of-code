@@ -1,6 +1,6 @@
 (ns aoc.2015.d16
-  (:require [aoc.file-util :as file-util]
-            [aoc.coll-util :as coll-util]
+  (:require [aoc.coll-util :as coll-util]
+            [aoc.file-util :as file-util]
             [clojure.string :as str]))
 
 (def input (file-util/read-lines "2015/d16.txt"))
