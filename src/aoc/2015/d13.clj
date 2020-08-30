@@ -1,7 +1,7 @@
 (ns aoc.2015.d13
   (:require [aoc.file-util :as file-util]
-            [clojure.set :as set]
-            [clojure.math.combinatorics :as combo]))
+            [clojure.math.combinatorics :as combo]
+            [clojure.set :as set]))
 
 (def input (file-util/read-lines "2015/d13.txt"))
 

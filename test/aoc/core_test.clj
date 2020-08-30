@@ -1,3 +1,3 @@
 (ns aoc.core-test
-  (:require [clojure.test :refer :all]
-            [aoc.core :refer :all]))
+  (:require [aoc.core :refer :all]
+            [clojure.test :refer :all]))

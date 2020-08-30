@@ -8,7 +8,7 @@
   "Return the count of words which have exactly `n` repeated letters."
   [freq-map n]
   (->> freq-map
-       (map #(filter (fn [[k v]] (= v n)) %))
+       (map #(filter (fn [[_ v]] (= v n)) %))
        (remove empty?)
        count))
 
