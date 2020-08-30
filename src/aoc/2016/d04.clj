@@ -1,6 +1,6 @@
 (ns aoc.2016.d04
-  (:require [clojure.string :as str]
-            [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [clojure.string :as str]))
 
 (def input (file-util/read-lines "2016/d04.txt"))
 

@@ -1,7 +1,7 @@
 (ns aoc.2016.d01
   (:require [aoc.file-util :as file-util]
-            [aoc.math-util :as math-util]
-            [aoc.grid :as grid]))
+            [aoc.grid :as grid]
+            [aoc.math-util :as math-util]))
 
 (def input (first (file-util/read-csv "2016/d01.txt")))
 
