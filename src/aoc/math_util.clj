@@ -10,3 +10,11 @@
               (reduced [x (conj v idx)])
               (assoc acc x [idx])))
           {} (map-indexed vector coll)))
+
+(defn factors
+  "Return vector of all factors of a given integer `n`"
+  [n]
+  (->> (range 1 (inc (Math/sqrt n)))
+       (filter #(zero? (rem n %)))
+       (mapcat #(vector % (/ n %)))
+       (into (sorted-set))))
