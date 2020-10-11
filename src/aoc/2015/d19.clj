@@ -1,6 +1,5 @@
 (ns aoc.2015.d19
   (:require [aoc.file-util :as file-util]
-            [clojure.string :as str]
             [aoc.string-util :as string-util]))
 
 (def input (file-util/read-lines "2015/d19.txt"))
@@ -34,7 +33,7 @@
         (if-let [new-mol (reduce
                           (fn [_ [replacement target]]
                             (let [idxs (string-util/match-indices target molecule)]
-                              (if (seq idxs)
+                              (when (seq idxs)
                                 (reduced (string-util/substring-replace molecule (first idxs) replacement)))))
                           nil
                           sorted-rules)]

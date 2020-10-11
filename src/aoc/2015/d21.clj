@@ -1,6 +1,6 @@
 (ns aoc.2015.d21
-  (:require [clojure.math.combinatorics :as combo]
-            [aoc.file-util :as file-util]
+  (:require [aoc.file-util :as file-util]
+            [clojure.math.combinatorics :as combo]
             [clojure.string :as str]))
 
 (def input (file-util/read-lines "2015/d21.txt"))
