@@ -1,6 +1,6 @@
 (ns aoc.2015.d20
-  (:require [aoc.math-util :as math-util]
-            [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [aoc.math-util :as math-util]))
 
 (def input (first (file-util/read-values "2015/d20.txt")))
 
