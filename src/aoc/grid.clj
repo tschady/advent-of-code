@@ -111,3 +111,8 @@
   (->> matrix
        (map (partial coll-util/lazy-pad pad))
        (apply mapcat list)))
+
+(defn point->idx
+  "Returns array index for given `[x y]` coordinate."
+  [[x y] x-width]
+  (+ y (* x x-width)))
