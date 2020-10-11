@@ -13,6 +13,6 @@
     1 ["turn on 0,0 through 0,0"]
     2000000 ["toggle 0,0 through 999,999"]))
 
-(deftest ^:slow challenge
+(deftest challenge
   (is (= 543903 (sut/part-1 sut/input)))
   (is (= 14687245 (sut/part-2 sut/input))))
