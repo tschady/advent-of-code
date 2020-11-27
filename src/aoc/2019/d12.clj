@@ -1,6 +1,5 @@
 (ns aoc.2019.d12
   (:require [aoc.file-util :as file-util]
-            [aoc.math-util :as math-util]
             [clojure.math.numeric-tower :as math]))
 
 (def input (file-util/read-lines "2019/d12.txt"))

@@ -25,7 +25,7 @@
         big-bot (apply max-key :r bots)]
     (count (filter (partial within-range? big-bot) bots))))
 
-(defn part-2
+#_(defn part-2
   "Return the manhattan distance from the origin to the closest coordinates
   that are in range of the largest number of nanobots."
   [input]
