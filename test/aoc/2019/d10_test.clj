@@ -38,5 +38,5 @@
     210 test-field))
 
 (deftest challenges
-  (is (= 253 (sut/part-1 sut/input))
-      (= 815 (sut/part-2 sut/input 200))))
+  (is (= 253 (sut/part-1 sut/input)))
+  (is (= 815 (sut/part-2 sut/input 200))))
