@@ -1,10 +1,10 @@
-{:deps    {antq                           {:mvn/version "0.7.4"}
+{:deps    {antq/antq                      {:mvn/version "0.7.4"}
            aysylu/loom                    {:mvn/version "1.0.2"}
            com.rpl/specter                {:mvn/version "1.1.3"}
-           digest                         {:mvn/version "1.4.9"}
+           digest/digest                  {:mvn/version "1.4.9"}
            instaparse/instaparse          {:mvn/version "1.4.10"}
            meander/epsilon                {:mvn/version "0.0.533"}
-           medley                         {:mvn/version "1.3.0"}
+           medley/medley                  {:mvn/version "1.3.0"}
            org.clojure/clojure            {:mvn/version "1.10.1"}
            org.clojure/data.csv           {:mvn/version "1.0.0"}
            org.clojure/data.json          {:mvn/version "1.0.0"}
@@ -12,7 +12,7 @@
            org.clojure/math.numeric-tower {:mvn/version "0.0.4"}
            org.flatland/ordered           {:mvn/version "1.5.9"}
            org.slf4j/slf4j-nop            {:mvn/version "RELEASE"}
-           pandect                        {:mvn/version "0.6.1"}
+           pandect/pandect                {:mvn/version "0.6.1"}
            ubergraph/ubergraph            {:mvn/version "0.8.2"}}
  :paths   ["src" "resources"]
  :aliases {:test      {:extra-paths ["test"]
@@ -22,6 +22,6 @@
                        :main-opts   ["-m" "kaocha.runner"]}
            :outdated  {:extra-deps {antq/antq {:mvn/version "RELEASE"}}
                        :main-opts  ["-m" "antq.core"]}
-           :bench     {:extra-deps {criterium {:mvn/version "0.4.6"}}}
-           :clj-kondo {:extra-deps {clj-kondo {:mvn/version "RELEASE"}}
+           :bench     {:extra-deps {criterium/criterium {:mvn/version "0.4.6"}}}
+           :clj-kondo {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
                        :main-opts  ["-m" "clj-kondo.main"]}}}

@@ -1,8 +1,6 @@
 (ns aoc.2019.d04
   (:require [aoc.string-util :as string-util]
-            [clojure.spec.alpha :as s]
-            [clojure.string :as str]
-            [aoc.math-util :as math-util]))
+            [clojure.spec.alpha :as s]))
 
 (def input-min 402328)
 (def input-max 864247)
