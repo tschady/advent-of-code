@@ -1,7 +1,7 @@
 (ns aoc.2016.d01
-  (:require [aoc.file-util :as file-util]
-            [aoc.grid :as grid]
-            [aoc.math-util :as math-util]))
+  (:require [aoc.coll-util :refer [first-duplicate]]
+            [aoc.file-util :as file-util]
+            [aoc.grid :as grid]))
 
 (def input (first (file-util/read-csv "2016/d01.txt")))
 
@@ -16,5 +16,5 @@
   by walking given input."
   [input]
   (let [locs (grid/turns->path input)
-        dup (first (math-util/first-duplicate locs))]
+        dup (first (first-duplicate locs))]
     (grid/manhattan-dist grid/origin dup)))
