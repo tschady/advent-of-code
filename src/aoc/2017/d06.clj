@@ -1,6 +1,6 @@
 (ns aoc.2017.d06
-  (:require [aoc.file-util :as file-util]
-            [aoc.math-util :refer [first-duplicate]]))
+  (:require [aoc.coll-util :refer [first-duplicate]]
+            [aoc.file-util :as file-util]))
 
 (def input (mapv read-string (first (file-util/read-tsv "2017/d06.txt"))))
 
