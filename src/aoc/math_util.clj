@@ -13,3 +13,9 @@
   "Given a sequence of digits, join them together into one integer."
   [xs]
   (->> xs (map str) str/join read-string))
+
+(defn xor
+  "Returns true if exclusive or satisfied over all inputs, else false."
+  ([a b] (and (or a b)
+              (not (and a b))))
+  ([a b & more] (reduce xor (xor a b) more)))
