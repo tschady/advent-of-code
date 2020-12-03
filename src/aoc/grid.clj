@@ -116,3 +116,8 @@
   "Returns array index for given `[x y]` coordinate."
   [[x y] x-width]
   (+ y (* x x-width)))
+
+(defn wrap-coords
+  "Return the [x y] coords in-bounds of a grid that wraps at `max-x` and `max-y`"
+  [max-x max-y [x y]]
+  [(rem x max-x) (rem y max-y)])
