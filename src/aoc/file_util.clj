@@ -13,6 +13,12 @@
   [path]
   (-> path read-file str/split-lines))
 
+(defn read-chunks
+  "Return file contents as collection of chunks, where chunks are separated by a
+  full blank line."
+  [path]
+  (-> path read-file (str/split #"\n\n")))
+
 (defn read-values
   "Return sequence of numeric values from input file which has numbers on each row.
   Supports negative signs."
