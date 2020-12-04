@@ -18,9 +18,7 @@
 
 ;; this is weird since the first problem is less specific than the second, but seems cleaner
 ;;  than turning off some specs
-(s/def ::passport-keys #(->> [:eyr :byr :hcl :ecl :hgt :iyr :pid]
-                             (map (partial contains? %))
-                             (every? true?)))
+(s/def ::passport-keys #(every? (partial contains? %) [:eyr :byr :hcl :ecl :hgt :iyr :pid]))
 
 (s/def ::passport (s/keys :req-un [::eyr ::byr ::hcl ::ecl ::hgt ::iyr ::pid]
                           :opt-un [::cid]))
