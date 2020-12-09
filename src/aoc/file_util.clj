@@ -23,7 +23,7 @@
   "Return sequence of numeric values from input file which has numbers on each row.
   Supports negative signs."
   [path]
-  (->> path read-lines (map #(Integer/parseInt %))))
+  (->> path read-lines (map #(Long/parseLong %))))
 
 (defn read-tsv
   "Return a list of rows, with each row as a list of values from the TSV."
