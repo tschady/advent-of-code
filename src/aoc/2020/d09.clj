@@ -13,14 +13,14 @@
   "Returns the sum of the first and last elements of the contiguous range
   subset of `xs` that sums to `target`."
   [xs target]
-  (loop [start 0 end 1]
+  (loop [start 0
+         end 1
+         sum (reduce + (subvec xs start end))]
     (when (<= 0 start end (count xs))
-      (let [candidate (subvec xs start end)
-            sum (reduce + candidate)]
-        (cond
-          (= sum target) (+ (apply min candidate) (apply max candidate))
-          (> sum target) (recur (inc start) end)
-          (< sum target) (recur start (inc end)))))))
+      (cond
+        (= sum target) (apply + (apply (juxt min max) (subvec xs start end)))
+        (> sum target) (recur (inc start) end (- sum (nth xs start)))
+        (< sum target) (recur start (inc end) (+ sum (nth xs end)))))))
 
 (defn first-invalid
   "Return the first number of `xs` that is not the sum of two addends from the previous
