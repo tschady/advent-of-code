@@ -36,3 +36,8 @@
               (reduced [x (conj v idx)])
               (assoc acc x [idx])))
           {} (map-indexed vector coll)))
+
+(defn intervals
+  "Return the seq of intervals between each successive element of coll."
+  [xs]
+  (map - (rest xs) xs))
