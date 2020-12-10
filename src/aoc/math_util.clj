@@ -19,3 +19,24 @@
   ([a b] (and (or a b)
               (not (and a b))))
   ([a b & more] (reduce xor (xor a b) more)))
+
+(defn change-combos
+  "Return all possible combinations from the set of `denoms` that exactly
+  sum to `amt`."
+  ([amt denoms] (change-combos amt denoms [[]]))
+  ([amt denoms acc]
+   (cond (zero? amt) acc
+         (or (neg? amt) (empty? denoms)) (pop acc)
+         :else (concat (change-combos amt (rest denoms) acc)
+                       (change-combos (- amt (first denoms))
+                                      (rest denoms)
+                                      (update acc (dec (count acc)) conj (first denoms)))))))
+
+(defn change-permutation-count
+  "Return the count of all possible permutations from the set of `denoms`
+  that exactly sum to `amt`."
+  [amt denoms]
+  (cond (= amt 0) 1
+        (or (< amt 0) (empty? denoms)) 0
+        :else (+ (change-permutation-count amt (rest denoms))
+                 (change-permutation-count (- amt (first denoms)) denoms))))
