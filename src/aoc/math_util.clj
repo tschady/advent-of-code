@@ -32,6 +32,51 @@
               (not (and a b))))
   ([a b & more] (reduce xor (xor a b) more)))
 
+(defn extended-gcd
+  "The extended Euclidean algorithm--using Clojure code from RosettaCode for Extended Eucliean
+  (see http://en.wikipedia.orwiki/Extended_Euclidean_algorithm)
+  Returns a list containing the GCD and the Bézout coefficients
+  corresponding to the inputs with the result: gcd followed by bezout coefficients "
+  [a b]
+  (cond (zero? a) [(Math/abs b) 0 1]
+        (zero? b) [(Math/abs a) 1 0]
+        :else (loop [s 0, s0 1
+                     t 1, t0 0
+                     r (Math/abs b)
+                     r0 (Math/abs a)]
+                (if (zero? r)
+                  [r0 s0 t0]
+                  (let [q (quot r0 r)]
+                    (recur (- s0 (* q s)) s
+                           (- t0 (* q t)) t
+                           (- r0 (* q r)) r))))))
+
+(defn mul-mod-inv
+  "Get multiplicative modular inverse using extended Euclid's formula.
+    gcd followed by Bezout coefficients. We want the 1st coefficients
+   (i.e. second of extend-gcd result).  We compute mod base so result
+    is between 0..(base-1).
+  Return `nil` if `a` and `b` are not co-prime."
+  [a b]
+  (let [b (if (neg? b) (- b) b)
+        a (if (neg? a) (- b (mod (- a) b)) a)
+        egcd (extended-gcd a b)]
+      (when (= (first egcd) 1); must be co-prime
+        (mod (second egcd) b))))
+
+(defn gcd
+  "Return the Greatest Common Denominator of integers `a` and `b` using Euclid's formula."
+  [a b]
+  (first (extended-gcd a b)))
+
+(defn extended-euclid
+  ""
+  [a b]
+  (cond (zero? a) [b 0 1]
+        (zero? b) [a 1 0])
+  )
+
+
 (defn change-combos
   "Return all possible combinations from the set of `denoms` that exactly
   sum to `amt`."
