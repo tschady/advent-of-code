@@ -9,10 +9,15 @@
   [move]
   ((juxt first #(Integer/parseInt (str/join (rest %)))) (str/trim move)))
 
-(def dir->delta {\U [0 1]
-                 \D [0 -1]
-                 \L [-1 0]
-                 \R [1 0]})
+(def dir->delta {\U [ 0  1]
+                 \D [ 0 -1]
+                 \L [-1  0]
+                 \R [ 1  0]
+
+                 \N [ 0  1]
+                 \E [ 1  0]
+                 \W [-1  0]
+                 \S [ 0 -1]})
 
 (def origin [0 0])
 
@@ -65,6 +70,10 @@
   move is given by it's direction (U,D,L,R), and magnitude."
   [moves]
   (mapcat (fn [[dir magnitude]] (repeat magnitude (dir->delta dir))) moves))
+
+(defn move->delta
+  [[dir mag]]
+  (mapv #(* mag %) (dir->delta dir)))
 
 (defn walk
   "Return every location reached by applying steps given by deltas."
