@@ -7,6 +7,12 @@
   [s]
   (map read-string (re-seq #"-?\d+" s)))
 
+(defn ints-pos
+  "Return a collection of positive integers found in a string.  Useful for strings with
+  hyphens instead of negative signs."
+  [s]
+  (map read-string (re-seq #"\d+" s)))
+
 (defn explode-digits
   "Turn input string of digits into sequence of numbers they represent."
   [s]
