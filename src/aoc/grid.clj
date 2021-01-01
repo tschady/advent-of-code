@@ -98,10 +98,35 @@
                       [-1  0] ,,,,,, [1  0]
                       [-1  1] [0  1] [1  1]])
 
+(def neighbor-deltas-3d
+  (for [x [-1 0 1]
+        y [-1 0 1]
+        z [-1 0 1]
+        :when (not= 0 x y z)]
+    [x y z]))
+
+(def neighbor-deltas-4d
+  (for [x [-1 0 1]
+        y [-1 0 1]
+        z [-1 0 1]
+        w [-1 0 1]
+        :when (not= 0 x y z w)]
+    [x y z w]))
+
 (defn neighbor-coords
-  "Return the 8 cartesian coord tuples surrounding input coord."
+  "Return the 8 cartesian coord tuples surrounding input coord in 2-d space."
   [[x y]]
   (map (fn [[dx dy]] [(+ x dx) (+ y dy)]) neighbor-deltas))
+
+(defn neighbor-coords-3d
+  "Return the 26 cartesian coord tuples surrounding input coord in 3-d space."
+  [[x y z]]
+  (map (fn [[dx dy dz]] [(+ x dx) (+ y dy) (+ z dz)]) neighbor-deltas-3d))
+
+(defn neighbor-coords-4d
+  "Return the 8 cartesian coord tuples surrounding input coord in 4-d space."
+  [[x y z w]]
+  (map (fn [[dx dy dz dw]] [(+ x dx) (+ y dy) (+ z dz) (+ w dw)]) neighbor-deltas-4d))
 
 (defn neighbors
   "Return the contents of the 8 surrounding neighbors in the grid.
