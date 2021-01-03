@@ -2,8 +2,7 @@
   (:require [aoc.file-util :as file-util]
             [aoc.grid :as grid]
             [aoc.hex :as hex]
-            [clojure.set :as set]
-            [medley.core :refer [filter-vals]]))
+            [aoc.conway-life :as life]))
 
 (def input (file-util/read-lines "2020/d24.txt"))
 
@@ -24,22 +23,9 @@
                #{})
        (into [])))
 
-(defn next-gen [actives]
-  (let [half (reduce (fn [acc active-loc]
-                       (let [neighbors          (set (hex/neighbors active-loc))
-                             active-neighbors   (set/intersection neighbors (set actives))
-                             inactive-neighbors (set/difference neighbors active-neighbors)]
-                         (-> (if (<= 1 (count active-neighbors) 2)
-                               (update-in acc [:active] conj active-loc)
-                               acc)
-                             (update-in [:inactive] #(merge-with + % (frequencies inactive-neighbors))))))
-                     {}
-                     actives)]
-    (concat (:active half) (keys (filter-vals #(= 2 %) (:inactive half))))))
-
 (defn part-1 [input] (count (seed input)))
 
 (defn part-2 [input]
-  (-> (iterate next-gen (seed input))
+  (-> (iterate (partial life/next-gen hex/neighbors #(<= 1 % 2) #(= 2 %)) (seed input))
       (nth 100)
       count))
