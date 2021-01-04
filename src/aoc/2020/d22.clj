@@ -22,13 +22,6 @@ NL = '\n'
 
 (defn subgame-deck [p] (subvec p 1 (inc (first p))))
 
-(defn p1-wins-recursive? [p1 p2]
-  (if (play-subgame? p1 p2)
-    (= :p1 (:winner (winning-deck (subgame-deck p1)
-                                  (subgame-deck p2)
-                                  p1-wins-recursive?)))
-    (p1-highcard? p1 p2)))
-
 (defn winning-deck [p1 p2 p1-wins?]
   (loop [p1   p1
          p2   p2
@@ -49,6 +42,13 @@ NL = '\n'
         (recur (subvec p1 1)
                (conj (subvec p2 1) (first p2) (first p1))
                (conj seen hash))))))
+
+(defn p1-wins-recursive? [p1 p2]
+  (if (play-subgame? p1 p2)
+    (= :p1 (:winner (winning-deck (subgame-deck p1)
+                                  (subgame-deck p2)
+                                  p1-wins-recursive?)))
+    (p1-highcard? p1 p2)))
 
 (defn deck-score [deck]
   (->> (reverse deck)
