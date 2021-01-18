@@ -18,18 +18,18 @@
 
 (def cmd->fn (memoize *cmd->fn))
 
-(defn run
-  ([prog] (run prog {:ptr 0 "a" 0 "b" 0 "c" 0 "d" 0}))
-  ([prog memory]
-   (loop [mem (transient memory)]
-     (if-let [cmd (get prog (get mem :ptr))]
-       (recur (-> mem
-                  ((cmd->fn cmd))
-                  (assoc! :ptr (inc (get mem :ptr)))))
-       (persistent! mem)))))
+(defn run [prog memory]
+  (loop [mem (transient memory)]
+    (if-let [cmd (get prog (get mem :ptr))]
+      (recur (-> mem
+                 ((cmd->fn cmd))
+                 (assoc! :ptr (inc (get mem :ptr)))))
+      (persistent! mem))))
 
-(defn part-1 [input] (-> input run (get "a")))
+(def init-state {:ptr 0 "a" 0 "b" 0 "c" 0 "d" 0})
+
+(defn part-1 [input] (-> input (run init-state) (get "a")))
 
 (defn part-2 [input] (-> input
-                         (run {:ptr 0 "a" 0 "b" 0 "c" 1 "d" 0})
+                         (run (assoc init-state "c" 1))
                          (get "a")))
