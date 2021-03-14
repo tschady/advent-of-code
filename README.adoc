@@ -1,0 +1,29 @@
+# advent-of-code
+
+image:https://circleci.com/gh/tschady/advent-of-code.svg?style=svg["CircleCI", https://circleci.com/gh/tschady/advent-of-code]
+image:https://codecov.io/gh/tschady/advent-of-code/branch/master/graph/badge.svg["codecov", https://codecov.io/gh/tschady/advent-of-code]
+
+My solutions to the https://adventofcode.com[Advent of Code] challenge
+over multiple years.
+
+*Goals*: elegance -> performance -> experimentation
+
+---
+
+.2015
+image:https://github.com/tschady/advent-of-code/blob/master/doc/2015.gif["Complete 2015"]
+
+.2016
+WIP
+
+.2017
+WIP
+
+.2018
+WIP
+
+.2019
+WIP
+
+.2020
+WIP
