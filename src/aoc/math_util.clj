@@ -40,3 +40,12 @@
         (or (< amt 0) (empty? denoms)) 0
         :else (+ (change-permutation-count amt (rest denoms))
                  (change-permutation-count (- amt (first denoms)) denoms))))
+
+(defn count-on-bits
+  "Return the number of '1' bits in the binary representation of integer `n`"
+  [n]
+  ;; Use Brian Kernighan's formula
+  (loop [n n, c 0]
+    (if (zero? n)
+      c
+      (recur (bit-and n (dec n)) (inc c)))))
