@@ -118,6 +118,11 @@
   [[x y]]
   (map (fn [[dx dy]] [(+ x dx) (+ y dy)]) neighbor-deltas))
 
+(defn neighbor-coords-news
+  "Return the 4 cartesian coord tuples in the surrounding cardinal directions."
+  [[x y]]
+  [[x (inc y)] [(inc x) y] [(dec x) y] [x (dec y)]])
+
 (defn neighbor-coords-3d
   "Return the 26 cartesian coord tuples surrounding input coord in 3-d space."
   [[x y z]]
@@ -144,6 +149,19 @@
   (into {} (for [y (range (count lines))
                  x (range (count (nth lines y)))]
              {[x y] (glyph->val (get-in lines [y x]))})))
+
+(defn print-grid-to-array
+  "Return ASCII representation of grid, given hashmap of coords to glyphs."
+  [grid]
+  (let [min-x (apply min (map first (keys grid)))
+        max-x (apply max (map first (keys grid)))
+        min-y (apply min (map second (keys grid)))
+        max-y (apply max (map second (keys grid)))]
+    (->> (for [y (range min-y (inc max-y))
+               x (range min-x (inc max-x))]
+           (get grid [x y] \space))
+         (partition (inc max-x))
+         (map (partial apply str)))))
 
 (defn transpose-pad
   "Return a transposed matrix, where input matrix is made square
