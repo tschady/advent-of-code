@@ -180,3 +180,20 @@
   "Return the [x y] coords in-bounds of a grid that wraps at `max-x` and `max-y`"
   [max-x max-y [x y]]
   [(rem x max-x) (rem y max-y)])
+
+(defn connected-adjacency-map
+  "Returns a node adjacency map where nodes are `grid` coords, and edges
+  exist if both nodes are 'open', where openness is determined by `open-fn?`.
+  Map entries are in form {[0 0] '([0 1] [1 0])}, suitable for graph library constructors.
+  Note: only nodes connected via `neighbor-fn` from the `origin` node are present."
+  [open-fn? neighbor-fn origin]
+  (loop [nodes   '([0 0])
+         seen    #{}
+         adj-map {}]
+    (if (empty? nodes)
+      adj-map
+      (let [loc            (first nodes)
+            open-neighbors (filter open-fn? (neighbor-fn loc))]
+        (recur (into (rest nodes) (remove seen open-neighbors))
+               (conj seen loc)
+               (into adj-map (hash-map loc open-neighbors)))))))
