@@ -1,16 +1,16 @@
 (ns aoc.2020.d24
   (:require [aoc.file-util :as file-util]
-            [aoc.grid :as grid]
             [aoc.hex :as hex]
-            [aoc.conway-life :as life]))
+            [aoc.conway-life :as life]
+            [aoc.math-util :as math-util]))
 
 (def input (file-util/read-lines "2020/d24.txt"))
 
 (defn steps->coord [s]
   (->> (re-seq #"(se|sw|nw|ne|w|e)" s)
        (map first)
-       (reduce (fn [loc step] (grid/vector-add loc ((hex/delta loc) step)))
-               grid/origin)))
+       (map (partial hex/delta :pointy-top))
+       (math-util/vector-math +)))
 
 (defn seed
   "Returns initial set of black tile coordinates from given instructions."
@@ -26,6 +26,10 @@
 (defn part-1 [input] (count (seed input)))
 
 (defn part-2 [input]
-  (-> (iterate (partial life/next-gen hex/neighbors #(<= 1 % 2) #(= 2 %)) (seed input))
+  (-> (partial life/next-gen
+               (partial hex/neighbors :pointy-top)
+               #(<= 1 % 2)
+               #(= 2 %))
+      (iterate (seed input))
       (nth 100)
       count))
