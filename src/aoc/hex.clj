@@ -26,3 +26,20 @@
 
 (defn neighbors [orientation loc]
   (map #(mapv + loc %) (neighbor-deltas orientation)))
+
+(defn distance
+  ([a] (distance a [0 0 0]))
+  ([a b] (/ (reduce + (map (comp #(Math/abs %) -) a b)) 2)))
+
+(defn walk
+  "Return the hex delta (in [q r s] coords) of applying cardinal direction `steps`"
+  [orientation steps]
+  (->> steps
+       (map (partial delta orientation))
+       (math-util/vector-math +)))
+
+(defn step
+  "Return location resulting from walking 1 step from `loc` in direction `dir`.
+  Useful as a reduction function, i.e. (partial step :flat-top)"
+  [orientation loc dir]
+  (mapv + loc (delta orientation dir)))
