@@ -1,37 +1,28 @@
 (ns aoc.hex
-  (:require [aoc.grid :as grid]))
+  (:require [aoc.grid :as grid]
+            [aoc.math-util :as math-util]))
 
-;; good resource: https://www.redblobgames.com/grids/hexagons/
-;;   useful to complete the alternate coordinate schemes besides
-;;   `:odd-r`
+;; [resource on hex-coord systems and functions](https://www.redblobgames.com/grids/hexagons/)
 
 (def dir->delta
-  {:odd-r {:even {"w"  [-1 0]
-                  "e"  [1 0]
-                  "nw" [-1 -1]
-                  "ne" [0 -1]
-                  "sw" [-1 1]
-                  "se" [0 1]}
-           :odd  {"w"  [-1 0]
-                  "e"  [1 0]
-                  "nw" [0 -1]
-                  "ne" [1 -1]
-                  "sw" [0 1]
-                  "se" [1 1]}}})
+  {:pointy-top {"w"  [-1 0 1]
+                "e"  [1 0 -1]
+                "nw" [0 -1 1]
+                "ne" [1 -1 0]
+                "sw" [-1 1 0]
+                "se" [0 1 -1]}
+   :flat-top   {"n"  [0 -1 1]
+                "s"  [0 1 -1]
+                "nw" [-1 0 1]
+                "ne" [1 -1 0]
+                "sw" [-1 1 0]
+                "se" [1 0 -1]}})
 
-;; todo: using `x` or `y` for evenness depends on `-r` or `-q` coord scheme.
-;;   update if we ever use `-q`
-(defn delta
-  ([loc] (delta loc :odd-r))
-  ([[x y] system]
-   (let [evenness (if (even? y) :even :odd)]
-     (get-in dir->delta [system evenness]))))
+(defn delta [orientation dir]
+  (get-in dir->delta [orientation dir]))
 
-(defn neighbor-deltas
-  ([loc] (neighbor-deltas loc :odd-r))
-  ([loc system] (vals (delta loc system))))
+(defn neighbor-deltas [orientation]
+  (vals (get dir->delta orientation)))
 
-(defn neighbors
-  ([loc] (neighbors loc :odd-r))
-  ([loc system] (map (partial grid/vector-add loc) (neighbor-deltas loc system))))
-
+(defn neighbors [orientation loc]
+  (map #(mapv + loc %) (neighbor-deltas orientation)))
