@@ -9,6 +9,12 @@
        (mapcat #(vector % (/ n %)))
        (into (sorted-set))))
 
+(defn vector-math
+  "Return a result vector from mapping `op` across collection of N-dimensional input vectors.
+  E.g. `(vector-math + [[1 1] [2 4]]) => [3 5]`"
+  [op coll]
+  (apply (partial mapv op) coll))
+
 (defn digits->num
   "Given a sequence of digits, join them together into one integer."
   [xs]
