@@ -12,7 +12,11 @@
       (>= 0 target) (recur max-n max-n snippets)
       :else target)))
 
-(defn make-ring [input size]
+(defn make-ring
+  "Return a mutable integer array (for performance reasons) with each index representing
+  a cup's label, and the value being the next cup in line, resembling a hashmap of linked
+  list nodes. Index 0 points to the 'current' cup."
+  [input size]
   (let [ring (int-array (inc size))]
     (->> [[0], input, (range 10 (inc size)), (vector (first input))]
          (into [] cat)
