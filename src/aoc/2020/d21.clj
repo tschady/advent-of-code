@@ -33,7 +33,7 @@
          results (zipmap (keys db) (repeatedly lvar))]
      (run* [q]
        (distincto (vals results))
-       (and* (map (fn [[k v]] (membero (get results k) (vec v))) db))
+       (everyg (fn [[k v]] (membero (get results k) (vec v))) db)
        (== q results)))))
 
 (defn part-1 [input]
