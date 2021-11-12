@@ -19,6 +19,16 @@
                  \W [-1  0]
                  \S [ 0 -1]})
 
+(defn flat->coord
+  "Return the [x y] cartesian coordinates of index `i` in a flat array."
+  [i size]
+  [(rem i size) (quot i size)])
+
+(defn coord->flat
+  "Return the flat array index of a cartesian coordinate [x y]."
+  [[x y] size]
+  (+ x (* y size)))
+
 (def origin [0 0])
 
 (defn theta

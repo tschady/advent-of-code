@@ -5,6 +5,28 @@
   [m]
   (apply mapv vector m))
 
+(defn rot-r
+  "Return the matrix resulting from a 90 degree rotation to the right."
+  [m]
+  (map reverse (transpose m)))
+
+(defn flip-x
+  ""
+  [m]
+  (map reverse m))
+
+(defn flip-y
+  ""
+  [m]
+  (-> m transpose flip-x transpose))
+
+(defn corner-idxs
+  ""
+  [size]
+  (for [y [0 (dec size)]
+        x [0 (dec size)]]
+    (+ x (* size y))))
+
 (defn rotate-seq-left
   "Return the sequence `xs` rotated to the left by `n` elements"
   [n xs]
