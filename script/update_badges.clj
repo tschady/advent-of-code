@@ -16,7 +16,7 @@
 (def badge-style
   {"color"      "00cc00" ; right side
    "labelColor" "0a0e25" ; left side
-   "style"      "for-the-badge"
+   "style"      "flat"
    "logo"       (str "data:image/png;base64," (slurp "img/aoc-favicon-base64"))})
 
 (defn get-stars
