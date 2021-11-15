@@ -21,7 +21,7 @@
   (when-let [match3 (first-triple (hasher i))]
     (reduce (fn [_ i]
               (let [match5s (quintuples (hasher i))]
-                (if (contains? match5s match3)
+                (when (contains? match5s match3)
                   (reduced true))))
             nil
             (range (inc i) (+ i 1001)))))

@@ -1,7 +1,7 @@
 (ns aoc.2020.d19
-  (:require [instaparse.core :as insta]
-            [aoc.file-util :as file-util]
-            [clojure.string :as str]))
+  (:require [aoc.file-util :as file-util]
+            [clojure.string :as str]
+            [instaparse.core :as insta]))
 
 (def input (file-util/read-chunks "2020/d19.txt"))
 

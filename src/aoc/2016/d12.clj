@@ -1,6 +1,5 @@
 (ns aoc.2016.d12
   (:require [aoc.file-util :as file-util]
-            [com.rpl.specter :as specter :refer [transform setval]]
             [clojure.string :as str]))
 
 (def input (file-util/read-lines "2016/d12.txt"))

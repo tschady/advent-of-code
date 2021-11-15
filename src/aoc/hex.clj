@@ -1,6 +1,5 @@
 (ns aoc.hex
-  (:require [aoc.grid :as grid]
-            [aoc.math-util :as math-util]))
+  (:require [aoc.math-util :as math-util]))
 
 ;; [resource on hex-coord systems and functions](https://www.redblobgames.com/grids/hexagons/)
 

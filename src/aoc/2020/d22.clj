@@ -1,6 +1,6 @@
 (ns aoc.2020.d22
-  (:require [instaparse.core :as insta]
-            [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [instaparse.core :as insta]))
 
 (def input (file-util/read-file "2020/d22.txt"))
 

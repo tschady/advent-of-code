@@ -1,7 +1,7 @@
 (ns aoc.2020.d07
   (:require [aoc.file-util :as file-util]
-            [loom.graph :as loom :refer [successors weight transpose nodes]]
-            [loom.derived :refer [subgraph-reachable-from]]))
+            [loom.derived :refer [subgraph-reachable-from]]
+            [loom.graph :as loom :refer [successors weight transpose nodes]]))
 
 (def input (file-util/read-lines "2020/d07.txt"))
 

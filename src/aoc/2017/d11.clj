@@ -1,7 +1,6 @@
 (ns aoc.2017.d11
   (:require [aoc.file-util :as file-util]
-            [aoc.hex :as hex]
-            [aoc.math-util :as math-util]))
+            [aoc.hex :as hex]))
 
 (def input (first (file-util/read-csv "2017/d11.txt")))
 

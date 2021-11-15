@@ -1,9 +1,9 @@
 (ns aoc.2020.d21
   (:refer-clojure :exclude [==])
   (:require [aoc.file-util :as file-util]
-            [clojure.core.logic :as logic :refer :all]
-            [clojure.string :as str]
-            [clojure.set :as set]))
+            [clojure.core.logic :refer :all]
+            [clojure.set :as set]
+            [clojure.string :as str]))
 
 (def input (file-util/read-lines "2020/d21.txt"))
 
