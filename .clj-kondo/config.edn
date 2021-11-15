@@ -1,3 +1,8 @@
-{:linters {:missing-docstring {:level :off}
-           :refer-all {:exclude [clojure.test]}
-           :unsorted-required-namespaces {:level :warning}}}
+{:linters
+ {:missing-docstring            {:level :off}
+  :refer-all                    {:exclude [clojure.test clojure.core.logic]}
+  :unresolved-symbol            {:exclude [(clojure.core.logic/run*)
+                                           (clojure.core.logic/run)
+                                           lvar]}
+  :unsorted-required-namespaces {:level :warning}
+  :unused-binding               {:exclude-destructured-as true}}}

@@ -1,7 +1,8 @@
 (ns aoc.2020.d04
   (:require [aoc.file-util :as file-util]
             [clojure.spec.alpha :as s]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [clojure.walk :as walk]))
 
 (def input (file-util/read-chunks "2020/d04.txt"))
 
@@ -27,7 +28,7 @@
   (->> (str/split raw #"[\s\n]")
        (map #(str/split % #":"))
        (into {})
-       clojure.walk/keywordize-keys))
+       walk/keywordize-keys))
 
 (defn solve [input spec] (->> input
                               (map parse-passport)

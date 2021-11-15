@@ -1,7 +1,7 @@
 (ns aoc.2020.d11
-  (:require [aoc.file-util :as file-util]
-            [aoc.grid :as grid]
-            [aoc.coll-util :as coll-util]))
+  (:require [aoc.coll-util :as coll-util]
+            [aoc.file-util :as file-util]
+            [aoc.grid :as grid]))
 
 (def input (file-util/read-lines "2020/d11.txt"))
 

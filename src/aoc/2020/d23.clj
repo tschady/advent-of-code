@@ -1,6 +1,6 @@
 (ns aoc.2020.d23
-  (:require [aoc.string-util :as string-util]
-            [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [aoc.string-util :as string-util]))
 
 (def input (vec (string-util/explode-digits (file-util/read-file "2020/d23.txt"))))
 

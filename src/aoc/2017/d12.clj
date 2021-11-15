@@ -1,14 +1,14 @@
 (ns aoc.2017.d12
   (:require [aoc.file-util :as file-util]
             [clojure.string :as str]
-            [ubergraph.core :as uber]
-            [ubergraph.alg :as alg]))
+            [ubergraph.alg :as alg]
+            [ubergraph.core :as uber]))
 
 (def input (file-util/read-lines "2017/d12.txt"))
 
 (defn parse-line [s] (read-string (str "{" (str/replace s #"<->" "[") "]}")))
 
-(defn make-graph [lines] (uber/graph (apply merge (map parse-line input))))
+(defn make-graph [lines] (uber/graph (apply merge (map parse-line lines))))
 
 (defn find-groups [graph] (alg/connected-components graph))
 

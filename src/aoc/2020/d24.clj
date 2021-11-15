@@ -1,7 +1,7 @@
 (ns aoc.2020.d24
-  (:require [aoc.file-util :as file-util]
+  (:require [aoc.conway-life :as life]
+            [aoc.file-util :as file-util]
             [aoc.hex :as hex]
-            [aoc.conway-life :as life]
             [aoc.math-util :as math-util]))
 
 (def input (file-util/read-lines "2020/d24.txt"))

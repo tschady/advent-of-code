@@ -8,7 +8,7 @@
   "Returns the product of the `n` numbers from set of `input` that sum to `target-sum`"
   [input target-sum n]
   (->> (combo/combinations input n)
-       (some #(if (= target-sum (apply + %)) %))
+       (some #(when (= target-sum (apply + %)) %))
        (reduce *)))
 
 (defn part-1 [input] (solve input 2020 2))
