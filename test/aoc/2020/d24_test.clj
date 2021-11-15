@@ -2,6 +2,6 @@
   (:require [aoc.2020.d24 :as sut]
             [clojure.test :refer :all]))
 
-(deftest challenges
+(deftest ^:slow challenges
   (is (= 420 (sut/part-1 sut/input)))
   (is (= 4206 (sut/part-2 sut/input))))

@@ -11,6 +11,6 @@
 (deftest fill-disk
   (is (= (seq "10000011110010000111") (sut/fill-disk 20 "10000"))))
 
-(deftest challenges
+(deftest ^:slow challenges
   (is (= "10010010110011010" (sut/solve sut/disk-p1 sut/input)))
   (is (= "01010100101011100" (sut/solve sut/disk-p2 sut/input))))
