@@ -1,1 +1,13 @@
-{:paths ["resources" "script"]}
+{:paths ["resources" "script"]
+ :tasks {badges   {:doc  "Updates README badges with latest puzzle completion stats."
+                   :task (shell "bb script/update_badges.clj")}
+         clean    {:doc  "Clean all temp build files"
+                   :task (shell "rm -rf .cpcache target")}
+         lint     {:doc  "Run clj-kondo over all src/test."
+                   :task (shell "clj-kondo --parallel --lint src:test")}
+         outdated {:doc  "Find outdated library versions, and selectively upgrade."
+                   :task (clojure "-M:outdated --upgrade")}
+         test     {:doc  "Run test suite, skipping those with 'slow' metadata."
+                   :task (clojure "-M:test --skip-meta :slow")}
+         test-all {:doc "Run all tests."
+                   :task (clojure "-M:test")}}}
