@@ -2,11 +2,18 @@
 {:tests [{:id :unit
           :source-paths ["src"]
           :test-paths ["test"]
-          :ns-patterns ["-test$"]}]
+          :ns-patterns ["-test$"]}
+         {:id :y2020 :test-paths ["test/aoc/2020"]}
+         {:id :y2019 :test-paths ["test/aoc/2019"]}
+         {:id :y2018 :test-paths ["test/aoc/2018"]}
+         {:id :y2017 :test-paths ["test/aoc/2017"]}
+         {:id :y2016 :test-paths ["test/aoc/2016"]}
+         {:id :y2015 :test-paths ["test/aoc/2015"]}]
  :plugins [:kaocha.plugin/print-invocations
            :kaocha.plugin/profiling]
  :capture-output? true
  :color? true
  :kaocha.plugin.profiling/count 10
  :kaocha.plugin.profiling/profiling? true
- :reporter kaocha.report/documentation}
+ ;; :reporter kaocha.report/documentation
+ :reporter kaocha.report/dots}
