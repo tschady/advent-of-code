@@ -1,17 +1,16 @@
 (ns aoc.2015.d12
-  (:require [aoc.file-util :as file-util]
-            [clojure.data.json :as json]
-            [clojure.edn :as edn]
-            [clojure.walk :refer [prewalk]]))
+  (:require
+   [aoc.file-util :as file-util]
+   [aoc.string-util :as string-util]
+   [clojure.data.json :as json]
+   [clojure.walk :refer [prewalk]]))
 
 (def input (file-util/read-file "2015/d12.txt"))
 
 (defn part-1
   "Return the sum of all digits from the input string."
   [s]
-  (->> (re-seq #"-?\d+" s)
-       (map edn/read-string)
-       (reduce + 0)))
+  (reduce + 0 (string-util/ints s)))
 
 (defn part-2
   "Return the sum of all digits from the input string, except those who

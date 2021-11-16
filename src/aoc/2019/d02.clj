@@ -1,8 +1,8 @@
 (ns aoc.2019.d02
   (:require [aoc.file-util :as file-util]
-            [clojure.string :as str]))
+            [aoc.string-util :as string-util]))
 
-(def input (mapv read-string (str/split (file-util/read-file "2019/d02.txt") #",")))
+(def input (vec (string-util/ints (file-util/read-file "2019/d02.txt"))))
 
 (def opcodes {1 +, 2 *, 99 :terminate})
 

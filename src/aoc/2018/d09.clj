@@ -1,16 +1,13 @@
 (ns aoc.2018.d09
-  (:require [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [aoc.string-util :as string-util]))
 
 (def input (file-util/read-file "2018/d09.txt"))
-
-(def ^:private game-pattern #"(\d+) players; last marble is worth (\d+) points")
 
 (defn- make-game
   "Create an initial game data structure from descriptive string."
   [game-str]
-  (let [matches (re-matches game-pattern game-str)
-        num-players (read-string (nth matches 1))
-        max-turns (read-string (nth matches 2))]
+  (let [[num-players max-turns] (string-util/ints game-str)]
     {:num-players num-players
      :max-turns max-turns
      :player 0

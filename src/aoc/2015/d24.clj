@@ -2,7 +2,7 @@
   (:require [aoc.file-util :as file-util]
             [clojure.math.combinatorics :as combo]))
 
-(def input (file-util/read-values "2015/d24.txt"))
+(def input (file-util/read-ints "2015/d24.txt"))
 
 (defn qe-score [pkgs] (reduce * 1 pkgs))
 

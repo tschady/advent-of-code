@@ -2,7 +2,7 @@
   (:require [aoc.file-util :as file-util]
             [clojure.math.combinatorics :as combo]))
 
-(def input (vec (file-util/read-values "2020/d09.txt")))
+(def input (file-util/read-ints "2020/d09.txt"))
 
 (defn valid?
   "Returns true if there are any two values from `window` that sum to `n`"

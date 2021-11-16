@@ -3,7 +3,7 @@
             [aoc.file-util :as file-util]
             [clojure.math.combinatorics :as combo]))
 
-(def input (file-util/read-values "2020/d10.txt"))
+(def input (file-util/read-ints "2020/d10.txt"))
 
 (defn joltage-intervals
   "Return the collection of intervals between each successive adapter,

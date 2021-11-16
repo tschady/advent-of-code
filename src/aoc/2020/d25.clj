@@ -1,7 +1,7 @@
 (ns aoc.2020.d25
   (:require [aoc.file-util :as file-util]))
 
-(def input (file-util/read-values "2020/d25.txt"))
+(def input (file-util/read-ints "2020/d25.txt"))
 
 (defn xform-step [subj n] (rem (* subj n) 20201227))
 

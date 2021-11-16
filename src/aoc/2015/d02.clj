@@ -1,13 +1,8 @@
 (ns aoc.2015.d02
-  (:require [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [aoc.string-util :as string-util]))
 
 (def input (file-util/read-lines "2015/d02.txt"))
-
-(defn- parse-input
-  "Return vector 3-tuple of the dimensions given by input string.
-  e.g. '1x2x3' => [1 2 3]"
-  [s]
-  (mapv read-string (re-seq #"\d+" s)))
 
 (defn paper-needed
   "Return paper area required to wrap box in sq. ft.
@@ -31,7 +26,7 @@
   "Return total area of paper required to wrap all input gifts."
   [gifts]
   (->> gifts
-       (map parse-input)
+       (map string-util/ints)
        (map paper-needed)
        (reduce + 0)))
 
@@ -39,6 +34,6 @@
   "Return length of ribbon required to wrap all input gifts."
   [gifts]
   (->> gifts
-       (map parse-input)
+       (map string-util/ints)
        (map ribbon-needed)
        (reduce + 0)))

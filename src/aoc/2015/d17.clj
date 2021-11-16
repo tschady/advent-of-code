@@ -2,7 +2,7 @@
   (:require [aoc.file-util :as file-util]
             [aoc.math-util :refer [change-combos]]))
 
-(def input (file-util/read-values "2015/d17.txt"))
+(def input (file-util/read-ints "2015/d17.txt"))
 
 (defn part-1
   "Return the total number of combinations of containers whose capacities

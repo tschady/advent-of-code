@@ -2,10 +2,7 @@
   (:require [aoc.file-util :as file-util]
             [com.rpl.specter :refer [setval transform ALL NONE]]))
 
-(def boss-stats (->> (file-util/read-file "2015/d22.txt")
-                     (re-seq #"\d+")
-                     (map #(Integer/parseInt %))
-                     (zipmap [:hp :damage])))
+(def boss-stats (zipmap [:hp :damage] (file-util/read-ints "2015/d22.txt")))
 
 (def initial-state {:hard-mode      false
                     :hero           {:hp 50, :mana 500, :armor 0}
