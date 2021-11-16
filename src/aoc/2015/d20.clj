@@ -2,7 +2,7 @@
   (:require [aoc.file-util :as file-util]
             [aoc.math-util :as math-util]))
 
-(def input (first (file-util/read-values "2015/d20.txt")))
+(def input (first (file-util/read-ints "2015/d20.txt")))
 
 (defn- score [mult elves]
   (reduce + 0 (map #(* mult %) elves)))

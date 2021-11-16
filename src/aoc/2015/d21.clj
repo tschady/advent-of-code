@@ -1,17 +1,12 @@
 (ns aoc.2015.d21
   (:require [aoc.file-util :as file-util]
-            [clojure.math.combinatorics :as combo]
-            [clojure.string :as str]))
+            [clojure.math.combinatorics :as combo]))
 
-(def input (file-util/read-lines "2015/d21.txt"))
+(def input (file-util/read-ints "2015/d21.txt"))
 
 (def hero-hp 100)
 
-(defn parse-boss [input]
-  (->> (str/join input)
-       (re-seq #"\d+")
-       (map read-string)
-       (zipmap [:hp :damage :armor])))
+(defn parse-boss [input] (zipmap [:hp :damage :armor] input))
 
 (def shop {:weapons [{:cost 8   :damage 4 :armor 0}
                      {:cost 10  :damage 5 :armor 0}

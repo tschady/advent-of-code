@@ -1,7 +1,9 @@
 (ns aoc.file-util
-  (:require [clojure.data.csv :as csv]
-            [clojure.java.io :as io]
-            [clojure.string :as str]))
+  (:require
+   [aoc.string-util :as string-util]
+   [clojure.data.csv :as csv]
+   [clojure.java.io :as io]
+   [clojure.string :as str]))
 
 (defn read-file
   "Return full file contents from `path`."
@@ -19,11 +21,10 @@
   [path]
   (-> path read-file (str/split #"\n\n")))
 
-(defn read-values
-  "Return sequence of numeric values from input file which has numbers on each row.
-  Supports negative signs."
+(defn read-ints
+  "Return vector of integers from input, supports negative signs."
   [path]
-  (->> path read-lines (map #(Long/parseLong %))))
+  (vec (string-util/ints (read-file path))))
 
 (defn read-tsv
   "Return a list of rows, with each row as a list of values from the TSV."

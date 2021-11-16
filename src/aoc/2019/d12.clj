@@ -1,10 +1,10 @@
 (ns aoc.2019.d12
-  (:require [aoc.file-util :as file-util]
-            [clojure.math.numeric-tower :as math]))
+  (:require
+   [aoc.file-util :as file-util]
+   [aoc.string-util :as string-util]
+   [clojure.math.numeric-tower :as math]))
 
 (def input (file-util/read-lines "2019/d12.txt"))
-
-(defn parse-pos [s] (map read-string (re-seq #"-?\d+" s)))
 
 (defn build-moon [[x y z]] {:x  x :y  y :z  z
                             :dx 0 :dy 0 :dz 0})
@@ -49,10 +49,10 @@
        (* 2)))
 
 (defn part-1 [input t]
-  (let [sys (->> input (map parse-pos) (map build-moon))
+  (let [sys (->> input (map string-util/ints) (map build-moon))
         future-sys (nth (iterate tick-system sys) t)]
     (apply + (map energy future-sys))))
 
 (defn part-2 [input]
-  (let [sys (->> input (map parse-pos) (map build-moon))]
+  (let [sys (->> input (map string-util/ints) (map build-moon))]
     (reduce math/lcm (map (partial period sys) [:dx :dy :dz]))))

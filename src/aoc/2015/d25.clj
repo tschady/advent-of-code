@@ -1,9 +1,10 @@
 (ns aoc.2015.d25
-  (:require [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [aoc.string-util :as string-util]))
 
 (def input (file-util/read-file "2015/d25.txt"))
 
-(defn input->coord [line] (mapv read-string (re-seq #"\d+" line)))
+(defn input->coord [line] (into [] (string-util/ints line)))
 
 (def start-code 20151125)
 

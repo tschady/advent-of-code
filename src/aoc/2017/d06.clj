@@ -2,7 +2,7 @@
   (:require [aoc.coll-util :refer [first-duplicate]]
             [aoc.file-util :as file-util]))
 
-(def input (mapv read-string (first (file-util/read-tsv "2017/d06.txt"))))
+(def input (file-util/read-ints "2017/d06.txt"))
 
 (defn realloc-blocks
   "Return next cycle of balancing memory blocks, by redistributing the

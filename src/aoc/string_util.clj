@@ -1,5 +1,11 @@
 (ns aoc.string-util
+  (:refer-clojure :exclude [ints])
   (:require [clojure.string :as str]))
+
+(defn ints
+  "Return a collection of integers found in a string.  Integers may be negative."
+  [s]
+  (map read-string (re-seq #"-?\d+" s)))
 
 (defn explode-digits
   "Turn input string of digits into sequence of numbers they represent."

@@ -1,13 +1,14 @@
 (ns aoc.2018.d23
   (:require [aoc.file-util :as file-util]
-            [aoc.grid :as grid]))
+            [aoc.grid :as grid]
+            [aoc.string-util :as string-util]))
 
 (def input (file-util/read-lines "2018/d23.txt"))
 
 (defn- parse-bot
   "Given an input string of nanobot parameters, parse into hashmap."
   [bot-str]
-  (let [[x y z r] (map read-string (re-seq #"-?\d+" bot-str))]
+  (let [[x y z r] (string-util/ints bot-str)]
     {:loc [x y z] :r r}))
 
 (defn- within-range?

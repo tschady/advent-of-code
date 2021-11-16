@@ -2,7 +2,7 @@
   (:require [aoc.file-util :as file-util]
             [clojure.math.combinatorics :as combo]))
 
-(def input (sort (file-util/read-values "2020/d01.txt")))
+(def input (sort (file-util/read-ints "2020/d01.txt")))
 
 (defn solve
   "Returns the product of the `n` numbers from set of `input` that sum to `target-sum`"

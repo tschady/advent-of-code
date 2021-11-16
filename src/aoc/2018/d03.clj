@@ -1,17 +1,15 @@
 (ns aoc.2018.d03
-  (:require [aoc.file-util :as file-util]
-            [clojure.set :as set]))
+  (:require
+   [aoc.file-util :as file-util]
+   [aoc.string-util :as string-util]
+   [clojure.set :as set]))
 
 (def input (file-util/read-lines "2018/d03.txt"))
-
-(def ^:private claim-pattern #"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)")
 
 (defn- parse-claim
   "Given an input claim string, parse into hashmap"
   [claim-str]
-  (let [[id x y dx dy] (map read-string
-                            (rest (re-find claim-pattern claim-str)))]
-    {:id id :x x :y y :dx dx :dy dy}))
+  (zipmap [:id :x :y :dx :dy] (string-util/ints claim-str)))
 
 (defn- claim-locs
   "Return all the Cartesian coords for the area of a claim"

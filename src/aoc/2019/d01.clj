@@ -2,7 +2,7 @@
   (:require [aoc.file-util :as file-util]
             [clojure.core.reducers :as r]))
 
-(def input (file-util/read-values "2019/d01.txt"))
+(def input (file-util/read-ints "2019/d01.txt"))
 
 (defn mass->fuel
   "Return the fuel units required to launch a module of given `mass`,

@@ -1,9 +1,8 @@
 (ns aoc.2015.d15
-  (:require [aoc.file-util :as file-util]))
+  (:require [aoc.file-util :as file-util]
+            [aoc.string-util :as string-util]))
 
 (def input (file-util/read-lines "2015/d15.txt"))
-
-(defn parse-line [line] (mapv read-string (re-seq #"-?\d+" line)))
 
 (def tsp-combos
   "A list of vectors of all combinations of 4-tuple with sum 100."
@@ -28,7 +27,7 @@
     {:score score :cal cal}))
 
 (defn- bake-all-batches [input]
-  (let [cookie-stats (map parse-line input)]
+  (let [cookie-stats (map string-util/ints input)]
     (map #(bake-cookie cookie-stats %) tsp-combos)))
 
 (defn part-1

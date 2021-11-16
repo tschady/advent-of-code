@@ -6,7 +6,7 @@
    [ubergraph.alg :as alg]
    [ubergraph.core :as uber]))
 
-(def input (first (file-util/read-values "2016/d13.txt")))
+(def input (first (file-util/read-ints "2016/d13.txt")))
 
 (defn *open-space?
   "Return true if given coord is an open space within problem bounds given by `size`, else false."

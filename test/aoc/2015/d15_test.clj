@@ -9,9 +9,6 @@
 (def parsed-input [[-1 -2 6 3 8]
                    [2 3 -2 -1 3]])
 
-(deftest parse
-  (is (= parsed-input (map sut/parse-line test-input))))
-
 (deftest score
   (is (= 62842880 (:score (sut/bake-cookie parsed-input [44 56])))))
 
