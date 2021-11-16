@@ -3,6 +3,9 @@
                    :task (shell "bb script/update_badges.clj")}
          clean    {:doc  "Clean all temp build files"
                    :task (shell "rm -rf .cpcache target")}
+         download {:doc "Download problem input for given year and day.
+             e.g. bb download 2021 7"
+                   :task (shell "bb script/download_input.clj" *command-line-args*)}
          lint     {:doc  "Run clj-kondo over all src/test."
                    :task (shell "clj-kondo --parallel --lint src:test")}
          outdated {:doc  "Find outdated library versions, and selectively upgrade."
