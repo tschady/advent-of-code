@@ -9,6 +9,12 @@
        (mapcat #(vector % (/ n %)))
        (into (sorted-set))))
 
+(defn series-sum
+  "Returns the sum of all digits in this contiguous integer series,
+  from `start` to `end`. Start defaults to 1."
+  ([end] (/ (* end (inc end)) 2))
+  ([start end] (- (series-sum end) (series-sum (dec start)))))
+
 (defn vector-math
   "Return a result vector from mapping `op` across collection of N-dimensional input vectors.
   E.g. `(vector-math + [[1 1] [2 4]]) => [3 5]`"

@@ -1,7 +1,8 @@
 (ns aoc.2020.d05
-  (:require [aoc.file-util :as file-util]
-            [clojure.set]
-            [clojure.string :as str]))
+  (:require
+   [aoc.file-util :as file-util]
+   [aoc.math-util :as math-util]
+   [clojure.string :as str]))
 
 (def input (file-util/read-lines "2020/d05.txt"))
 
@@ -13,6 +14,8 @@
 (defn part-1 [input] (apply max (map seat-id input)))
 
 (defn part-2 [input]
-  (let [taken-seats (sort (map seat-id input))
-        all-seats (range (first taken-seats) (inc (last taken-seats)))]
-    (first (clojure.set/difference (set all-seats) (set taken-seats)))))
+  (let [seat-ids (map seat-id input)
+        [start end] ((juxt (partial apply min) (partial apply max)) seat-ids)
+        expected-sum (math-util/series-sum start end)
+        sum (reduce + seat-ids)]
+    (- expected-sum sum)))
