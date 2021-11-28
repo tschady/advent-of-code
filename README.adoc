@@ -52,4 +52,4 @@ WIP
 WIP
 
 .2020
-WIP
+image:complete-2020.gif["Complete 2020"]
