@@ -26,6 +26,12 @@
   [path]
   (vec (string-util/ints (read-file path))))
 
+(defn read-int-vectors
+  "Return vector of vectors of integers from input, supports negative signs.
+  e.g. each row of input is a collection of integers."
+  [path]
+  (mapv (comp vec string-util/ints) (read-lines path)))
+
 (defn read-ranges
   "Return vector of integer tuples, separated by '-' sign."
   [path]
@@ -40,5 +46,3 @@
   "Return a list of rows, with each row as a list of values from the TSV."
   [path]
   (->> path read-file csv/read-csv))
-
-
