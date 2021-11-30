@@ -26,6 +26,11 @@
   [path]
   (vec (string-util/ints (read-file path))))
 
+(defn read-ranges
+  "Return vector of integer tuples, separated by '-' sign."
+  [path]
+  (mapv string-util/ints-pos (read-lines path)))
+
 (defn read-tsv
   "Return a list of rows, with each row as a list of values from the TSV."
   [path]
