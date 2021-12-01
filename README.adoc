@@ -18,6 +18,7 @@ image:2017.svg[]
 image:2018.svg[]
 image:2019.svg[]
 image:2020.svg[]
+image:2021.svg[]
 
 image:https://circleci.com/gh/tschady/advent-of-code.svg?style=svg["CircleCI", https://circleci.com/gh/tschady/advent-of-code]
 image:https://codecov.io/gh/tschady/advent-of-code/branch/master/graph/badge.svg["codecov", https://codecov.io/gh/tschady/advent-of-code]
@@ -53,3 +54,6 @@ WIP
 
 .2020
 image:complete-2020.gif["Complete 2020"]
+
+.2021
+WIP
