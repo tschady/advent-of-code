@@ -55,3 +55,9 @@
     (for [x (repeatedly #(re-find matcher))
           :while (some? x)]
       [(.start matcher) (.end matcher)])))
+
+(defn s->int
+  "Return the integer in `base` (default 10) represented by `s`, which may be
+  a string or sequence of chars."
+  ([xs] (s->int xs 10))
+  ([xs base] (Long/parseLong (apply str xs) base)))
