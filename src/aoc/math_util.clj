@@ -61,3 +61,9 @@
     (if (zero? n)
       c
       (recur (bit-and n (dec n)) (inc c)))))
+
+(defn mean [xs]
+  (float (/ (reduce + xs) (count xs))))
+
+(defn median [xs]
+  (-> xs sort (nth (/ (count xs) 2))))
