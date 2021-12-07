@@ -8,7 +8,7 @@
   "Returns the total fuel used by all the crabs at locations `locs` to reach point `dest`,
   using function `f` to compute fuel required for each distance."
   [locs f dest]
-  (reduce + (map (comp f #(Math/abs (- % dest))) locs)))
+  (reduce + (map (comp f #(Math/abs (- ^int % ^int dest))) locs)))
 
 ;; Because the costs are linear with distance, we know the median will be the meeting point.
 (defn part-1 [input]
