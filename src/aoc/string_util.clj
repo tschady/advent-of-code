@@ -1,6 +1,7 @@
 (ns aoc.string-util
   (:refer-clojure :exclude [ints])
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.set :as set]))
 
 (defn ints
   "Return a collection of integers found in a string.  Integers may be negative."
@@ -18,9 +19,9 @@
   [s]
   (map #(Character/getNumericValue %) s))
 
-(def alphagram
+(defn alphagram [s]
   "The lowercased letters of a string arranged in alphabetical order"
-  (comp sort str/lower-case))
+  (apply str (sort (str/lower-case (apply str s)))))
 
 (defn anagram?
   "Return true if the input strings `a` and `b` are non-identical,
@@ -61,3 +62,15 @@
   a string or sequence of chars."
   ([xs] (s->int xs 10))
   ([xs base] (Long/parseLong (apply str xs) base)))
+
+(defn diff
+  "Return a 3-tuple of:
+  1- the chars in `a` that do not exist in `b`
+  2- the chars in `b` that do not exist in `a`
+  3- the chars common to `a` and `b`"
+  [a b]
+  (let [a (set a)
+        b (set b)]
+    [(set/difference a b)
+     (set/difference b a)
+     (set/intersection a b)]))
