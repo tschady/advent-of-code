@@ -146,11 +146,13 @@
 (defn neighbors
   "Return the contents of the 8 surrounding neighbors in the grid.
   Off grid cells are not returned."
-  [grid loc]
-  (->> loc
-       neighbor-coords
-       (map grid)
-       (remove nil?)))
+  ([grid loc] (neighbors grid loc neighbor-coords))
+  ([grid loc neighbor-fn]
+   (->> loc
+        neighbor-fn
+        (map grid)
+        (remove nil?))))
+
 
 (defn build-grid
   "Return map of coordinates to a value, given list of strings of glyphs,
@@ -197,7 +199,7 @@
   Map entries are in form {[0 0] '([0 1] [1 0])}, suitable for graph library constructors.
   Note: only nodes connected via `neighbor-fn` from the `origin` node are present."
   [open-fn? neighbor-fn origin]
-  (loop [nodes   '([0 0])
+  (loop [nodes   (list origin)
          seen    #{}
          adj-map {}]
     (if (empty? nodes)
