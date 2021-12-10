@@ -15,8 +15,10 @@
 (defn stackify
   "Returns either:
     - the stack of unclosed openers as a vector (empty in the case of balance)
-    - the first offending unmatched closing char"
+    - the first offending unmatched closing char.
+  Throws Assertion error if `s` contains any invalid chars."
   [s]
+  {:pre [(every? (set (concat (keys mates) (vals mates))) s)]}
   (reduce (fn [stack c]
             (cond
               (opener? c)                (conj stack c)
