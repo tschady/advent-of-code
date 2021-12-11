@@ -2,7 +2,7 @@
   (:require
    [aoc.file-util :as file-util]
    [aoc.grid :refer [neighbor-coords build-grid]]
-   [com.rpl.specter :as sp :refer [MAP-VALS transform]]))
+   [com.rpl.specter :refer [MAP-VALS transform]]))
 
 (def input (file-util/read-lines "2021/d11.txt"))
 
