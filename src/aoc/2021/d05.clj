@@ -8,7 +8,7 @@
     ##Inf
     (/ (- y2 y1) (- x2 x1))))
 
-(defn y-intercept [[[x1 y1] [x2 y2] :as line]]
+(defn y-intercept [[[x1 y1] [_x2 _y2] :as line]]
   (- y1 (* x1 (slope line))))
 
 (defn line->points [line]

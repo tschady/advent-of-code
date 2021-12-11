@@ -1,4 +1,5 @@
 (ns aoc.grid
+  (:refer-clojure :exclude [print])
   (:require [aoc.coll-util :as coll-util]
             [clojure.string :as str]))
 
