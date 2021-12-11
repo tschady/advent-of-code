@@ -1,7 +1,8 @@
 (ns aoc.2017.d09
-  (:require [aoc.file-util :as file-util]
-            [clojure.string :as str]
-            [aoc.coll-util :as coll-util]))
+  (:require
+   [aoc.coll-util :as coll-util]
+   [aoc.file-util :as file-util]
+   [clojure.string :as str]))
 
 (def input (file-util/read-file "2017/d09.txt"))
 

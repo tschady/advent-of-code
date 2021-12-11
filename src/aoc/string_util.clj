@@ -1,7 +1,8 @@
 (ns aoc.string-util
   (:refer-clojure :exclude [ints])
-  (:require [clojure.string :as str]
-            [clojure.set :as set]))
+  (:require
+   [clojure.set :as set]
+   [clojure.string :as str]))
 
 (defn ints
   "Return a collection of integers found in a string.  Integers may be negative."
@@ -19,8 +20,9 @@
   [s]
   (map #(Character/getNumericValue %) s))
 
-(defn alphagram [s]
+(defn alphagram
   "The lowercased letters of a string arranged in alphabetical order"
+  [s]
   (apply str (sort (str/lower-case (apply str s)))))
 
 (defn anagram?

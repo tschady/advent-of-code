@@ -10,7 +10,7 @@
 
 (defn- merge-ips [[lo1 hi1] [lo2 hi2]] [(min lo1 lo2) (max hi1 hi2)])
 
-(defn merge-ranges [ranges [lo2 hi2 :as r2]]
+(defn merge-ranges [ranges r2]
   (let [r1 (peek ranges)]
     (if (overlap? r1 r2)
       (conj (pop ranges) (merge-ips r1 r2))
