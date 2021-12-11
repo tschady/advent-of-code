@@ -175,6 +175,8 @@
          (partition (inc max-x))
          (map (partial apply str)))))
 
+(def print print-grid-to-array)
+
 (defn transpose-pad
   "Return a transposed matrix, where input matrix is made square
   by padding with `pad` at end of input rows as neccesary"
