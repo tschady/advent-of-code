@@ -14,8 +14,7 @@
            org.flatland/ordered           {:mvn/version "1.15.10"}
            org.slf4j/slf4j-nop            {:mvn/version "RELEASE"}
            pandect/pandect                {:mvn/version "1.0.1"}
-           ubergraph/ubergraph            {:mvn/version "0.8.2"}
-           }
+           ubergraph/ubergraph            {:mvn/version "0.8.2"}}
  :paths   ["src" "resources"]
  :aliases {:test      {:extra-paths ["test"]
                        :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.60.945"}
@@ -26,4 +25,7 @@
                        :main-opts  ["-m" "antq.core"]}
            :bench     {:extra-deps {criterium/criterium {:mvn/version "0.4.6"}}}
            :clj-kondo {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
-                       :main-opts  ["-m" "clj-kondo.main"]}}}
+                       :main-opts  ["-m" "clj-kondo.main"]}
+           :doc       {:extra-paths ["script" "docs"]
+                       :extra-deps  {marginalia/marginalia {:mvn/version "0.9.1"}}
+                       :main-opts   ["-m" "blogify"]}}}

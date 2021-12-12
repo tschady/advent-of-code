@@ -14,10 +14,12 @@
 (defn part-1 [input]
   (total-fuel input identity (m/median input)))
 
+;; ^:blog
 ;; The answer will be within 0.5 of the mean, so test the two integers around it.
 ;; I originally used the mean as an upper bound, since I knew the triangle number was < n^2
 ;; via https://www.reddit.com/r/adventofcode/comments/rawxad/2021_day_7_part_2_i_wrote_a_paper_on_todays/
-(defn part-2 [input]
+
+(defn ^:blog part-2 [input]
   (let [mean (m/mean input)
         low (int (Math/floor mean))
         hi (int (Math/ceil mean))]
