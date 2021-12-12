@@ -21,12 +21,14 @@
 (def all ["abcefg", "cf", "acdeg", "acdfg", "bcdf",
           "abdfg", "abdefg", "acf", "abcdefg", "abcdfg"])
 
+;; ^:blog
 ;;  we recognize 1,4,7,8 from their unique string sizes
 ;;  we know {b e f} from their unique freqs in the full set of numbers
 ;;  we know {a} from diff of 1 and 7
 ;;  we know {c} because it's the unknown remaining in 1
 ;;  we know {d} because it's the only unknown left in 4
 ;;  we know {g} because it's last
+
 (defn determine-output [[digits outputs]]
   (let [[one seven four & _] (sort-by count digits)
         all-freq (frequencies (apply str digits))
