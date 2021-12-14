@@ -15,7 +15,18 @@
           (assoc grid loc 0) ; flash it
           (neighbor-coords loc)))
 
-(defn step [grid]
+;; ^:blog
+;; The core `step` function used in `iterate`.  By iterating, we do not need to
+;; track any intermediate state like the zero count since we can sum over all the
+;; states reached.
+;;
+;; [NOTE]
+;; ====
+;; My approach to these problems is to start from the outside in.  In this case,
+;; I typed `(reduce flash grid flashers)` before anything else.
+;; ====
+
+(defn ^:blog step [grid]
   (loop [grid (transform [MAP-VALS] inc grid)]
     (if-let [flashers (seq (filter #(> (val %) 9) grid))]
       (recur (reduce flash grid flashers))

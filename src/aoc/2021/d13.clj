@@ -14,7 +14,11 @@
                (map rest)
                (map #(map read-string %)))})
 
-(defn fold [paper [axis v]]
+;; ^:blog
+;; Great use of specter here to perform a complex conditional mutation.
+;; Thanks to @drowsy for the idea
+
+(defn ^:blog fold [paper [axis v]]
   (set (transform [ALL (if (= 'x axis) FIRST LAST) (pred> v)] #(- (* 2 v) %) paper)))
 
 (defn part-1 [input]
