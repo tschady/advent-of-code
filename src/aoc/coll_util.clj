@@ -58,3 +58,9 @@
                       (when (branch? node)
                         (mapcat (partial walk (inc depth)) (children node))))))]
     (walk 0 root)))
+
+(defn x-nth
+  "Returns the `n`th element of sequence `xs`.  Works like `clojure.core/nth` but
+  reverses the order of the arguments so we can use in thread-last pipelines."
+  [n xs]
+  (nth xs n))

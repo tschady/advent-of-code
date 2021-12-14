@@ -278,3 +278,40 @@ Thanks to @drowsy for the idea
 (defn fold [paper [axis v]]
   (set (transform [ALL (if (= 'x axis) FIRST LAST) (pred> v)] #(- (* 2 v) %) paper)))
 ----
+
+
+== link:../src/aoc/2021/d14.clj[aoc.2021.d14]
+For part-1, I raced to an iterative solution building the string each time with
+`medley.core/interleave-all`.
+10 iterations took 20ms, 20 took 1000x that, so there's no way we can do this 40 times.
+Looking at the ruleset, it's pretty contained, so we should be able to just track
+counts of each pair.  Very similar to day 6 for fish count.
+
+[source, clojure]
+----
+(defn step [rules pair-counts]
+  (reduce-kv (fn [m [a b :as k] v]
+               (let [insert (get rules k)]
+                 (-> m
+                     (update [a insert] (fnil + 0) v)
+                     (update [insert b] (fnil + 0) v))))
+             {}
+             pair-counts))
+----
+
+
+The only thing of interest here is `x-nth`, a utility function I wrote that just
+reverses the arguments of `nth` in order to make thread-last work.
+
+[source, clojure]
+----
+(defn solve [input n]
+  (let [[orig rules] (parse input)]
+    (->> orig
+         (partition 2 1)
+         frequencies
+         (iterate (partial step rules))
+         (x-nth n)
+         (assemble (last orig))
+         score)))
+----
