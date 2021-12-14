@@ -3,7 +3,11 @@
 
 (def input (map (partial partition 2) (file-util/read-int-vectors "2021/d05.txt")))
 
-(defn- slope [[[x1 y1] [x2 y2]]]
+;; ^:blog
+;; I use slope and y-intercept to compute points on the line. The interesting part is
+;; use of Infinity: `##Inf` which works well mathematically, but does require the occasional 'if'.
+
+(defn- ^:blog slope [[[x1 y1] [x2 y2]]]
   (if (= x2 x1)
     ##Inf
     (/ (- y2 y1) (- x2 x1))))
@@ -29,4 +33,7 @@
 
 (defn part-1 [input] (solve #{0 ##Inf} input))
 
-(defn part-2 [input] (solve #{0 ##Inf 1 -1} input))
+;; ^:blog
+;; This lets me describe horizontal/vertical/diagonal lines by their slope.
+
+(defn ^:blog part-2 [input] (solve #{0 ##Inf 1 -1} input))
