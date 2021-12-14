@@ -19,7 +19,11 @@
          (map (comp inc second))
          (reduce +))))
 
-(defn part-2 [input]
+;; ^:blog
+;; A straightforward problem.  Notably, I was able to reuse my `grid` library
+;; to build the grid, find neighbors, and create the graph in the form of an adjacency map.
+
+(defn ^:blog part-2 [input]
   (let [grid (g/build-grid input #(Character/getNumericValue %))]
     (->> (filter (partial low-point? grid) grid)
          (map first)

@@ -6,7 +6,12 @@
 (defn init-state [input]
   (mapv #(get (frequencies input) % 0) (range 9)))
 
-(defn next-gen [timers]
+;; ^:blog
+;; Simple `iterate` on an 8-element vector of rolled-up fish counts per time.
+;; I saw some solutions that completely destructured the `timers` vector.
+;; This is clever - I never think of it - I don't know why.
+
+(defn ^:blog next-gen [timers]
   (let [spawners (get timers 0 0)]
     (-> timers
         (subvec 1)

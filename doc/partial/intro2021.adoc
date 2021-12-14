@@ -1,0 +1,18 @@
+= Advent of Code 2021
+:author: @tschady
+:date: 2021 Dec 01
+:description: Commentary on solutions to http://adventofcode.com/2021[Advent of Code 2021] problems
+:sectanchors:
+
+:toc:
+:toc-placement!:
+
+My running commentary on approach, with any code of interest.
+
+== Rules for Sanity
+
+1. Never stay up for problem release.
+1. Don't sweat the leaderboard.
+1. Finish puzzle and refactor before looking at other approaches.
+
+toc::[]

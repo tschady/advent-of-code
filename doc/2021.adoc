@@ -1,0 +1,260 @@
+= Advent of Code 2021
+:author: @tschady
+:date: 2021 Dec 01
+:description: Commentary on solutions to http://adventofcode.com/2021[Advent of Code 2021] problems
+:sectanchors:
+
+:toc:
+:toc-placement!:
+
+My running commentary on approach, with any code of interest.
+
+== Rules for Sanity
+
+1. Never stay up for problem release.
+1. Don't sweat the leaderboard.
+1. Finish puzzle and refactor before looking at other approaches.
+
+toc::[]
+== link:../src/aoc/2021/d01.clj[aoc.2021.d01]
+The trick here is realizing that `(B + C + D) - (A + B + C) = D - A`.
+I originally used the 3-arity version of map with
+`(count (filter pos? (map - (rest input) input)))`
+but then realized that was a utility fn I'd forgotten about: `intervals`, for
+the speed competition I never enter.
+
+[source, clojure]
+----
+(defn part-1 [input]
+  (count (filter pos? (intervals input))))
+
+(defn part-2 [input]
+  (count (filter pos? (intervals 3 input))))
+----
+
+
+== link:../src/aoc/2021/d04.clj[aoc.2021.d04]
+I used 2D arrays for cards and `nil` to mark numbers.
+I thought `(group-by bingo?)` worked well, but the main point of interest is
+the lazy sequence of recursive calls to `scores`. This sets up the elegant
+`part-1`, `part-2` solution, which reads like the problem description.
+
+[source, clojure]
+----
+(defn scores [[[num & nums] cards]]
+  (lazy-seq
+   (when num
+     (let [{winners true remain nil} (->> cards
+                                         (mark-all-cards num)
+                                         (group-by bingo?))
+           win-scores (map (partial score num) winners)]
+       (concat win-scores (scores [nums remain]))))))
+
+(defn part-1 [input] (first (scores (parse-input input))))
+
+(defn part-2 [input] (last (scores (parse-input input))))
+----
+
+
+== link:../src/aoc/2021/d05.clj[aoc.2021.d05]
+I use slope and y-intercept to compute points on the line. The interesting part is
+use of Infinity: `##Inf` which works well mathematically, but does require the occasional 'if'.
+
+[source, clojure]
+----
+(defn- slope [[[x1 y1] [x2 y2]]]
+  (if (= x2 x1)
+    ##Inf
+    (/ (- y2 y1) (- x2 x1))))
+----
+
+
+This lets me describe horizontal/vertical/diagonal lines by their slope.
+
+[source, clojure]
+----
+(defn part-2 [input] (solve #{0 ##Inf 1 -1} input))
+----
+
+
+== link:../src/aoc/2021/d06.clj[aoc.2021.d06]
+Simple `iterate` on an 8-element vector of rolled-up fish counts per time.
+I saw some solutions that completely destructured the `timers` vector.
+This is clever - I never think of it - I don't know why.
+
+[source, clojure]
+----
+(defn next-gen [timers]
+  (let [spawners (get timers 0 0)]
+    (-> timers
+        (subvec 1)
+        (assoc 8 spawners)
+        (update 6 (fnil + 0) spawners))))
+----
+
+
+== link:../src/aoc/2021/d07.clj[aoc.2021.d07]
+Like many of these AOC problems, a HOF is a clean way to separate part-1 and
+part-2 formulas.
+
+[source, clojure]
+----
+(defn total-fuel
+  "Returns the total fuel used by all the crabs at locations `locs` to reach point `dest`,
+  using function `f` to compute fuel required for each distance."
+  [locs f dest]
+  (reduce + (map (comp f #(Math/abs (- ^int % ^int dest))) locs)))
+----
+
+
+For part 1, because the costs are linear with distance, we know the median will be the meeting point.
+
+[source, clojure]
+----
+(defn part-1 [input]
+  (total-fuel input identity (m/median input)))
+----
+
+
+For part 2, if the fuel formula was `n^2` then the mean would yield the exact answer.
+But since formula is a triangle number, which is always less than the square, I first used the mean as an upper bound to reduce the search space.
+Then I found
+https://www.reddit.com/r/adventofcode/comments/rawxad/2021_day_7_part_2_i_wrote_a_paper_on_todays/[this beauty]
+which shows the answer will be within 0.5 of the mean, so I test the 2 integers around it.
+
+[source, clojure]
+----
+(defn part-2 [input]
+  (let [mean (m/mean input)
+        low (int (Math/floor mean))
+        hi (int (Math/ceil mean))]
+    (->> (range low (inc hi))
+         (map (partial total-fuel input m/series-sum))
+         (apply min))))
+----
+
+
+== link:../src/aoc/2021/d08.clj[aoc.2021.d08]
+For this problem I used a combination of expected frequencies of the whole,
+and differences between the characters.
+
+- we recognize 1,4,7,8 from their unique string sizes
+- we know {b e f} from their unique freqs in the full set of numbers
+- we know {a} from diff of 1 and 7
+- we know {c} because it's the unknown remaining in 1
+- we know {d} because it's the only unknown left in 4
+- we know {g} because it's last
+
+I also wrote a handy string diff function that returns a 3-tuple of [only left, only right, common] modeled after `core.data/diff`
+
+[source, clojure]
+----
+(defn determine-output [[digits outputs]]
+  (let [[one seven four & _] (sort-by count digits)
+        all-freq (frequencies (apply str digits))
+        b (key-for-val all-freq 6)
+        e (key-for-val all-freq 4)
+        f (key-for-val all-freq 9)
+        a (ffirst (diff seven one))
+        c (ffirst (diff one #{f}))
+        d (ffirst (diff four #{b c f}))
+        g (ffirst (diff "abcdefg" #{a b c d e f}))
+        subst-map {a \a b \b c \c d \d e \e f \f g \g}]
+    (->> outputs
+         (map (comp alphagram (partial replace subst-map)))
+         (map #(.indexOf all %))
+         str/join
+         Long/parseLong)))
+----
+
+
+== link:../src/aoc/2021/d09.clj[aoc.2021.d09]
+A straightforward problem.  Notably, I was able to reuse my `grid` library
+to build the grid, find neighbors, and create the graph in the form of an adjacency map.
+
+[source, clojure]
+----
+(defn part-2 [input]
+  (let [grid (g/build-grid input #(Character/getNumericValue %))]
+    (->> (filter (partial low-point? grid) grid)
+         (map first)
+         (map (partial g/connected-adjacency-map (partial basin? grid) g/neighbor-coords-news))
+         (map count)
+         (sort >)
+         (take 3)
+         (reduce *))))
+----
+
+
+== link:../src/aoc/2021/d11.clj[aoc.2021.d11]
+The core `step` function used in `iterate`.  By iterating, we do not need to
+track any intermediate state like the zero count since we can sum over all the
+states reached.
+
+[NOTE]
+====
+My approach to these problems is to start from the outside in.  In this case,
+I typed `(reduce flash grid flashers)` before anything else.
+====
+
+[source, clojure]
+----
+(defn step [grid]
+  (loop [grid (transform [MAP-VALS] inc grid)]
+    (if-let [flashers (seq (filter #(> (val %) 9) grid))]
+      (recur (reduce flash grid flashers))
+      grid)))
+----
+
+
+== link:../src/aoc/2021/d12.clj[aoc.2021.d12]
+This problem immediately looked like a recursive Depth First Search.
+For part-1 I could track the typical visited nodes and remove them from
+the next search level, but interestingly part-2 flipped this on its head
+and used a variable count.  This could be tracked with an extra boolean
+like `bonus-used?`, but I preferred to put this complexity in the data layer
+with the allowances map below.
+
+[source, clojure]
+----
+(defn dfs-paths [g goal path allowances]
+  (let [curr (peek path)]
+    (if (= goal curr)
+      (vector path)
+      (let [nexts (filter #(pos? (get allowances %)) (get g curr))]
+        (mapcat #(dfs-paths g goal (conj path %) (update allowances curr dec)) nexts)))))
+----
+
+
+The interesting part of the algorithm is this map of the number of times
+each cave may be visited.  I use infinity again for large cave count since it can be decremented forever.
+
+[source, clojure]
+----
+(defn make-allowances
+  "Returns map of cave to number of times it may be visited.
+  Small caves begin with lowercase and can be visited once.
+  Large caves (everything not small) can be visited infinitely."
+  [g]
+  (let [{small true, big false} (group-by small-cave? (keys g))]
+    (merge (zipmap small (repeat 1)) (zipmap big (repeat ##Inf)))))
+----
+
+
+I optimized for dev time and DFS algo simplicity here, by iterating over
+the collection of small-caves, treating each one in turn as
+the magic cave that can be visited twice.  There is a lot of duplication here,
+with many paths visited multiple times then collpased with `set`.
+
+[source, clojure]
+----
+(defn part-2 [input]
+  (let [g           (parse-graph input)
+        init-allow  (make-allowances g)
+        small-caves (remove #{"start" "end"} (filter small-cave? (keys g)))]
+    (->> small-caves
+         (map #(update init-allow % inc))
+         (mapcat (partial dfs-paths g "end" ["start"]))
+         set
+         count)))
+----
