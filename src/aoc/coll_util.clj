@@ -38,9 +38,9 @@
           {} (map-indexed vector coll)))
 
 (defn intervals
-  "Return the seq of intervals between each successive element of coll."
-  [xs]
-  (map - (rest xs) xs))
+  "Returns the seq of intervals between each element of `xs`, step `n` (default 1)"
+  ([xs] (intervals 1 xs))
+  ([n xs] (map - (drop n xs) xs)))
 
 (defn tree-seq-depth
   "Returns a lazy sequence of the nodes in a tree in a tuple with their
