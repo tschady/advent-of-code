@@ -15,7 +15,7 @@
 ;; (Is your https://www.reddit.com/r/adventofcode/comments/k3q7tr/my_advent_of_code_2020_bingo_card_fun_little_side/[AdventOfCode bingo card] complete yet?)
 ;; ====
 ;;
-;; You *could* type out Djikstra's algorithm, using Java's PriorityQueue
+;; You *could* type out Dijkstra's algorithm, using Java's PriorityQueue
 ;; or `clojure.data.priority-map`.  Or, you could just slam it all into
 ;; a graph library and Keep 'er Movin'.
 ;;
