@@ -40,8 +40,9 @@
         :cost)))
 
 ;; ^:blog Part 2 is solved the same way after expanding the grid.
-;; The input data helped here, as I originally just did `mod` and had 0s
-;; in my output.
+;; The example data helped here, as I originally just did `mod` and had 0s
+;; in my output.  This "modify, subtract 1, mod 9, increment 1" probably
+;; has a simpler expression.
 
 (defn ^:blog expand-grid [grid size]
   (apply merge (for [loc  (keys grid)
