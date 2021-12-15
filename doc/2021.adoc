@@ -342,13 +342,6 @@ so I had to build an empty graph and use the explicit `add-edges*`
   (-> (uber/multidigraph)
       (uber/add-edges* (edges risk-grid))
       (alg/shortest-path start end :weight)))
-
-(defn part-1 [input]
-  (let [size (count input)]
-    (-> input
-        (grid/build-grid #(Character/digit % 10))
-        (safest-path [0 0] [(dec size) (dec size)])
-        :cost)))
 ----
 
 
@@ -359,12 +352,31 @@ has a simpler expression.
 
 [source, clojure]
 ----
-(defn expand-grid [grid size]
-  (apply merge (for [loc  (keys grid)
-                     dx   (range 5)
-                     dy   (range 5)
-                     :let [[x y] loc
-                           risk (get grid loc)
-                           new-risk (inc (mod (+ dx dy risk -1) 9))]]
-                 {[(+ x (* size dx)) (+ y (* size dy))] new-risk})))
+(defn expand-grid [grid magnifier]
+  (let [[width height] (grid/size grid)]
+    (apply merge (for [loc (keys grid)
+                       dx   (range magnifier)
+                       dy   (range magnifier)
+                       :let [[x y] loc
+                             risk (get grid loc)
+                             new-risk (inc (mod (+ dx dy risk -1) 9))]]
+                   {[(+ x (* width dx)) (+ y (* height dy))] new-risk}))))
+----
+
+
+Expanding the grid with size 1 for part-1 in an expensive no-op,
+but I'm a sucker for generalizing the two parts.
+
+[source, clojure]
+----
+(defn solve [input magnifier]
+  (let [g (-> input
+              (grid/build-grid #(Character/digit % 10))
+              (expand-grid magnifier))
+        end (mapv dec (grid/size g))]
+    (:cost (safest-path g [0 0] end))))
+
+(defn part-1 [input] (solve input 1))
+
+(defn part-2 [input] (solve input 5))
 ----

@@ -32,31 +32,32 @@
       (uber/add-edges* (edges risk-grid))
       (alg/shortest-path start end :weight)))
 
-(defn ^:blog part-1 [input]
-  (let [size (count input)]
-    (-> input
-        (grid/build-grid #(Character/digit % 10))
-        (safest-path [0 0] [(dec size) (dec size)])
-        :cost)))
-
 ;; ^:blog Part 2 is solved the same way after expanding the grid.
 ;; The example data helped here, as I originally just did `mod` and had 0s
 ;; in my output.  This "modify, subtract 1, mod 9, increment 1" probably
 ;; has a simpler expression.
 
-(defn ^:blog expand-grid [grid size]
-  (apply merge (for [loc  (keys grid)
-                     dx   (range 5)
-                     dy   (range 5)
-                     :let [[x y] loc
-                           risk (get grid loc)
-                           new-risk (inc (mod (+ dx dy risk -1) 9))]]
-                 {[(+ x (* size dx)) (+ y (* size dy))] new-risk})))
+(defn ^:blog expand-grid [grid magnifier]
+  (let [[width height] (grid/size grid)]
+    (apply merge (for [loc (keys grid)
+                       dx   (range magnifier)
+                       dy   (range magnifier)
+                       :let [[x y] loc
+                             risk (get grid loc)
+                             new-risk (inc (mod (+ dx dy risk -1) 9))]]
+                   {[(+ x (* width dx)) (+ y (* height dy))] new-risk}))))
 
-(defn part-2 [input]
-  (let [size (count input)]
-    (-> input
-        (grid/build-grid #(Character/digit % 10))
-        (expand-grid size)
-        (safest-path [0 0] [(dec (* 5 size)) (dec (* 5 size))])
-        :cost)))
+;; ^:blog
+;; Expanding the grid with size 1 for part-1 in an expensive no-op,
+;; but I'm a sucker for generalizing the two parts.
+
+(defn ^:blog solve [input magnifier]
+  (let [g (-> input
+              (grid/build-grid #(Character/digit % 10))
+              (expand-grid magnifier))
+        end (mapv dec (grid/size g))]
+    (:cost (safest-path g [0 0] end))))
+
+(defn ^:blog part-1 [input] (solve input 1))
+
+(defn ^:blog part-2 [input] (solve input 5))
