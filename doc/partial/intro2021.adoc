@@ -1,5 +1,7 @@
 = Advent of Code 2021
 :author: @tschady
+:toc:
+:toc-placement!:
 :date: 2021 Dec 01
 :description: Commentary on solutions to http://adventofcode.com/2021[Advent of Code 2021] problems
 :sectanchors:
@@ -11,9 +13,6 @@ ifdef::env-github[]
 :caution-caption: :fire:
 :warning-caption: :warning:
 endif::[]
-
-:toc:
-:toc-placement!:
 
 My running commentary on approach, with any code of interest.
 
