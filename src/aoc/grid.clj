@@ -163,6 +163,13 @@
                  x (range (count (nth lines y)))]
              {[x y] (glyph->val (get-in lines [y x]))})))
 
+(defn size
+  "Returns the a tuple of max dimensions along [x y]"
+  [grid]
+  (let [max-x (apply max (map first (keys grid)))
+        max-y (apply max (map second (keys grid)))]
+    [(inc max-x) (inc max-y)]))
+
 (defn print-grid-to-array
   "Return ASCII representation of grid, given hashmap of coords to glyphs."
   [grid]
