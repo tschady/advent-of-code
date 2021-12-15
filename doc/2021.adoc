@@ -324,6 +324,10 @@ First graph problem of the year.
 (Is your https://www.reddit.com/r/adventofcode/comments/k3q7tr/my_advent_of_code_2020_bingo_card_fun_little_side/[AdventOfCode bingo card] complete yet?)
 ====
 
+You *could* type out Djikstra's algorithm, using Java's PriorityQueue
+or `clojure.data.priority-map`.  Or, you could just slam it all into
+a graph library and Keep 'er Movin'.
+
 My go-to for these is https://github.com/Engelberg/ubergraph[ubergraph].
 There was some ambiguity in the constructor for edges
 (since the nodes were also `[x y]` vectors),
