@@ -62,8 +62,8 @@
 (defn s->int
   "Return the integer in `base` (default 10) represented by `s`, which may be
   a string or sequence of chars."
-  ([xs] (s->int xs 10))
-  ([xs base] (Long/parseLong (apply str xs) base)))
+  ([xs] (s->int 10 xs))
+  ([base xs] (Long/parseLong (apply str xs) base)))
 
 (defn diff
   "Return a 3-tuple of:
