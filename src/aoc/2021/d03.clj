@@ -14,19 +14,19 @@
   (->> (range (count (first input)))
        (map (partial compare-col-freq input >=))
        ((juxt identity #(replace {\1 \0, \0 \1} %)))
-       (map #(s->int % 2))
+       (map (partial s->int 2))
        (reduce *)))
 
 (defn rating
   [op input]
-  (-> (reduce (fn [nums i]
+  (->> (reduce (fn [nums i]
                 (if (= 1 (count nums))
                   (reduced nums)
                   (filter #(= (compare-col-freq nums op i) (nth % i)) nums)))
               input
               (range (count (first input))))
-      first
-      (s->int 2)))
+       first
+       (s->int 2)))
 
 (defn part-2 [input]
   (* (rating >= input) (rating < input)))
