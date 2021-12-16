@@ -384,3 +384,82 @@ but I'm a sucker for generalizing the two parts.
 
 (defn part-2 [input] (solve input 5))
 ----
+
+
+== link:../src/aoc/2021/d16.clj[aoc.2021.d16]
+This problem was tedious and painful.  I considered BNF parsing
+(but the branching is pretty complex), and Java ByteBuffers,
+before just settling on plain old Clojure.
+The _only_ thing I like about this code is my use of `cl-format`.
+
+[source, clojure]
+----
+(defn hex->bits [hex]
+  (cl-format nil "~{~4,'0B~}" (map #(Character/digit % 16) hex)))
+----
+
+
+Since all this data is immutable, all of these `slice-*` fn's
+take in a stream and return a tuple of the target value and the
+stream with the target removed. Simulates destructive chomping,
+but it is absolutely no fun.
+
+[source, clojure]
+----
+(defn slice-val [n stream]
+  (let [[subj stream] (split-at n stream)]
+    [(s->int 2 subj) stream]))
+----
+
+
+`medley.core/take-upto` saved some time knowing when to stop
+chomping the bits.
+
+[source, clojure]
+----
+(defn slice-literal [stream]
+  (let [val-part (->> stream
+                      (partition 5)
+                      (take-upto #(= \0 (first %))))
+        stream   (drop (count (flatten val-part)) stream)
+        value    (->> val-part
+                      (map (partial drop 1))
+                      flatten
+                      (s->int 2))]
+    [value stream]))
+----
+
+
+The main loop is OK.
+
+[source, clojure]
+----
+(defn parse-packet [stream]
+  (let [[version stream] (slice-val 3 stream)
+        [type stream]    (slice-val 3 stream)
+        [payload stream] (case type
+                           4 (slice-literal stream)
+                           (slice-operator stream))]
+    [{:version version :type type :payload payload}
+     stream]))
+----
+
+
+Mapping to functions makes the code readable
+
+[source, clojure]
+----
+(def type->op
+  {0 +
+   1 *
+   2 min
+   3 max
+   5 #(if (> %1 %2) 1 0)
+   6 #(if (< %1 %2) 1 0)
+   7 #(if (= %1 %2) 1 0)})
+
+(defn evaluate [{:keys [type payload]}]
+  (if (= 4 type)
+    payload
+    (reduce (type->op type) (map evaluate payload))))
+----
