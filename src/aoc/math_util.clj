@@ -67,3 +67,9 @@
 
 (defn median [xs]
   (-> xs sort (nth (/ (count xs) 2))))
+
+(defn quadratic [a b c]
+  (let [b2a (/ b (* 2 a))
+        discriminant (Math/sqrt (- (Math/pow b2a 2) (/ c a)))]
+    [(+ (* -1 b2a) discriminant)
+     (- (* -1 b2a) discriminant)]))
