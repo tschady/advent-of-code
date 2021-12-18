@@ -524,3 +524,102 @@ ranges that pass through the target at each time step.
                     y (apply range (vel-range vy [y_0 y_1] t))]
                 [x y]))))
 ----
+
+
+== link:../src/aoc/2021/d18.clj[aoc.2021.d18]
+My first thought was either `tree-seq` or `clojure.zip`.  With all the
+navigating necessary, I went with zippers. Although I'm familiar with
+them from considering their use on previous years, this was my first
+actual problem with them so I spent some time reading.  Then considerable
+experimentation to figure out the navigation.
+
+[CAUTION]
+====
+I lost hours because I read the instructions wrong.  I was navigating through
+the tree, finding the first available operation, then doing it.  The instructions
+say to do all the exploding, then go back and do any splitting.  I had to use
+printf debugging on the example with mine vs. another person's solution to see
+where I went wrong.
+====
+
+Gotta love problem input that's native Clojure code so `read-string` just works.
+
+[source, clojure]
+----
+(def input (mapv read-string (file-util/read-lines "2021/d18.txt")))
+----
+
+
+Nice to have the depth along for the ride.
+
+[source, clojure]
+----
+(defn- explode? [node]
+  (and (coll? (zip/node node))
+       (= 4 (count (zip/path node)))))
+----
+
+
+I use an iterator to lazily navigate the tree in the specified
+direction: `next` for forward/right, `prev` for backwards/left
+
+We need to include this `(not (nil? ...))` check because `zip/end`
+only works going forwards.  When we go backwards past the root,
+`nil` is our terminating signal.
+
+[source, clojure]
+----
+(defn iter-zip [zipper step-fn]
+  (->> zipper
+       (iterate step-fn)
+       (take-while #(and (not (nil? %))
+                         (not (zip/end? %))))))
+----
+
+
+Since we need to update two elements, we have to return
+back to this node only if we updated the left one.  Thus
+an ugly kludge in the add-left function to return back.
+
+[source, clojure]
+----
+(defn explode [zipper]
+  (let [[left right] (zip/node zipper)]
+    (-> zipper
+        (zip/replace 0)
+        (add-left left)
+        (add-right right)
+        zip/root)))
+
+(defn split
+  "Returns the zipper with this node replaced by a new child node.
+  The childs' values are the integer halves of the current value,
+  with rounding going to the right value."
+  [zipper]
+  (let [n     (zip/node zipper)
+        left  (quot n 2)
+        right (- n left)]
+    (-> zipper
+        (zip/replace [left right])
+        zip/root)))
+----
+
+
+The main loop uses iterators to find the next available exploder.
+If there isn't one, then try and split.  If we don't split, then
+we're done.
+TODO: This is currently inefficient, as we re-navigate back to each
+exploding node, when we could just do all the exploders in turn.
+(5s for part-2)
+
+[source, clojure]
+----
+(defn reduce-snail [data]
+  (let [zipper (-> data zip/vector-zip)
+        iter   (iter-zip zipper zip/next)]
+    (if-let [exploder (find-first explode? iter)]
+      (recur (explode exploder))
+      (if-let [splitter (find-first split? iter)]
+        (recur (split splitter))
+        (zip/root zipper)))))
+----
