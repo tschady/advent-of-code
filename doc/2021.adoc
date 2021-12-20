@@ -524,3 +524,76 @@ ranges that pass through the target at each time step.
                     y (apply range (vel-range vy [y_0 y_1] t))]
                 [x y]))))
 ----
+
+
+== link:../src/aoc/2021/d20.clj[aoc.2021.d20]
+Overall approach - use a map of [x y] to contents as usual.
+Normally, we could just store the 1s, and omit the zeros, but this
+problem has special consideration around Infinity. We start with an
+infinite board of darkness, and my input "algorithm" turns any fully
+dark square on (index 0 is `#`), and fully light squares off
+(index 512 is `0`). On odd iterations, the board will be infinitely bright.
+On even, infinitely dark.  If the problem asked for odd iterations,
+I could track the bounded dark squares, but since they only ask for even
+input I'll skip that and cheat with the `field` value below.  This is
+an infinite cycle representing what the outskirts look like at the time.
+
+[source, clojure]
+----
+(def glyph->val {\# \1 \. \0})
+
+(defn parse [[algo-str img-str]]
+  (let [img-lines (str/split-lines img-str)]
+    {:low   0
+     :hi    (count img-lines)
+     :field (cycle [\0 \1])
+     :img   (grid/build-grid img-lines glyph->val)
+     :algo  (mapv glyph->val algo-str)}))
+----
+
+
+When checking for surrounding values, if it's out of bounds,
+it's part of the infinite field.
+
+[source, clojure]
+----
+(defn new-val [algo img loc default]
+  (let [locs (grid/neighbor-coords loc (grid/area-deltas 1))]
+    (->> locs
+         (map #(get img % default))
+         (s->int 2)
+         (get algo))))
+----
+
+
+Use a typical step function for iteration.  Caching the current
+range extremities in `low` and `hi` saves a bit of time.
+
+[source, clojure]
+----
+(defn step [{:keys [low hi img algo field] :as state}]
+  (let [low  (dec low)
+        hi   (inc hi)
+        span (range low hi)
+        locs (for [x span y span] [x y])]
+    (reduce (fn [state loc]
+              (assoc-in state [:img loc] (new-val algo img loc (first field))))
+            (-> state
+                (assoc :low low)
+                (assoc :hi hi)
+                (update :field rest))
+            locs)))
+
+(defn solve [input n]
+  (->> (parse input)
+       (iterate step)
+       (x-nth n)
+       :img
+       (filter-vals #{\1})
+       count))
+----
+
+
+This is pretty slow (5s for part-2 on my machine).
+Replacing the `(iterate step state)` with a loop over a transient
+should be much faster
