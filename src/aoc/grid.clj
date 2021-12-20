@@ -109,6 +109,14 @@
                       [-1  0] ,,,,,, [1  0]
                       [-1  1] [0  1] [1  1]])
 
+(defn area-deltas
+  "Returns the delta to locations up to `n` spaces out from center,
+  unlike other `neighbor-*` functions, this includes the center square."
+  [n]
+  (for [y (range (* -1 n) (inc n))
+        x (range (* -1 n) (inc n))]
+    [x y]))
+
 (def neighbor-deltas-3d
   (for [x [-1 0 1]
         y [-1 0 1]
@@ -125,9 +133,11 @@
     [x y z w]))
 
 (defn neighbor-coords
-  "Return the 8 cartesian coord tuples surrounding input coord in 2-d space."
-  [[x y]]
-  (map (fn [[dx dy]] [(+ x dx) (+ y dy)]) neighbor-deltas))
+  "Return the cartesian coord tuples surrounding input coord in 2-d space,
+  with neighbors returned by `neighbors`, defaulting to the 8 surrounding cells."
+  ([[x y]] (neighbor-coords [x y] neighbor-deltas))
+  ([[x y] neighbors]
+   (map (fn [[dx dy]] [(+ x dx) (+ y dy)]) neighbors)))
 
 (defn neighbor-coords-news
   "Return the 4 cartesian coord tuples in the surrounding cardinal directions."
@@ -154,7 +164,6 @@
         (map grid)
         (remove nil?))))
 
-
 (defn build-grid
   "Return map of coordinates to a value, given list of strings of glyphs,
   and a mapping of glyph->val."
@@ -170,17 +179,21 @@
         max-y (apply max (map second (keys grid)))]
     [(inc max-x) (inc max-y)]))
 
+(defn grid-min-max [grid]
+  [(apply min (map first (keys grid)))
+   (apply max (map first (keys grid)))
+   (apply min (map second (keys grid)))
+   (apply max (map second (keys grid)))])
+
 (defn print-grid-to-array
   "Return ASCII representation of grid, given hashmap of coords to glyphs."
   [grid]
-  (let [min-x (apply min (map first (keys grid)))
-        max-x (apply max (map first (keys grid)))
-        min-y (apply min (map second (keys grid)))
-        max-y (apply max (map second (keys grid)))]
+  (let [[min-x max-x min-y max-y] (grid-min-max grid)
+        x-dim (- max-x min-x)]
     (->> (for [y (range min-y (inc max-y))
                x (range min-x (inc max-x))]
            (get grid [x y] \space))
-         (partition (inc max-x))
+         (partition (inc x-dim))
          (map (partial apply str)))))
 
 (def print print-grid-to-array)
