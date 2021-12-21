@@ -1,6 +1,7 @@
 (ns aoc.2021.d21
   (:require
    [aoc.file-util :as file-util]
+   [aoc.math-util :refer [mod-1]]
    [medley.core :refer [find-first]]))
 
 (def input (->> (file-util/read-file "2021/d21.txt")
@@ -29,12 +30,7 @@
 
 (defn deterministic-die [turn] (+ 3 (* 3 (inc (* 3 turn)))))
 
-;; dec/inc/mod dance to get 1-based.  TODO: make a helper function out of this?
-(defn advance-pos [roll pos]
-  (-> (dec pos)
-      (+ roll)
-      (mod 10)
-      inc))
+(defn advance-pos [roll pos] (mod-1 (+ roll pos) 10))
 
 (defn advance-state [{:keys [pos scores player] :as state} roll]
   (let [new-pos (advance-pos roll (get pos player))]
