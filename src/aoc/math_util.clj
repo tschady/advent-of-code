@@ -73,3 +73,8 @@
         discriminant (Math/sqrt (- (Math/pow b2a 2) (/ c a)))]
     [(+ (* -1 b2a) discriminant)
      (- (* -1 b2a) discriminant)]))
+
+(defn mod-1
+  "Returns the 1-based modulus `base` of `n`"
+  [n base]
+  (inc (mod (dec n) base)))

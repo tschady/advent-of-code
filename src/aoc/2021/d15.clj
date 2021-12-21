@@ -2,6 +2,7 @@
   (:require
    [aoc.file-util :as file-util]
    [aoc.grid :as grid]
+   [aoc.math-util :refer [mod-1]]
    [ubergraph.alg :as alg]
    [ubergraph.core :as uber]))
 
@@ -37,9 +38,7 @@
       (alg/shortest-path start end :weight)))
 
 ;; ^:blog Part 2 is solved the same way after expanding the grid.
-;; The example data helped here, as I originally just did `mod` and had 0s
-;; in my output.  This "modify, subtract 1, mod 9, increment 1" probably
-;; has a simpler expression.
+;; My new `mod-1` function helps prevent off-by-ones with 1-based indexing.
 
 (defn ^:blog expand-grid [grid magnifier]
   (let [[width height] (grid/size grid)]
@@ -48,7 +47,7 @@
                        dy   (range magnifier)
                        :let [[x y] loc
                              risk (get grid loc)
-                             new-risk (inc (mod (+ dx dy risk -1) 9))]]
+                             new-risk (mod-1 (+ dx dy risk) 9)]]
                    {[(+ x (* width dx)) (+ y (* height dy))] new-risk}))))
 
 ;; ^:blog
