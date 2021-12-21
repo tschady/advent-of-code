@@ -10,16 +10,15 @@
                 (take-nth 2)
                 (mapv read-string)))
 
-;; NOTES part-1 easy, not sure to use iterate or a loop, guessing for part2.  iterate
-;; was easier to debug.  I started with cycles for infinite die roll and next player
+;; ^:blog
+;; In line with my goal of being able to easily produce visualizations,
+;; I avoid recursion (and thus forego memoization benefits) to make
+;; lazy update functions usable with `iterate`.
 ;;
-;; i.e.  `(def fake-d100 (cycle (range 1 101)))`
-;;
-;; but changed them out to functions for easier debugging.
-
-;; part-2 Fun.  I notice we no longer need turn, and the die is the same every round.
-;; I should probably memoize, but I like having iterate for every possible
-;; state in case i want to visualize (later!)
+;; It wouldn't be practical to generalize the two halves of problem
+;; since we don't need any concept of turn in part 2.
+;; 
+;; I started with cycles for infinite die roll and next player (i.e. `(def fake-d100 (cycle (range 1 101)))` but changed them out to functions for easier debugging.
 
 (defn make-game [die-fn pos]
   {:turn   0
@@ -28,18 +27,22 @@
    :player 0
    :die-fn die-fn})
 
-(defn deterministic-die [turn] (+ 3 (* 3 (inc (* 3 turn)))))
+(defn ^:blog deterministic-die [turn] (+ 3 (* 3 (inc (* 3 turn)))))
 
-(defn advance-pos [roll pos] (mod-1 (+ roll pos) 10))
+;; ^:blog I used my new `mod-1` function again.
 
-(defn advance-state [{:keys [pos scores player] :as state} roll]
+(defn ^:blog advance-pos [roll pos] (mod-1 (+ roll pos) 10))
+
+;; ^:blog The active player is toggled, and used as the index of item to update
+
+(defn ^:blog advance-state [{:keys [pos scores player] :as state} roll]
   (let [new-pos (advance-pos roll (get pos player))]
     (-> state
         (update-in [:scores player] + new-pos)
         (assoc-in [:pos player] new-pos)
         (assoc :player (mod (inc player) 2)))))
 
-(defn play-turn [{:keys [turn pos player die-fn] :as game}]
+(defn ^:blog play-turn [{:keys [turn pos player die-fn] :as game}]
   (-> game
       (advance-state (die-fn turn))
       (update :turn inc)))
@@ -50,44 +53,61 @@
 (defn final-score [{:keys [turn scores]}]
   (* 3 turn (reduce min scores)))
 
-(defn part-1 [input]
+;; ^:blog I like the readability of using `medley.core/find-first` to stop iteration.
+
+(defn ^:blog part-1 [input]
   (->> input
        (make-game deterministic-die)
        (iterate play-turn)
        (find-first (partial winner 1000))
        final-score))
 
-(def dirac-rolls
+;; ^:blog Part 2 uses same iterative approach, which is much slower.  ~1.2s.
+;; But this gives us the full state at every time tick in a lazy sequence
+;; for viz.
+
+(def ^:blog dirac-rolls
   "The possible outcomes by frequency of 3d3."
   (frequencies (for [r1 [1 2 3]
                      r2 [1 2 3]
                      r3 [1 2 3]]
                  (+ r1 r2 r3))))
 
-(defn init-dirac [pos] {:pos pos :scores [0 0] :player 0})
-
-(defn dirac-poss [state n]
+(defn ^:blog dirac-poss
+  "Return a map of the possible outcome states with their frequency, based on
+  every possibility of a 3d3 roll."
+  [state n]
   (reduce (fn [state-hash [roll freq]]
             (merge-with + state-hash (hash-map (advance-state state roll) (* n freq))))
           {}
           dirac-rolls))
 
-(defn play-dirac [win-score input]
-  (loop [world {:winners    [0 0]
-                :state-hash {(init-dirac input) 1}}]
-    (if (empty? (:state-hash world))
-      (:winners world)
-      (recur
-       (reduce (fn [world [state n]]
-                 (let [poss                   (dirac-poss state n)
-                       {p1 0 p2 1 remain nil} (group-by #(winner win-score (key %)) poss)]
-                   (-> world
-                       (update-in [:winners 0] + (reduce + (map second p1)))
-                       (update-in [:winners 1] + (reduce + (map second p2)))
-                       (update :state-hash dissoc state)
-                       (update :state-hash #(merge-with + % (into {} remain))))))
-               world
-               (:state-hash world))))))
+(defn ^:blog step-dirac
+  "Advance the state of the dirac world by 1 time-tick.  This updates all of our
+  current states into their following states in one pass, suitable for `iterate`."
+  [win-score world]
+  (reduce (fn [world [state n]]
+            (let [{p1 0 p2 1 remain nil} (->> (dirac-poss state n)
+                                              (group-by #(winner win-score (key %))))]
+              (-> world
+                  (update-in [:winners 0] + (reduce + (map second p1)))
+                  (update-in [:winners 1] + (reduce + (map second p2)))
+                  (update :state-hash dissoc state)
+                  (update :state-hash #(merge-with + % (into {} remain))))))
+          world
+          (:state-hash world)))
 
-(defn part-2 [input]
-  (apply max (play-dirac 21 input)))
+(defn make-dirac
+  "Initial world state with given player positions."
+  [pos]
+  {:winners    [0 0]
+   :state-hash {{:pos pos :scores [0 0] :player 0} 1}})
+
+;; ^:blog We terminate when there are no more states that aren't winners.
+
+(defn ^:blog part-2 [input]
+  (->> (make-dirac input)
+       (iterate (partial step-dirac 21))
+       (find-first #(empty? (:state-hash %)))
+       :winners
+       (reduce max)))
