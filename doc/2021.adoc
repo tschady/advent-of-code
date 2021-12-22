@@ -803,6 +803,66 @@ We terminate when there are no more states that aren't winners.
 ----
 
 
+== link:../src/aoc/2021/d22.clj[aoc.2021.d22]
+I looked at the data and saw the two halves, I cut/paste in
+the obvious first section to not need a clamping function and get
+part1 quickly using a naive set of currently lit coordinates.  The
+input was small enough.
+
+For part2 this wouldn't work - even with bitpacking, it is TBs to
+store the naive solution, so we can't track individual locations.  I
+worked out the 2D case on paper to learn the algorithm, which is to
+recursively remove all overlapping subcubes from each layer of the
+instructions.  For 'on' cubes, we add their unique volume.  For
+'off' cubes, they add 0 lights, but still get removed from cubes
+before them.
+
+---
+
+These two low level utilities do most of the work to find the
+overlapping areas of two cuboids.
+
+[source, clojure]
+----
+(defn clamp
+  "Return the coordinate range `x0` -> `x1` clamped to range `lo` -> `hi`.
+  Returns nil in the case of no overlap."
+  [[lo hi] [x0 x1]]
+  (when (and (<= lo x1) (>= hi x0))
+    [(max lo x0) (min hi x1)]))
+
+(defn overlap
+  "Return the cuboid intersection of `c1` and `c2`, else nil."
+  [c1 c2]
+  (let [result (map clamp c1 c2)]
+    (when (every? identity result) result)))
+----
+
+
+The core of the algorithm is this recursive method to find
+the volume of lights uniquely represented by this cube by
+subtracting out the volumes of overlapping cubes in later
+instructions.  To make sure we do not subtract the same volume
+twice (or more), we need to descend the entire tree recursively. I
+borrowed the lazy seq `tails` from Haskell to elegantly get the set
+of remaining combinations to consider.  I inelegantly use `butlast`
+to prevent nil checks in destructuring, since the last item of
+tails is '().
+
+[source, clojure]
+----
+(defn unique-volume
+  "Return the volume unique to `cuboid`.  Recursively remove volumes
+  uniquely held by sub-cuboids from those that overlap `cuboid`."
+  [cuboid cuboids]
+  (let [relevant-cuboids (keep #(overlap cuboid %) cuboids)]
+    (reduce (fn [total [this & subcuboids]]
+              (- total (unique-volume this subcuboids)))
+            (volume cuboid)
+            (butlast (tails relevant-cuboids)))))
+----
+
+
 == link:../src/aoc/2021/d24.clj[aoc.2021.d24]
 
 CAUTION: I enjoyed the aha! moment of this puzzle.  Major spoilers
