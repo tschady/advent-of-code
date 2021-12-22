@@ -64,3 +64,10 @@
   reverses the order of the arguments so we can use in thread-last pipelines."
   [n xs]
   (nth xs n))
+
+(defn tails
+  "Returns a sequence of all suffixes of this sequence, longest first."
+  [xs]
+  (if-not (seq xs)
+    '(())
+    (cons xs (lazy-seq (tails (rest xs))))))
