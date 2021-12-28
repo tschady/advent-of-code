@@ -800,3 +800,51 @@ We terminate when there are no more states that aren't winners.
        :winners
        (reduce max)))
 ----
+
+
+== link:../src/aoc/2021/d25.clj[aoc.2021.d25]
+Straightforward reuse of `wrap-coords` to find any blockers.
+I intentionally used `dissoc` and `assoc` because I thought
+I'd switch to the transient versions later in a loop/recur
+for speed.
+
+[source, clojure]
+----
+(defn shift [dx dy grid g [loc c]]
+  (let [new-loc (->> loc
+                     (grid/vector-add (->delta c))
+                     (grid/wrap-coords dx dy))]
+    (if (get grid new-loc)
+      g
+      (-> g
+          (dissoc loc)
+          (assoc new-loc c)))))
+----
+
+
+This is my first use of `as->`. I always thought it obfuscating,
+but I like it here.
+
+[source, clojure]
+----
+(defn step [dx dy grid]
+  (as-> grid g
+    (reduce (partial shift dx dy g) g (filter-vals #{\>} grid))
+    (reduce (partial shift dx dy g) g (filter-vals #{\v} grid))))
+----
+
+
+This is really the year of iterate.  I hope I return to these with
+visualizations.
+
+[source, clojure]
+----
+(defn part-1 [input]
+  (let [[dx dy grid] (parse input)]
+    (->> grid
+         (iterate (partial step dx dy))
+         (partition 2 1)
+         (take-while (partial apply not=))
+         count
+         inc)))
+----
