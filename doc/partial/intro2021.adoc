@@ -3,8 +3,9 @@
 :toc:
 :toc-placement!:
 :date: 2021 Dec 01
-:description: Commentary on solutions to http://adventofcode.com/2021[Advent of Code 2021] problems
+:description: Commentary on solutions to http://adventofcode.com/2021[Advent of Code 2021]
 :sectanchors:
+:stem:
 
 ifdef::env-github[]
 :tip-caption: :bulb:
