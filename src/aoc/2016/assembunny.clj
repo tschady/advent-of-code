@@ -19,8 +19,8 @@
 (def ^:private cmd->fn (memoize *cmd->fn))
 
 (defn run [prog memory]
-  (loop [mem (transient memory)]
-    (if-let [cmd (get prog (get mem :ptr))]
+  (loop [mem (assoc! (transient memory) :prog prog)]
+    (if-let [cmd (get-in mem [:prog (get mem :ptr)])]
       (recur (-> mem
                  ((cmd->fn cmd))
                  (assoc! :ptr (inc (get mem :ptr)))))
