@@ -11,7 +11,7 @@
 
 (def yrs ["2021" "2020" "2019" "2018" "2017" "2016" "2015"])
 
-(def cookie (slurp ".session"))
+(def cookie (str/trim-newline (slurp ".session")))
 
 (def badge-style
   {"color"      "00cc00" ; right side
@@ -22,8 +22,9 @@
 (defn get-stars
   "Return a string representing number of stars earned for a given `year`"
   [year]
-  (let [parsed (-> (str "adventofcode.com/" year)
-                   (curl/get {:headers {"Cookie" (str "session=" cookie)}})
+  (let [parsed (-> (str "https://adventofcode.com/" year)
+                   (curl/get {:debug true
+                              :headers {"Cookie" (str "session=" cookie)}})
                    :body
                    (convert-to :hickory))]
     (-> (s/select (s/class "star-count") parsed)
