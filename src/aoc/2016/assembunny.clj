@@ -1,7 +1,7 @@
 (ns aoc.2016.assembunny
   (:require [clojure.string :as str]))
 
-(def init-state {:ptr 0 "a" 0 "b" 0 "c" 0 "d" 0})
+(def init-state {:ptr 0 :out [] "a" 0 "b" 0 "c" 0 "d" 0})
 
 (defn- val-or-int [mem a] (or (get mem a) (Integer/parseInt a)))
 
@@ -31,7 +31,9 @@
                 (let [target (next-ptr mem a)]
                   (if-let [instr (get-in mem [:prog target])]
                     (assoc! mem :prog (assoc (get mem :prog) target (toggle-instr instr)))
-                    mem))))
+                    mem)))
+        "out" (fn [mem]
+                (assoc! mem :out (conj (get mem :out) (val-or-int mem a)))))
       (catch Exception e (identity)))))
 
 (def ^:private cmd->fn (memoize *cmd->fn))
@@ -43,3 +45,15 @@
                  ((cmd->fn cmd))
                  (assoc! :ptr (inc (get mem :ptr)))))
       (get (persistent! mem) "a"))))
+
+(defn run-inf-output [prog memory limit]
+  (loop [counter 0
+         mem (transient (assoc memory :prog prog))]
+    (if (>= (count (get mem :out)) limit)
+      (get (persistent! mem) :out)
+      (if-let [cmd (get-in mem [:prog (get mem :ptr)])]
+          (recur (inc counter)
+                 (-> mem
+                     ((cmd->fn cmd))
+                     (assoc! :ptr (inc (get mem :ptr)))))
+          (get (persistent! mem) "a")))))
