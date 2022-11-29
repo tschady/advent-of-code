@@ -1,7 +1,6 @@
 (ns aoc.2016.d12
   (:require [aoc.2016.assembunny :as bunny]
-            [aoc.file-util :as file-util]
-            [clojure.string :as str]))
+            [aoc.file-util :as file-util]))
 
 (def input (file-util/read-lines "2016/d12.txt"))
 

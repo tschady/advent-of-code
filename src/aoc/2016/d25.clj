@@ -6,12 +6,12 @@
 (def input (file-util/read-lines "2016/d25.txt"))
 
 ;; hack
-(defn desired-output [a]
+(defn desired-output [prog a]
   (let [depth 10]
     (= (take depth (cycle [0 1]))
-       (bunny/run-inf-output input (assoc bunny/init-state "a" a) depth))))
+       (bunny/run-inf-output prog (assoc bunny/init-state "a" a) depth))))
 
 (defn part-1 [prog]
   (->> (drop 1 (range))
-       (filter desired-output)
+       (filter #(desired-output prog %))
        first))

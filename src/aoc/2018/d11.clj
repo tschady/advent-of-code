@@ -19,9 +19,7 @@
 
 (defn format-answer [xs] (str/join "," xs))
 
-(defn make-grid-coords
-  ""
-  [size]
+(defn make-grid-coords [size]
   (for [x (range 1 (inc size))
         y (range 1 (inc size))]
     [x y]))
@@ -35,15 +33,12 @@
         up-left (get m [(dec x) (dec y)] 0)]
     (- (+ cur-power up left) up-left)))
 
-(defn build-matrix
-  [grid-sn size]
+(defn build-matrix [grid-sn size]
   (reduce (fn [m [x y]] (assoc m [x y] (summed-area grid-sn m [x y])))
           {}
           (make-grid-coords size)))
 
-(defn subgrid-power
-  ""
-  [subgrid-size matrix [x y]]
+(defn subgrid-power [subgrid-size matrix [x y]]
   (let [delta (dec subgrid-size)
         nw (get matrix [(dec x) (dec y)] 0)
         ne (get matrix [(+ x delta) (dec y)] 0)
@@ -52,30 +47,23 @@
     (when-not (nil? se)
       (- (+ se nw) ne sw))))
 
-(defn power-grid
-  [matrix subgrid-size]
+(defn power-grid [matrix subgrid-size]
   (->> (keys matrix)
        (map #(subgrid-power subgrid-size matrix %))
        (zipmap (keys matrix))
        (filter second)
        (into {})))
 
-(defn max-power
-  ""
-  [matrix subgrid-size]
+(defn max-power [matrix subgrid-size]
   (apply max-key val (power-grid matrix subgrid-size)))
 
-(defn part-1
-  ""
-  [grid-sn]
+(defn part-1 [grid-sn]
   (-> (build-matrix grid-sn matrix-size)
       (max-power 3)
       key
       format-answer))
 
-(defn part-2
-  ""
-  [grid-sn]
+(defn part-2 [grid-sn]
   (let [matrix (build-matrix grid-sn matrix-size)]
     (->> (range 1 (inc matrix-size))
          (map (fn [subgrid-size]

@@ -11,17 +11,17 @@
   (map reverse (transpose m)))
 
 (defn flip-x
-  ""
+  "Reverse the rows of a matrix."
   [m]
   (map reverse m))
 
 (defn flip-y
-  ""
+  "Reverse the columns of a matrix."
   [m]
   (-> m transpose flip-x transpose))
 
 (defn corner-idxs
-  ""
+  "Returns the 4 indexes of the corners of a 2D square of `size` dimensions."
   [size]
   (for [y [0 (dec size)]
         x [0 (dec size)]]
