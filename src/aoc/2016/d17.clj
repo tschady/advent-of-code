@@ -17,7 +17,7 @@
 
 (defn next-states [{:keys [pos path]} goal size pass]
   (let [doors (take 4 (md5 (str pass (apply str path))))
-        moves (keep-indexed #(if (unlocked? %2) (dirs %1)) doors)]
+        moves (keep-indexed #(when (unlocked? %2) (dirs %1)) doors)]
     (for [[dir step] moves
           :let [new-pos (grid/vector-add pos step)
                 dist (grid/manhattan-dist new-pos goal)]
@@ -32,7 +32,6 @@
         (= (:pos curr) goal) (apply str (:path curr))
         :else
         (recur (into (pop p) (next-states curr goal size pass)))))))
-
 
 ;; This is made more complicated by `next-states` having the A*
 ;; heuristic calc.  I could de-dupe this problem by solving all paths,

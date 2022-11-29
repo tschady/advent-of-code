@@ -35,14 +35,14 @@
 
 ;; ^:blog The active player is toggled, and used as the index of item to update
 
-(defn ^:blog advance-state [{:keys [pos scores player] :as state} roll]
+(defn ^:blog advance-state [{:keys [pos player] :as state} roll]
   (let [new-pos (advance-pos roll (get pos player))]
     (-> state
         (update-in [:scores player] + new-pos)
         (assoc-in [:pos player] new-pos)
         (assoc :player (mod (inc player) 2)))))
 
-(defn ^:blog play-turn [{:keys [turn pos player die-fn] :as game}]
+(defn ^:blog play-turn [{:keys [turn die-fn] :as game}]
   (-> game
       (advance-state (die-fn turn))
       (update :turn inc)))

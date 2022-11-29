@@ -34,7 +34,7 @@
                     mem)))
         "out" (fn [mem]
                 (assoc! mem :out (conj (get mem :out) (val-or-int mem a)))))
-      (catch Exception e (identity)))))
+      (catch Exception _ #(identity %)))))
 
 (def ^:private cmd->fn (memoize *cmd->fn))
 

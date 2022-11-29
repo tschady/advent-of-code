@@ -3,8 +3,6 @@
             digest
             [medley.core :refer [distinct-by]]))
 
-(digest/md5 "foo")
-
 (def input "wtnhxymk")
 
 (defn target-hashes [input]
@@ -13,17 +11,13 @@
        (map digest/md5)
        (filter #(str/starts-with? % "00000"))))
 
-(defn part-1
-  ""
-  [input]
+(defn part-1 [input]
   (->> (target-hashes input)
        (take 8)
        (map #(nth % 5))
        (apply str)))
 
-(defn part-2
-  ""
-  [input]
+(defn part-2 [input]
   (->> (target-hashes input)
        (map (juxt (comp #(Character/digit % 10) #(nth % 5))
                   #(nth % 6)))
