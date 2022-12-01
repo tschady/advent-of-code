@@ -3,6 +3,7 @@
           :source-paths ["src"]
           :test-paths ["test"]
           :ns-patterns ["-test$"]}
+         {:id :y2022 :test-paths ["test/aoc/2022"]}
          {:id :y2021 :test-paths ["test/aoc/2021"]}
          {:id :y2020 :test-paths ["test/aoc/2020"]}
          {:id :y2019 :test-paths ["test/aoc/2019"]}
