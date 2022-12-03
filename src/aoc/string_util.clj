@@ -80,3 +80,6 @@
      (set/difference b a)
      (set/intersection a b)]))
 
+(defn halve [s]
+  "Returns a vector of 2 equal parts of `s`.  Extra chars will go at the end."
+  (split-at (quot (count s) 2) s))
