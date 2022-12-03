@@ -4,6 +4,9 @@
    [clojure.set :as set]
    [clojure.string :as str]))
 
+(def alphabet-lower "abcdefghijklmnopqrstuvwxyz")
+(def alphabet-upper "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
 (defn ints
   "Return a collection of integers found in a string.  Integers may be negative."
   [s]
@@ -76,3 +79,4 @@
     [(set/difference a b)
      (set/difference b a)
      (set/intersection a b)]))
+
