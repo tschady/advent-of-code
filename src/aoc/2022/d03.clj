@@ -17,8 +17,6 @@
        (map priority)
        (reduce +)))
 
-(defn part-1 [input]
-  (solve input (fn [sacks] (map #(partition (/ (count %) 2) %) sacks))))
+(defn part-1 [input] (solve input (partial map s/halve)))
 
-(defn part-2 [input]
-  (solve input (partial partition 3)))
+(defn part-2 [input] (solve input (partial partition 3)))
