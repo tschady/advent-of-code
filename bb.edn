@@ -8,6 +8,9 @@
          download {:doc  "Download problem input for given year and day.
              e.g. bb download -y 2022 -d 7, defaults to today."
                    :task (exec 'tasks/download-input)}
+         go       {:doc  "Macro to get a jump on today"
+                   :depends [download template]
+                   :task (exec 'tasks/open-browser)}
          lint     {:doc  "Run clj-kondo over all src/test."
                    :task (shell "clj-kondo --parallel --lint src:test")}
          outdated {:doc  "Find outdated library versions, and selectively upgrade."

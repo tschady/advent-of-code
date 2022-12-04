@@ -2,6 +2,7 @@
   (:require
    [babashka.curl :as curl]
    [babashka.pods :as pods]
+   [clojure.java.shell :refer [sh]]
    [selmer.parser :refer [render-file]]))
 
 (pods/load-pod 'retrogradeorbit/bootleg "0.1.9")
@@ -30,8 +31,11 @@
 
 (defn- zero-pad-str [s] (format "%02d" (Long/valueOf s)))
 
+(defn- problem-url [y d] (str aoc-url "/" y "/day/" d))
+(defn- input-url [y d] (str (problem-url y d) "/input"))
+
 (defn template-day
-  ""
+  "Create stub clj and test file for given day, from template."
   [{:keys [y d] :or {y current-year d current-day}}]
   (let [d       (zero-pad-str d)
         outsrc  (format "src/aoc/%s/d%s.clj" y d)
@@ -40,14 +44,14 @@
     (spit outtest (render-file "templates/test.clj" {:year y :day d}))))
 
 (defn download-input
-  ""
+  "Download the problem input for given day, and save to correct path."
   [{:keys [y d] :or {y current-year d current-day}}]
-  (let [url (str aoc-url "/" y "/day/" d "/input")
+  (let [url (input-url y d)
         dest (format "resources/%s/d%s.txt" y (zero-pad-str d))]
     (spit dest (:body (curl/get url headers)))))
 
 (defn- save-badge
-  ""
+  "Create badge with year label and star count, and save to file."
   [[label stars]]
   (let [path  (str "img/" label ".svg")
         params (merge {"label" label, "message" stars} badge-style)
@@ -66,3 +70,10 @@
         all-yrs    (mapv str (reverse (range 2015 (inc (Long/valueOf current-year)))))
         yrs->stars (zipmap (conj all-yrs "Total") stars)]
     (run! save-badge yrs->stars)))
+
+(defn open-browser
+  "Open default browser to input page and problem page.  Should open
+  in separate tabs with focus on problem."
+  [{:keys [y d] :or {y current-year d current-day}}]
+  (sh "open" (input-url y d))
+  (sh "open" (problem-url y d)))
