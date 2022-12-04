@@ -21,6 +21,8 @@ image:2020.svg[]
 image:2021.svg[]
 image:2022.svg[]
 
+image::Total.svg[]
+
 image:https://circleci.com/gh/tschady/advent-of-code.svg?style=svg["CircleCI", https://circleci.com/gh/tschady/advent-of-code]
 image:https://codecov.io/gh/tschady/advent-of-code/branch/master/graph/badge.svg["codecov", https://codecov.io/gh/tschady/advent-of-code]
 
