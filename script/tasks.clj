@@ -2,6 +2,7 @@
   (:require
    [babashka.curl :as curl]
    [babashka.pods :as pods]
+   [babashka.process :as p]
    [clojure.java.shell :refer [sh]]
    [selmer.parser :refer [render-file]]))
 
@@ -32,23 +33,22 @@
 (defn- zero-pad-str [s] (format "%02d" (Long/valueOf s)))
 
 (defn- problem-url [y d] (str aoc-url "/" y "/day/" d))
-(defn- input-url [y d] (str (problem-url y d) "/input"))
+(defn- input-url   [y d] (str (problem-url y d) "/input"))
+(defn- source-path [y d] (format "src/aoc/%s/d%s.clj"       y (zero-pad-str d)))
+(defn- test-path   [y d] (format "test/aoc/%s/d%s_test.clj" y (zero-pad-str d)))
+(defn- input-path  [y d] (format "resources/%s/d%s.txt"     y (zero-pad-str d)))
 
 (defn template-day
   "Create stub clj and test file for given day, from template."
   [{:keys [y d] :or {y current-year d current-day}}]
-  (let [d       (zero-pad-str d)
-        outsrc  (format "src/aoc/%s/d%s.clj" y d)
-        outtest (format "test/aoc/%s/d%s_test.clj" y d)]
-    (spit outsrc (render-file "templates/src.clj" {:year y :day d}))
-    (spit outtest (render-file "templates/test.clj" {:year y :day d}))))
+  (let [d0 (zero-pad-str d)]
+    (spit (source-path y d) (render-file "templates/src.clj" {:year y :day d0}))
+    (spit (test-path y d) (render-file "templates/test.clj" {:year y :day d0}))))
 
 (defn download-input
   "Download the problem input for given day, and save to correct path."
   [{:keys [y d] :or {y current-year d current-day}}]
-  (let [url (input-url y d)
-        dest (format "resources/%s/d%s.txt" y (zero-pad-str d))]
-    (spit dest (:body (curl/get url headers)))))
+  (spit (input-path y d) (:body (curl/get (input-url y d) headers))))
 
 (defn- save-badge
   "Create badge with year label and star count, and save to file."
@@ -71,9 +71,9 @@
         yrs->stars (zipmap (conj all-yrs "Total") stars)]
     (run! save-badge yrs->stars)))
 
-(defn open-browser
-  "Open default browser to input page and problem page.  Should open
-  in separate tabs with focus on problem."
+(defn open-apps
+  "Fire up all applications required to solve the problem."
   [{:keys [y d] :or {y current-year d current-day}}]
+  (p/process (str "emacsclient -c " (source-path y d)))
   (sh "open" (input-url y d))
   (sh "open" (problem-url y d)))
