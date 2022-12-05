@@ -1,6 +1,7 @@
 (ns tasks
   (:require
    [babashka.curl :as curl]
+   [babashka.fs :as fs]
    [babashka.pods :as pods]
    [babashka.process :as p]
    [clojure.java.shell :refer [sh]]
@@ -11,8 +12,12 @@
 (require '[pod.retrogradeorbit.bootleg.utils :refer [convert-to]]
          '[pod.retrogradeorbit.hickory.select :as s])
 
-(def current-year (str (.getYear (java.time.LocalDate/now))))
-(def current-day (str (.getDayOfMonth (java.time.LocalDate/now))))
+(def now (java.time.LocalDate/now (java.time.ZoneId/of "US/Eastern")))
+
+(def current-day (str (.getDayOfMonth now)))
+(def current-year (str (if (= 12 (.getMonthValue now))
+                         (.getYear now)
+                         (dec (.getYear now)))))
 
 (def aoc-url "https://adventofcode.com")
 (def badge-url "http://img.shields.io/static/v1")
@@ -41,14 +46,23 @@
 (defn template-day
   "Create stub clj and test file for given day, from template."
   [{:keys [y d] :or {y current-year d current-day}}]
-  (let [d0 (zero-pad-str d)]
-    (spit (source-path y d) (render-file "templates/src.clj" {:year y :day d0}))
-    (spit (test-path y d) (render-file "templates/test.clj" {:year y :day d0}))))
+  (let [d0 (zero-pad-str d)
+        out-source (source-path y d)
+        out-test (test-path y d)]
+    (if (fs/exists? out-source)
+      (println (format "Create '%s' failed, file already exists." out-source))
+      (spit out-source (render-file "templates/src.clj" {:year y :day d0})))
+    (if (fs/exists? out-test)
+      (println (format "Create '%s' failed, file already exists." out-test))
+      (spit out-test (render-file "templates/test.clj" {:year y :day d0})))))
 
 (defn download-input
   "Download the problem input for given day, and save to correct path."
   [{:keys [y d] :or {y current-year d current-day}}]
-  (spit (input-path y d) (:body (curl/get (input-url y d) headers))))
+  (let [dest (input-path y d)]
+    (if (fs/exists? dest)
+      (println (format "Create '%s' failed, file already exists." dest))
+      (spit dest (:body (curl/get (input-url y d) headers))))))
 
 (defn- save-badge
   "Create badge with year label and star count, and save to file."
