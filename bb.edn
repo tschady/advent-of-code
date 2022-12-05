@@ -5,17 +5,18 @@
                    :task (shell "rm -rf .cpcache target")}
          doc      {:doc  "Generate blog from source for input year"
                    :task (clojure "-M:doc" *command-line-args*)}
-         download {:doc  "Download problem input for given year and day.
-             e.g. bb download -y 2022 -d 7, defaults to today."
+         download {:doc  "Download problem input for -y YYYY -d D, default today."
                    :task (exec 'tasks/download-input)}
-         go       {:doc  "Quickstart macro: download, create templates, open browser and editor to problem"
+         go       {:doc  "Quickstart: download data, open REPL/editor to problem template, open browser."
                    :depends [download template]
                    :task (exec 'tasks/open-apps)}
          lint     {:doc  "Run clj-kondo over all src/test."
                    :task (shell "clj-kondo --parallel --lint src:test")}
          outdated {:doc  "Find outdated library versions, and selectively upgrade."
                    :task (clojure "-M:outdated --upgrade")}
-         template {:doc  "Create src & test templates for -y YYYY -d D"
+         submit   {:doc  "Submit answer for part & day. -p {1,2} -y YYYY -d D, default today."
+                   :task (echo "foo")}
+         template {:doc  "Create src & test templates for -y YYYY -d D, default today."
                    :task (exec 'tasks/template-day)}
          test     {:doc  "Run test suite, skipping those with 'slow' metadata."
                    :task (clojure "-M:test --skip-meta :slow")}
