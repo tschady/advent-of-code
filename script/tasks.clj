@@ -39,6 +39,8 @@
 
 (defn- problem-url [y d] (str aoc-url "/" y "/day/" d))
 (defn- input-url   [y d] (str (problem-url y d) "/input"))
+(defn- answer-url  [y d] (str (problem-url y d) "/answer"))
+
 (defn- source-path [y d] (format "src/aoc/%s/d%s.clj"       y (zero-pad-str d)))
 (defn- test-path   [y d] (format "test/aoc/%s/d%s_test.clj" y (zero-pad-str d)))
 (defn- input-path  [y d] (format "resources/%s/d%s.txt"     y (zero-pad-str d)))
@@ -91,3 +93,21 @@
   (p/process (str "emacsclient -c " (source-path y d)))
   (sh "open" (input-url y d))
   (sh "open" (problem-url y d)))
+
+(defn submit
+  "Submit answers for given part and day.  Results to STDOUT."
+  [{:keys [p y d a] :or {p "1" y current-year d current-day}}]
+  (if (empty? a)
+    (println "Error: you must submit an answer after the -a flag.")
+    (let [resp (->> {:body (format "level=%s&answer=%s" p a)}
+                    (merge headers)
+                    (curl/post (answer-url y d)))
+          result (->> (convert-to (:body resp) :hickory)
+                   (s/select (s/child (s/tag :article) (s/tag :p)))
+                   first
+                   :content
+                   first)]
+      (prn resp)
+      (prn "-------")
+      (prn result)
+      )))
