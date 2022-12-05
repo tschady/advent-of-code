@@ -15,7 +15,7 @@
          outdated {:doc  "Find outdated library versions, and selectively upgrade."
                    :task (clojure "-M:outdated --upgrade")}
          submit   {:doc  "Submit answer for part & day. -p {1,2} -y YYYY -d D, default today."
-                   :task (echo "foo")}
+                   :task (exec 'tasks/submit)}
          template {:doc  "Create src & test templates for -y YYYY -d D, default today."
                    :task (exec 'tasks/template-day)}
          test     {:doc  "Run test suite, skipping those with 'slow' metadata."
