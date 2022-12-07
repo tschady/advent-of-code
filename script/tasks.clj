@@ -5,6 +5,7 @@
    [babashka.pods :as pods]
    [babashka.process :as p]
    [clojure.java.shell :refer [sh]]
+   [clojure.walk :refer [prewalk]]
    [selmer.parser :refer [render-file]]))
 
 (pods/load-pod 'retrogradeorbit/bootleg "0.1.9")
@@ -91,23 +92,27 @@
   "Fire up all applications required to solve the problem."
   [{:keys [y d] :or {y current-year d current-day}}]
   (p/process (str "emacsclient -c " (source-path y d)))
+  (sh "git" "checkout" "-b" (format "%s-%s" y d))
   (sh "open" (input-url y d))
   (sh "open" (problem-url y d)))
 
 (defn submit
   "Submit answers for given part and day.  Results to STDOUT."
   [{:keys [p y d a] :or {p "1" y current-year d current-day}}]
-  (if (empty? a)
+  (if (nil? a)
     (println "Error: you must submit an answer after the -a flag.")
-    (let [resp (->> {:body (format "level=%s&answer=%s" p a)}
-                    (merge headers)
-                    (curl/post (answer-url y d)))
+    (let [resp   (->> {:body (format "level=%s&answer=%s" p a)}
+                      (merge headers)
+                      (curl/post (answer-url y d)))
           result (->> (convert-to (:body resp) :hickory)
-                   (s/select (s/child (s/tag :article) (s/tag :p)))
-                   first
-                   :content
-                   first)]
-      (prn resp)
-      (prn "-------")
-      (prn result)
-      )))
+                      (s/select (s/child (s/tag :main) (s/tag :article)))
+                      first :content first
+                      (prewalk (fn [x]
+                                 (cond
+                                   (string? x) x
+                                   (map? x)    (:content x))))
+                      flatten
+                      (apply str))]
+      (prn resp);; temporary to debug in case this monster parse hack fails
+      (println "-------")
+      (println result))))
