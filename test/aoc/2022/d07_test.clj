@@ -4,7 +4,7 @@
    [clojure.test :refer :all]
    [clojure.string :as str]))
 
-(def example (str/split-lines
+(def example
 "$ cd /
 $ ls
 dir a
@@ -27,7 +27,7 @@ $ ls
 4060174 j
 8033020 d.log
 5626152 d.ext
-7214296 k"))
+7214296 k")
 
 (deftest challenges
   (is (= 1582412 (sut/part-1 sut/input)))
