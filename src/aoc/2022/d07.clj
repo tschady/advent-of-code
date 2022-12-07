@@ -5,7 +5,47 @@
    [clojure.zip :as z]
    [com.rpl.specter :as sp]))
 
-(def input (f/read-lines "2022/d07.txt"))
+(def input (f/read-file "2022/d07.txt"))
+
+;; ## Approach
+;; I first did this with Zippers, leaving all that code
+;; below in a `comment` for the next time I need to get the rust off.
+;;
+;; Then I realized the input is in DFS order, so I could just cheat by
+;; munging the string to add the right brackets, and eval into a tree.
+
+(defn parse-tree [input]
+  (let [open (-> input
+                 (str/replace "$ cd .." "]")
+                 (str/replace #"\$ cd (.*?)\n" " [")
+                 (str/replace #"[^\d \[\]]" ""))
+        missing (- (get (frequencies open) \[)
+                   (get (frequencies open) \]))]
+    (read-string (str open (apply str (repeat missing "]"))))))
+
+(defn dir-sizes [input]
+  (->> (parse-tree input)
+       (tree-seq vector? identity)
+       (filter vector?)
+       (map #(sp/select (sp/walker number?) %))
+       (map (partial reduce +))
+       sort))
+
+(defn part-1 [input]
+  (->> (dir-sizes input)
+       (filter #(>= 100000 %))
+       (reduce +)))
+
+(defn part-2 [input]
+  (let [dirs (dir-sizes input)
+        space-needed (- 30000000 (- 70000000 (last dirs)))]
+    (->> dirs
+         (drop-while #(> space-needed %))
+         first)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(comment ;; first zipper approach
 
 (defn make-dir [name] {:type :d :name name :ls '()})
 
@@ -45,7 +85,8 @@
 
 (defn build-tree [input]
   (let [fs (make-zipper (make-dir "/"))]
-    (->> (rest input)
+    (->> (str/split-lines input)
+         rest
          (reduce exec-cmd fs)
          z/root)))
 
@@ -81,3 +122,4 @@
          (drop-while #(> needed (:du %)))
          first
          :du)))
+)
