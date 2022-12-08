@@ -1,4 +1,7 @@
-(ns aoc.matrix)
+(ns aoc.matrix
+  (:require
+   [clojure.core.matrix :as mat]
+   [clojure.math.combinatorics :refer [cartesian-product]]))
 
 (defn transpose
   "Return the matrix transpose (switching cols for rows) of given 2D matrix"
@@ -72,3 +75,8 @@
           (for [y (range y (+ x dy))
                 x (range x (+ x dx))]
             [x y])))
+
+(defn coords
+  "Returns a list of all [x y] coordinates in the given matrix."
+  [m]
+  (apply cartesian-product (map range (reverse (mat/shape m)))))
