@@ -78,13 +78,3 @@
   "Returns the 1-based modulus `base` of `n`"
   [n base]
   (inc (mod (dec n) base)))
-
-(defn clamp
-  "Returns `n` clamped within the minimum and maximum allowed values."
-  [n lo hi]
-  (max lo (min hi n)))
-
-(defn clamp-1
-  "Convenience helper to fix `n` to within [-1 .. 1]"
-  [n]
-  (clamp n -1 1))
