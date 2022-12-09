@@ -1,7 +1,8 @@
 (ns aoc.2020.d11
   (:require [aoc.coll-util :as coll-util]
             [aoc.file-util :as file-util]
-            [aoc.grid :as grid]))
+            [aoc.grid :as grid]
+            [clojure.core.matrix :as mat]))
 
 (def input (file-util/read-lines "2020/d11.txt"))
 
@@ -39,7 +40,7 @@
   "Return the first glyph of `grid` in the line of sight from `loc` looking in
   the direction of `slope`"
   [grid loc slope]
-  (let [inspect-loc (grid/vector-add loc slope)
+  (let [inspect-loc (mat/add loc slope)
         glyph (get grid inspect-loc)]
     (if (= :floor glyph)
       (recur grid inspect-loc slope)

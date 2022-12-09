@@ -1,8 +1,9 @@
 (ns aoc.2020.d24
-  (:require [aoc.conway-life :as life]
-            [aoc.file-util :as file-util]
-            [aoc.hex :as hex]
-            [aoc.math-util :as math-util]))
+  (:require
+   [aoc.conway-life :as life]
+   [aoc.file-util :as file-util]
+   [aoc.hex :as hex]
+   [clojure.core.matrix :as mat]))
 
 (def input (file-util/read-lines "2020/d24.txt"))
 
@@ -10,7 +11,7 @@
   (->> (re-seq #"(se|sw|nw|ne|w|e)" s)
        (map first)
        (map (partial hex/delta :pointy-top))
-       (math-util/vector-math +)))
+       (apply mat/add)))
 
 (defn seed
   "Returns initial set of black tile coordinates from given instructions."

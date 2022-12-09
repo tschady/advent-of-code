@@ -50,18 +50,6 @@
       (+ 360 deg)
       deg)))
 
-(defn vector-diff
-  "Return the vector difference of the second arg subtracted from the first,
-  given 2 Cartesian points.  e.g. (vector-diff [10 10] [1 2]) => [9 8]"
-  [[x1 y1] [x2 y2]]
-  [(- x1 x2) (- y1 y2)])
-
-(defn vector-add
-  "Return the vector sum of the args given 2 Cartesian points.
-  e.g. (vector-sum [10 10] [1 2]) => [11 12]"
-  [[x1 y1] [x2 y2]]
-  [(+ x1 x2) (+ y1 y2)])
-
 (defn distance [[x1 y1] [x2 y2]]
   (Math/sqrt (+ (Math/pow (- x2 x1) 2)
                 (Math/pow (- y2 y1) 2))))

@@ -1,8 +1,10 @@
 (ns aoc.2019.d10
-  (:require [aoc.file-util :as file-util]
-            [aoc.grid :as grid]
-            [com.rpl.specter :refer [transform MAP-VALS]]
-            [medley.core :refer [remove-vals]]))
+  (:require
+   [aoc.file-util :as file-util]
+   [aoc.grid :as grid]
+   [clojure.core.matrix :as mat]
+   [com.rpl.specter :refer [MAP-VALS transform]]
+   [medley.core :refer [remove-vals]]))
 
 (def input (file-util/read-lines "2019/d10.txt"))
 
@@ -24,7 +26,7 @@
   {90 [[1 0] [5 0] [80 0]]}"
   [field point]
   (->> (disj field point)
-       (group-by #(grid/angle (rotate (grid/vector-diff % point))))
+       (group-by #(grid/angle (rotate (mat/sub % point))))
        (into (sorted-map))
        (transform [MAP-VALS] #(sort-by (partial grid/distance point) %))))
 
