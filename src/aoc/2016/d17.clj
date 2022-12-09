@@ -1,8 +1,10 @@
 (ns aoc.2016.d17
-  (:require [aoc.file-util :as file-util]
-            [aoc.grid :as grid]
-            [clojure.data.priority-map :refer [priority-map]]
-            [digest :refer [md5]]))
+  (:require
+   [aoc.file-util :as file-util]
+   [aoc.grid :as grid]
+   [clojure.core.matrix :as m]
+   [clojure.data.priority-map :refer [priority-map]]
+   [digest :refer [md5]]))
 
 (def input (file-util/read-file "2016/d17.txt"))
 
@@ -19,7 +21,7 @@
   (let [doors (take 4 (md5 (str pass (apply str path))))
         moves (keep-indexed #(when (unlocked? %2) (dirs %1)) doors)]
     (for [[dir step] moves
-          :let [new-pos (grid/vector-add pos step)
+          :let [new-pos (m/add pos step)
                 dist (grid/manhattan-dist new-pos goal)]
           :when (in-bounds? new-pos size)]
       {{:pos new-pos :path (conj path dir)} (+ dist (inc (count path)))})))

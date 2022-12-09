@@ -1,5 +1,7 @@
 (ns aoc.hex
-  (:require [aoc.math-util :as math-util]))
+  (:require
+   [clojure.core.matrix :as mat]
+   [aoc.grid :as grid]))
 
 ;; [resource on hex-coord systems and functions](https://www.redblobgames.com/grids/hexagons/)
 
@@ -28,14 +30,14 @@
 
 (defn distance
   ([a] (distance a [0 0 0]))
-  ([a b] (/ (reduce + (map (comp #(Math/abs %) -) a b)) 2)))
+  ([a b] (/ (grid/manhattan-dist a b) 2)))
 
 (defn walk
   "Return the hex delta (in [q r s] coords) of applying cardinal direction `steps`"
   [orientation steps]
   (->> steps
        (map (partial delta orientation))
-       (math-util/vector-math +)))
+       (apply mat/add)))
 
 (defn step
   "Return location resulting from walking 1 step from `loc` in direction `dir`.

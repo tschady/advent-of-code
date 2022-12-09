@@ -1,6 +1,7 @@
 (ns aoc.2020.d12
   (:require [aoc.file-util :as file-util]
-            [aoc.grid :as grid]))
+            [aoc.grid :as grid]
+            [clojure.core.matrix :as mat]))
 
 (def input (file-util/read-lines "2020/d12.txt"))
 
@@ -22,8 +23,8 @@
                     (condp = dir
                       \R (assoc acc :bearing (nth (iterate rot-r (get acc :bearing)) (num-turns mag)))
                       \L (assoc acc :bearing (nth (iterate rot-l (get acc :bearing)) (num-turns mag)))
-                      \F (update acc :loc grid/vector-add (mapv #(* mag %) (get acc :bearing)))
-                      (update acc method grid/vector-add (grid/move->delta [dir mag]))))
+                      \F (update acc :loc mat/add (mapv #(* mag %) (get acc :bearing)))
+                      (update acc method mat/add (grid/move->delta [dir mag]))))
                   {:loc grid/origin :bearing bearing}
                   (map grid/parse-move input))))
 

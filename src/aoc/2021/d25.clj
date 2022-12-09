@@ -2,6 +2,7 @@
   (:require
    [aoc.file-util :as file-util]
    [aoc.grid :as grid]
+   [clojure.core.matrix :as mat]
    [medley.core :refer [filter-vals remove-vals]]))
 
 (def input (file-util/read-lines "2021/d25.txt"))
@@ -22,7 +23,7 @@
 
 (defn ^:blog shift [dx dy grid g [loc c]]
   (let [new-loc (->> loc
-                     (grid/vector-add (->delta c))
+                     (mat/add (->delta c))
                      (grid/wrap-coords dx dy))]
     (if (get grid new-loc)
       g
