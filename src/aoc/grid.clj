@@ -3,6 +3,8 @@
   (:require
    [aoc.coll-util :as coll-util]
    [aoc.string-util :as s]
+   [clojure.core.matrix :as mat]
+   [clojure.core.matrix.linear :as linear]
    [clojure.string :as str]))
 
 (defn parse-move
@@ -105,7 +107,9 @@
   "Return the manhattan distance between two points, where each point is a
   vector of cartesian coordinates.  Works for n-dimensions."
   [a b]
-  (reduce + (map (comp #(Math/abs ^long %) -) a b)))
+  (-> (mat/sub a b)
+      (linear/norm 1)
+      int))
 
 (def neighbor-deltas [[-1 -1] [0 -1] [1 -1]
                       [-1  0] ,,,,,, [1  0]
