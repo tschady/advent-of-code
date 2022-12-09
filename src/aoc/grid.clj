@@ -1,14 +1,16 @@
 (ns aoc.grid
   (:refer-clojure :exclude [print])
-  (:require [aoc.coll-util :as coll-util]
-            [clojure.string :as str]))
+  (:require
+   [aoc.coll-util :as coll-util]
+   [aoc.string-util :as s]
+   [clojure.string :as str]))
 
 (defn parse-move
   "Transform a move, represented by a concatenated string of dir and dist,
   into a tuple of dir and dist.
-  e.g. 'R5' => [\\R 5]"
+  e.g. 'R5' => [\\R 5], 'R 5' => [\\R 5]"
   [move]
-  ((juxt first #(Integer/parseInt (str/join (rest %)))) (str/trim move)))
+  ((juxt first #(first (s/ints %))) move))
 
 (def dir->delta {\U [ 0  1]
                  \D [ 0 -1]
