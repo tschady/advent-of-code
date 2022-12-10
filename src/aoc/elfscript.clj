@@ -1,5 +1,6 @@
 (ns aoc.elfscript
-  (:require [clojure.string :as str]))
+  (:require
+   [clojure.string :as str]))
 
 (declare char-4x6)
 
@@ -18,7 +19,9 @@
         (map (partial take 4)) ; remove space
         (map transpose)
         (map #(map (partial apply str) %))
-        (map char-4x6)
+        (map #(or (char-4x6 %)
+                  (throw (Exception.
+                          (format "Unknown character: '%s'" (str/join "\n" %))))))
         (apply str))))
 
 (def char-4x6
