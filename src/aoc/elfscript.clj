@@ -12,6 +12,10 @@
        (map #(str/replace % on \#))))
 
 (defn ocr
+  "Returns the string representation of the characters on `screen`,
+  which is an array of rows of pixel outputs.  Default pixels are '#'
+  for on and '.' for off, but these chars may be given in optional
+  {:on c :off c} argument."
   ([screen glyphs] (ocr (normalize screen glyphs)))
   ([screen]
    (->> (transpose screen)
