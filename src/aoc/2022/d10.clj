@@ -1,8 +1,9 @@
 (ns aoc.2022.d10
   (:require
+   [aoc.elfscript :as elfscript]
    [aoc.file-util :as f]
-   [clojure.string :as str]
-   [aoc.string-util :as s]))
+   [aoc.string-util :as s]
+   [clojure.string :as str]))
 
 (def input (f/read-file "2022/d10.txt"))
 
@@ -23,4 +24,5 @@
   (->> (reg-series input)
        (map-indexed draw-pixel)
        (partition 40)
-       (map (partial apply str))))
+       (map (partial apply str))
+       (elfscript/ocr)))

@@ -1,5 +1,6 @@
 (ns aoc.2021.d13
   (:require
+   [aoc.elfscript :as elfscript]
    [aoc.file-util :as file-util]
    [aoc.grid :as grid]
    [aoc.string-util :as string-util]
@@ -29,4 +30,5 @@
   (let [{:keys [paper folds]} (parse input)]
     (-> (reduce fold paper folds)
         (zipmap (repeat \#))
-        grid/print)))
+        grid/print
+        (elfscript/ocr {:off \space :on \#}))))
