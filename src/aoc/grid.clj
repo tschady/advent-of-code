@@ -181,14 +181,15 @@
 
 (defn print-grid-to-array
   "Return ASCII representation of grid, given hashmap of coords to glyphs."
-  [grid]
-  (let [[min-x max-x min-y max-y] (grid-min-max grid)
-        x-dim (- max-x min-x)]
-    (->> (for [y (range min-y (inc max-y))
-               x (range min-x (inc max-x))]
-           (get grid [x y] \space))
-         (partition (inc x-dim))
-         (map (partial apply str)))))
+  ([grid] (print-grid-to-array \space grid))
+  ([off grid]
+   (let [[min-x max-x min-y max-y] (grid-min-max grid)
+         x-dim                     (- max-x min-x)]
+     (->> (for [y (range min-y (inc max-y))
+                x (range min-x (inc max-x))]
+            (get grid [x y] off))
+          (partition (inc x-dim))
+          (map (partial apply str))))))
 
 (def print print-grid-to-array)
 
