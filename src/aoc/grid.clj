@@ -174,10 +174,10 @@
     [(inc max-x) (inc max-y)]))
 
 (defn grid-min-max [grid]
-  [(apply min (map first (keys grid)))
-   (apply max (map first (keys grid)))
-   (apply min (map second (keys grid)))
-   (apply max (map second (keys grid)))])
+  [(reduce min (map first (keys grid)))
+   (reduce max (map first (keys grid)))
+   (reduce min (map second (keys grid)))
+   (reduce max (map second (keys grid)))])
 
 (defn print-grid-to-array
   "Return ASCII representation of grid, given hashmap of coords to glyphs."
