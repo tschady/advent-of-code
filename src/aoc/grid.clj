@@ -5,7 +5,9 @@
    [aoc.string-util :as s]
    [clojure.core.matrix :as mat]
    [clojure.core.matrix.linear :as linear]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [aoc.grid :as grid]
+   [medley.core :as medley]))
 
 (defn parse-move
   "Transform a move, represented by a concatenated string of dir and dist,
@@ -227,3 +229,22 @@
         (recur (into (rest nodes) (remove seen open-neighbors))
                (conj seen loc)
                (into adj-map (hash-map loc open-neighbors)))))))
+
+(defn connected-adjacency-map2
+  "Same as above, but passes current loc into the open-function."
+  [open-fn? neighbor-fn origin]
+  (loop [nodes   (list origin)
+         seen    #{}
+         adj-map {}]
+    (if (empty? nodes)
+      adj-map
+      (let [loc            (first nodes)
+            open-neighbors (filter (partial open-fn? loc) (neighbor-fn loc))]
+        (recur (into (rest nodes) (remove seen open-neighbors))
+               (conj seen loc)
+               (into adj-map (hash-map loc open-neighbors)))))))
+
+(defn locate
+  "Returns the collection of coords in grid `g` that contain value `v`"
+  [g v]
+  (keys (medley/filter-vals #{v} g)))
