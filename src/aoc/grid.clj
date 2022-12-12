@@ -215,23 +215,12 @@
 
 (defn connected-adjacency-map
   "Returns a node adjacency map where nodes are `grid` coords, and edges
-  exist if both nodes are 'open', where openness is determined by `open-fn?`.
-  Map entries are in form {[0 0] '([0 1] [1 0])}, suitable for graph library constructors.
-  Note: only nodes connected via `neighbor-fn` from the `origin` node are present."
-  [open-fn? neighbor-fn origin]
-  (loop [nodes   (list origin)
-         seen    #{}
-         adj-map {}]
-    (if (empty? nodes)
-      adj-map
-      (let [loc            (first nodes)
-            open-neighbors (filter open-fn? (neighbor-fn loc))]
-        (recur (into (rest nodes) (remove seen open-neighbors))
-               (conj seen loc)
-               (into adj-map (hash-map loc open-neighbors)))))))
-
-(defn connected-adjacency-map2
-  "Same as above, but passes current loc into the open-function."
+  exist if both nodes are 'open', where openness is determined by
+  `open-fn?`, which is a function which takes two arguments: the
+  current location and the potential next location.  Map entries are
+  in form {[0 0] '([0 1] [1 0])}, suitable for graph library
+  constructors.  Note: only nodes connected via `neighbor-fn` from the
+  `origin` node are present."
   [open-fn? neighbor-fn origin]
   (loop [nodes   (list origin)
          seen    #{}

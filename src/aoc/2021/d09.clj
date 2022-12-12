@@ -9,7 +9,7 @@
   (let [neighbors (g/neighbors grid loc g/neighbor-coords-news)]
     (every? (partial < height) neighbors)))
 
-(defn basin? [grid loc]
+(defn basin? [grid _ loc]
   (let [v (get grid loc)]
     (not (or (nil? v) (= 9 v)))))
 

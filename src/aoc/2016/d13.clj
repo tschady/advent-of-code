@@ -10,7 +10,7 @@
 
 (defn *open-space?
   "Return true if given coord is an open space within problem bounds given by `size`, else false."
-  [input size [x y]]
+  [input size _ [x y]]
   (and (<= 0 x size)
        (<= 0 y size)
        (-> (+ (* x x) (* 3 x) (* 2 x y) (* y y) y input)
