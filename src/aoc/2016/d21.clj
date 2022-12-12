@@ -41,7 +41,7 @@
 (defn inv-rotate-based
   [s c]
   (->> (range (count s))
-       (map #(rotate-left s %))
+       (map #(s/rotate-left s %))
        (filter #(= s (rotate-based % c)))
        first))
 

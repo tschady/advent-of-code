@@ -1,7 +1,8 @@
 (ns aoc.2022.d11-test
-    (:require
-     [aoc.2022.d11 :as sut]
-     [clojure.test :refer :all]))
+  (:require
+   [aoc.2022.d11 :as sut]
+   [clojure.string :as str]
+   [clojure.test :refer :all]))
 
 (def ex1 (->
 "Monkey 0:
