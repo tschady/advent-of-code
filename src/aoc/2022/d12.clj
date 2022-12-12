@@ -22,18 +22,19 @@
         h1 (get grid neighbor ##Inf)]
     (>= 1 (- h1 h0))))
 
-(defn build-graph [grid]
+(defn build-graph [grid start]
   (uber/digraph (grid/connected-adjacency-map
                  (partial walkable? grid)
                  grid/neighbor-coords-news
-                 origin)))
+                 start)))
 
 (defn part-1 [input]
-  (let [[grid start end] (parse input)]
-    (:cost (alg/shortest-path (build-graph grid) start end))))
+  (let [[grid start end] (parse input)
+        dg (build-graph grid start)]
+    (:cost (alg/shortest-path dg start end))))
 
 (defn part-2 [input]
-  (let [[grid _ end] (parse input)
-        starts (grid/locate grid 0)]
-    (:cost (alg/shortest-path (build-graph grid) {:start-nodes starts
-                                                  :end-node    end}))))
+  (let [[grid start end] (parse input)
+        starts (grid/locate grid 0)
+        dg (build-graph grid start)]
+    (:cost (alg/shortest-path dg {:start-nodes starts :end-node end}))))
