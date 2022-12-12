@@ -83,3 +83,16 @@
 (defn halve [s]
   "Returns a vector of 2 equal parts of `s`.  Extra chars will go at the end."
   (split-at (quot (count s) 2) s))
+
+(defn swap-letter [s x y] (replace {x y, y x} s))
+
+(defn swap-pos [s i j] (swap-letter s (nth s i) (nth s j)))
+
+(defn rotate-left [s n]
+  (let [i (mod n (count s))]
+    (concat (drop i s) (take i s))))
+
+(defn rotate-right [s n]
+  (let [i (mod n (count s))]
+    (concat (take-last i s) (drop-last i s))))
+
