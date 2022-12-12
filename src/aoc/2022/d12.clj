@@ -23,7 +23,7 @@
     (>= 1 (- h1 h0))))
 
 (defn build-graph [grid]
-  (uber/digraph (grid/connected-adjacency-map2
+  (uber/digraph (grid/connected-adjacency-map
                  (partial walkable? grid)
                  grid/neighbor-coords-news
                  origin)))
