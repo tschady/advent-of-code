@@ -80,8 +80,9 @@
      (set/difference b a)
      (set/intersection a b)]))
 
-(defn halve [s]
+(defn halve
   "Returns a vector of 2 equal parts of `s`.  Extra chars will go at the end."
+  [s]
   (split-at (quot (count s) 2) s))
 
 (defn swap-letter [s x y] (replace {x y, y x} s))
@@ -95,4 +96,3 @@
 (defn rotate-right [s n]
   (let [i (mod n (count s))]
     (concat (take-last i s) (drop-last i s))))
-

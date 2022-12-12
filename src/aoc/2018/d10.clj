@@ -1,9 +1,9 @@
 (ns aoc.2018.d10
   (:require
+   [aoc.elfscript :as elfscript]
    [aoc.file-util :as f]
-   [aoc.string-util :as s]
    [aoc.grid :as grid]
-   [aoc.elfscript :as elfscript]))
+   [aoc.string-util :as s]))
 
 (def input (f/read-lines "2018/d10.txt"))
 
@@ -13,7 +13,7 @@
 
 (defn tick-pixel
   ([pixel] (tick-pixel 1 pixel))
-  ([n {:keys [x y dx dy] :as pixel}]
+  ([n {:keys [dx dy] :as pixel}]
    (-> pixel
        (update-in [:x] + (* n dx))
        (update-in [:y] + (* n dy)))))

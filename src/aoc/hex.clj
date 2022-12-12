@@ -1,7 +1,7 @@
 (ns aoc.hex
   (:require
-   [clojure.core.matrix :as mat]
-   [aoc.grid :as grid]))
+   [aoc.grid :as grid]
+   [clojure.core.matrix :as mat]))
 
 ;; [resource on hex-coord systems and functions](https://www.redblobgames.com/grids/hexagons/)
 

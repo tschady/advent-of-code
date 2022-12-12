@@ -70,7 +70,7 @@
              last)
     (->> (z/down node)
          (iterate z/next)
-         (drop-while #(and (not (zip/end? %))
+         (drop-while #(and (not (z/end? %))
                            (not (target-dir? % dest))))
          first)))
 

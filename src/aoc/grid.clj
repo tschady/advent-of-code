@@ -5,8 +5,6 @@
    [aoc.string-util :as s]
    [clojure.core.matrix :as mat]
    [clojure.core.matrix.linear :as linear]
-   [clojure.string :as str]
-   [aoc.grid :as grid]
    [medley.core :as medley]))
 
 (defn parse-move

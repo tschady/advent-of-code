@@ -1,7 +1,8 @@
 (ns aoc.2022.d09-test
-    (:require
-     [aoc.2022.d09 :as sut]
-     [clojure.test :refer :all]))
+  (:require
+   [aoc.2022.d09 :as sut]
+   [clojure.string :as str]
+   [clojure.test :refer :all]))
 
 (def ex-1 (str/split-lines "R 4
 U 4

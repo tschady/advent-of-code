@@ -1,8 +1,7 @@
 (ns aoc.2022.d07-test
   (:require
    [aoc.2022.d07 :as sut]
-   [clojure.test :refer :all]
-   [clojure.string :as str]))
+   [clojure.test :refer :all]))
 
 (def example
 "$ cd /
