@@ -21,7 +21,8 @@
            ubergraph/ubergraph            {:mvn/version "0.8.2"}
            }
  :paths   ["src" "resources"]
- :aliases {:test      {:extra-paths ["test"]
+ :aliases {:dev       {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}
+           :test      {:extra-paths ["test"]
                        :extra-deps  {lambdaisland/kaocha           {:mvn/version "1.71.1119"}
                                      lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}
                                      org.clojure/test.check        {:mvn/version "RELEASE"}}
