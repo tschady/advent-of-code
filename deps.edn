@@ -8,6 +8,7 @@
            org.clj-commons/hickory        {:mvn/version "0.7.3"}
            org.clojure/clojure            {:mvn/version "1.11.1"}
            org.clojure/core.logic         {:mvn/version "1.0.1"}
+           org.clojure/core.match         {:mvn/version "1.0.0"}
            org.clojure/data.csv           {:mvn/version "1.0.1"}
            org.clojure/data.finger-tree   {:mvn/version "0.0.3"}
            org.clojure/data.json          {:mvn/version "2.4.0"}
