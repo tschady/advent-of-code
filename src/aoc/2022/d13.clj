@@ -9,19 +9,13 @@
 
 (defn compare-packets [L R]
   (cond
-    (and (nil? L) (nil? R))       0
-    (nil? R)                      1
-    (nil? L)                      -1
-    (and (number? L) (number? R)) (compare L R)
-    (number? R)                   (compare-packets L (list R))
-    (number? L)                   (compare-packets (list L) R)
-
-    (and (sequential? L) (sequential? R))
-    (let [c (compare-packets (first L) (first R))]
-      (if (zero? c)
-        (compare-packets (next L) (next R))
-        c))
-    :else (throw (AssertionError. (str "Unhandled packets" L R)))))
+    (and (sequential? L) (number? R))     (compare-packets L (list R))
+    (and (number? L) (sequential? R))     (compare-packets (list L) R)
+    (and (sequential? L) (sequential? R)) (let [c (compare-packets (first L) (first R))]
+                                            (if (zero? c)
+                                              (compare-packets (next L) (next R))
+                                              c))
+    :else (compare L R)))
 
 (defn part-1 [input]
   (->> (parse-packets input)
