@@ -179,6 +179,14 @@
    (reduce min (map second (keys grid)))
    (reduce max (map second (keys grid)))])
 
+(def bounds grid-min-max)
+
+(defn ob?
+  "Returns true if loc given by [x y] is outside the bounding box
+  [min-x max-x min-y max-y], like that returned by grid/bounds."
+  [[x1 x2 y1 y2] [x y]]
+  (not (and (<= x1 x x2) (<= y1 y y2))))
+
 (defn print-grid-to-array
   "Return ASCII representation of grid, given hashmap of coords to glyphs."
   ([grid] (print-grid-to-array \space grid))
@@ -235,3 +243,19 @@
   "Returns the collection of coords in grid `g` that contain value `v`"
   [g v]
   (keys (medley/filter-vals #{v} g)))
+
+(defn pos-range
+  "Returns the range between a and b no matter which input is larger.
+  Retains the correct order.  Useful for iterating over the `x` or `y`
+  coords between two points without regard for sign."
+  [a b]
+  (if (> a b)
+    (range a (dec b) -1)
+    (range a (inc b))))
+
+(defn line-coords
+  "Return the coll of [x y] coords of the line determined by input points."
+  [[x1 y1] [x2 y2]]
+  (for [x (pos-range x1 x2)
+        y (pos-range y1 y2)]
+    [x y]))
