@@ -20,6 +20,7 @@ image:2019.svg[]
 image:2020.svg[]
 image:2021.svg[]
 image:2022.svg[]
+image:2023.svg[]
 
 image::Total.svg[]
 
