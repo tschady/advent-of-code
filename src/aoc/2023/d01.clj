@@ -20,11 +20,7 @@
        (#(str (first %) (last %)))
        parse-long))
 
-(defn munge [s]
-  (reduce-kv #(str/replace %1 %2 %3) s word-hack))
-
-(defn solve [input re]
-  (reduce + 0 (map (partial get-calibration re) input)))
+(defn munge [s] (reduce-kv #(str/replace %1 %2 %3) s word-hack))
 
 (defn part-1 [input] (transduce (map calibrate) + input))
 
