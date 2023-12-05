@@ -5,25 +5,27 @@
 
 (def input (f/read-lines "2023/d01.txt"))
 
-(def word2num {"one" "1" "two" "2" "three" "3" "four" "4" "five" "5"
-               "six" "6" "seven" "7" "eight" "8" "nine" "9"})
+(def word-hack {"one"   "o1e"
+                "two"   "t2o"
+                "three" "t3e"
+                "four"  "f4r"
+                "five"  "f5e"
+                "six"   "s6x"
+                "seven" "s7n"
+                "eight" "e8t"
+                "nine"  "n9e"})
 
-(defn get-calibration
-  "Returns the two-digit number comprised of the first and last digit
-  appearing in `s` as determined by regex `re`"
-  [re s]
-  (->> (re-seq re s)
-       ((juxt first last))
-       (map second)
-       (map #(get word2num % %))
-       (apply str)
+(defn calibrate [s]
+  (->> (re-seq #"\d" s)
+       (#(str (first %) (last %)))
        parse-long))
+
+(defn munge [s]
+  (reduce-kv #(str/replace %1 %2 %3) s word-hack))
 
 (defn solve [input re]
   (reduce + 0 (map (partial get-calibration re) input)))
 
-(defn part-1 [input]
-  (solve input #"(\d)"))
+(defn part-1 [input] (transduce (map calibrate) + input))
 
-(defn part-2 [input]
-  (solve input (re-pattern (str "(?=(\\d|" (str/join "|" (keys word2num)) "))"))))
+(defn part-2 [input] (transduce (comp (map munge) (map calibrate)) + input))
