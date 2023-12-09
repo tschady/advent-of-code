@@ -1,8 +1,8 @@
 (ns aoc.2023.d05-test
   (:require
    [aoc.2023.d05 :as sut]
-   [clojure.test :refer :all]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [clojure.test :refer :all]))
 
 (def ex-str "seeds: 79 14 55 13
 

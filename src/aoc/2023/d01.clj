@@ -20,8 +20,8 @@
        (#(str (first %) (last %)))
        parse-long))
 
-(defn munge [s] (reduce-kv #(str/replace %1 %2 %3) s word-hack))
+(defn hack [s] (reduce-kv #(str/replace %1 %2 %3) s word-hack))
 
 (defn part-1 [input] (transduce (map calibrate) + input))
 
-(defn part-2 [input] (transduce (comp (map munge) (map calibrate)) + input))
+(defn part-2 [input] (transduce (comp (map hack) (map calibrate)) + input))

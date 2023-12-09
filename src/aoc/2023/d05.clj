@@ -1,8 +1,7 @@
 (ns aoc.2023.d05
   (:require
    [aoc.file-util :as f]
-   [aoc.string-util :as string-util]
-   [clojure.string :as str]))
+   [aoc.string-util :as string-util]))
 
 (def input (f/read-chunks "2023/d05.txt"))
 

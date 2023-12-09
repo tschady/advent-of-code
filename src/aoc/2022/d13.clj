@@ -1,7 +1,6 @@
 (ns aoc.2022.d13
   (:require
-   [aoc.file-util :as f]
-   [clojure.string :as str]))
+   [aoc.file-util :as f]))
 
 (def input (f/read-file "2022/d13.txt"))
 
