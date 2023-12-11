@@ -91,6 +91,11 @@
   [move-instructions]
   (->> move-instructions (map parse-move) step-moves (walk origin)))
 
+(defn manhattan-dist-2d
+  [[x0 y0] [x1 y1]]
+  (+ (abs (- x1 x0))
+     (abs (- y1 y0))))
+
 (defn manhattan-dist
   "Return the manhattan distance between two points, where each point is a
   vector of cartesian coordinates.  Works for n-dimensions."
