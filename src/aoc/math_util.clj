@@ -72,3 +72,9 @@
   "Returns the 1-based modulus `base` of `n`"
   [n base]
   (inc (mod (dec n) base)))
+
+(defn between?
+  "Returns true if `n` falls between `a` and `b` without touching"
+  [n a b]
+  (or (< a n b)
+      (> a n b)))
