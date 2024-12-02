@@ -1,6 +1,11 @@
 (ns aoc.coll-util
   (:require clojure.set))
 
+(defn count-truthy [coll]
+  "Returns the count of truthy items in `coll`"
+  ;; does not create an intermediate collection like `filter true?`
+  (reduce (fn [n val] (if val (inc n) n)) 0 coll))
+
 (defn idx-of-max
   "Return the index of the maximum value of the collection."
   [coll]
@@ -25,6 +30,11 @@
   "Return the `coll` input vector with the `i`th item removed."
   [coll i]
   (vec (concat (subvec coll 0 i) (subvec coll (inc i)))))
+
+(defn list-remove
+  "Return the `xs` input list with the `i`th item removed."
+  [xs i]
+  (concat (take i xs) (drop (inc i) xs)))
 
 (defn first-duplicate
   "For given coll, return a vector of first duplicate entry, and the two
