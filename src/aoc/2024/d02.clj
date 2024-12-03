@@ -17,6 +17,6 @@
 (defn safe-with-dampening? [report]
   (some safe? (cons report (dampened-candidates report))))
 
-(defn part-1 [input] (c/count-truthy (map safe? input)))
+(defn part-1 [input] (count (filter safe? input)))
 
-(defn part-2 [input] (c/count-truthy (map safe-with-dampening? input)))
+(defn part-2 [input] (count (filter safe-with-dampening? input)))
