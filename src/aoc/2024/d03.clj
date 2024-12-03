@@ -11,7 +11,7 @@
 (defn execute [mem]
   (transduce (comp (map second) (map s/ints) (map #(apply * %)))
              +
-             (re-seq #"mul\((\d+,\d+)\)" mem)))
+             (re-seq #"mul\((\d{1,3},\d{1,3})\)" mem)))
 
 (defn part-1 [input] (-> input execute))
 
