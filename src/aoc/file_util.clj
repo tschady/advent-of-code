@@ -8,7 +8,7 @@
 (defn read-file
   "Return full file contents from `path`."
   [path]
-  (-> path io/resource slurp str/trim-newline))
+  (-> (str "inputs/" path) io/resource slurp str/trim-newline))
 
 (defn read-lines
   "Return file contents as collection of rows."
