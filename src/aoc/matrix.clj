@@ -72,7 +72,7 @@
   [m [x y] dx dy v]
   (reduce #(set-element % %2 v)
           m
-          (for [y (range y (+ x dy))
+          (for [y (range y (+ y dy))
                 x (range x (+ x dx))]
             [x y])))
 
