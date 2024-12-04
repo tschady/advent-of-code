@@ -1,7 +1,8 @@
 (ns aoc.matrix
   (:require
    [clojure.core.matrix :as mat]
-   [clojure.math.combinatorics :refer [cartesian-product]]))
+   [clojure.math.combinatorics :refer [cartesian-product]]
+   [plumbing.core :refer [for-map]]))
 
 (defn transpose
   "Return the matrix transpose (switching cols for rows) of given 2D matrix"
@@ -76,7 +77,29 @@
                 x (range x (+ x dx))]
             [x y])))
 
+(defn get-rect
+  [m [x y] dx dy]
+  (for [y' (range y (+ dy y))]
+    (subvec (get m y') x (+ x dx))))
+
 (defn coords
   "Returns a list of all [x y] coordinates in the given matrix."
   [m]
   (apply cartesian-product (map range (reverse (mat/shape m)))))
+
+(defn rot-45
+  "Returns the matrix rotated 45 degrees clockwise. Fills with 0 or optional `fill` char"
+  ([m] (rot-45 m 0))
+  ([m fill]
+   ;; FIXME: assumes square
+   (let [size  (count m)
+         size' (dec (* 2 size))
+         data  (for-map [x (range size)
+                         y (range size)
+                         :let [x' (+ x y)
+                               y' (+ (- size x 1) y)]]
+                        [y' x'] (get-in m [x y]))
+         m'    (initialize size' size' fill)]
+     (reduce-kv (fn [m k v] (set-element m k v))
+                m'
+                data))))
