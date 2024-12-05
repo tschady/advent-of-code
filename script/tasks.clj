@@ -44,7 +44,7 @@
 
 (defn- source-path [y d] (format "src/aoc/%s/d%s.clj"       y (zero-pad-str d)))
 (defn- test-path   [y d] (format "test/aoc/%s/d%s_test.clj" y (zero-pad-str d)))
-(defn- input-path  [y d] (format "resources/%s/d%s.txt"     y (zero-pad-str d)))
+(defn- input-path  [y d] (format "resources/inputs/%s/d%s.txt" y (zero-pad-str d)))
 
 (defn template-day
   "Create stub clj and test file for given day, from template."
