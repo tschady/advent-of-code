@@ -81,3 +81,9 @@
   (if-not (seq xs)
     '(())
     (cons xs (lazy-seq (tails (rest xs))))))
+
+(defn midpoint
+  "Returns the value at the midpoint of the collection."
+  [coll]
+  {:pre [(odd? (count coll))]}
+  (nth coll (quot (count coll) 2)))
