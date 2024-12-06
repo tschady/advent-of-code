@@ -1,0 +1,56 @@
+== Encrypting your input files
+
+This guide provides instructions on how to have your inputs be encrypted on GitHub, and unencrypted locally.
+For those that have already pushed input files, I have included a section on purging these from your history.
+
+The benefits of this approach are that you can work and push normally without being aware of the encryption.  Just don't lose the symmetric encryption key, or else you'd have to download all your data again.
+
+NOTE: all paths and globs are written for my specific needs, you will need to update them for yours
+
+=== 1. Encrypt current & future inputs
+
+----
+$ brew install git-crypt
+$ git-crypt init
+$ git-crypt export-key /path/to/MY-SECRET-KEY
+----
+
+copy this key somewhere safe, you'll need it on all fresh clones
+
+To make purging easier, I created a new directory to place all input files inside (in my case `resources/inputs`), and copy (not git-cp) input files there
+
+Update your code to use new location
+
+edit .gitattributes to add:
+
+`resources/inputs/** filter=git-crypt diff=git-crypt`
+
+
+git add/commit/push new input files, verify GitHub has encrypted versions
+
+=== 2. Purge old unencrypted inputs
+
+NOTE: this will delete your stashes, so save them if you care
+
+IMPORTANT: set aside a copy of your current working repo to revert, e.g. in case you get your filter glob wrong.
+
+`$ brew install git-filter-repo`
+
+read the thorough man page
+
+`$ man git-filter-repo`
+
+clone a clean bare copy:
+----
+$ git clone --mirror git@github.com:tschady/advent-of-code.git
+$ cd advent-of-code.git
+$ git filter-repo --sensitive-data-removal --invert-paths --path-glob 'resources/20*/d*'
+$ git push --force --mirror origin
+----
+
+=== 3. Get new purged repo and unlock it
+
+----
+$ git clone git@github.com:tschady/advent-of-code.git
+$ git-crypt unlock /path/to/MY-SECRET-KEY
+----

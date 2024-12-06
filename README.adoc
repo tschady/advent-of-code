@@ -33,6 +33,14 @@ image:https://codecov.io/gh/tschady/advent-of-code/branch/master/graph/badge.svg
 ## Introduction
 My Clojure solutions to the https://adventofcode.com[Advent of Code] challenge over multiple years.
 
+## Don't make your inputs public!
+
+.Plea from creator of AOC:
+[quote, Eric Wastl]
+If you're posting a code repository somewhere, please don't include parts of Advent of Code like the puzzle text or your inputs.
+
+To aid anyone else that may have already published their inputs, I wrote link:ENCRYPT.adoc[this guide] on how to transparently encrypt your inputs and purge older public copies.
+
 ## Completed Years
 
 image:complete-2015.gif["2015",300]
