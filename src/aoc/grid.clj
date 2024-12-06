@@ -171,12 +171,20 @@
                  x (range (count (nth lines y)))]
              {[x y] (glyph->val (get-in lines [y x]))})))
 
+(defn max-x
+  "Returns the maximum x coordinate of grid."
+  [grid]
+  (apply max (map first (keys grid))))
+
+(defn max-y
+  "Returns the maximum y coordinate of grid."
+  [grid]
+  (apply max (map second (keys grid))))
+
 (defn size
   "Returns the a tuple of max dimensions along [x y]"
   [grid]
-  (let [max-x (apply max (map first (keys grid)))
-        max-y (apply max (map second (keys grid)))]
-    [(inc max-x) (inc max-y)]))
+  [(inc (max-x grid)) (inc (max-y grid))])
 
 (defn grid-min-max [grid]
   [(reduce min (map first (keys grid)))
