@@ -5,7 +5,7 @@ For those that have already pushed input files, I have included a section on pur
 
 The benefits of this approach are that you can work and push normally without being aware of the encryption.  Just don't lose the symmetric encryption key, or else you'd have to download all your data again.
 
-NOTE: all paths and globs are written for my specific needs, you will need to update them for yours
+NOTE: all paths and globs are written for my specific needs, you will need to update them for yours.  My old problematic inputs were in path `resources/2015/d01.txt` and my new ones are `resources/inputs/2015/d01.txt`
 
 === 1. Encrypt current & future inputs
 
