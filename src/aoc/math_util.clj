@@ -1,6 +1,11 @@
 (ns aoc.math-util
   (:require [clojure.string :as str]))
 
+(defn digit-count
+  "Returns number of digits in given integer `n`"
+  [n]
+  (-> n Math/log10 long inc))
+
 (defn factors
   "Return vector of all factors of a given integer `n`"
   [n]
