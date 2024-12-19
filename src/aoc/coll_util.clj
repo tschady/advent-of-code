@@ -75,6 +75,13 @@
   [n xs]
   (nth xs n))
 
+(defn heads
+  "Returns a sequence of all prefixes of this sequence, longest first."
+  [xs]
+  (if-not (seq xs)
+    '(())
+    (cons xs (lazy-seq (heads (butlast xs))))))
+
 (defn tails
   "Returns a sequence of all suffixes of this sequence, longest first."
   [xs]
