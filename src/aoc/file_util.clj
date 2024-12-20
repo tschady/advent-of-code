@@ -21,6 +21,14 @@
   [path]
   (-> path read-file (str/split #"\n\n")))
 
+(defn parse-chunks
+  "Return a map of supplied keys to parsed-input data, using passed in
+  vector of parsing functions corresponding to input chunks."
+  [path parsers]
+  (apply merge (map (fn [chunk [k f]] {k (f chunk)})
+              (read-chunks path)
+              parsers)))
+
 (defn read-ints
   "Return vector of integers from input, supports negative signs."
   [path]
