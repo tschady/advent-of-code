@@ -7,7 +7,7 @@
   (-> n Math/log10 long inc))
 
 (defn factors
-  "Return vector of all factors of a given integer `n`"
+  "Return sorted-set of all factors of a given integer `n`"
   [n]
   (->> (range 1 (inc (Math/sqrt n)))
        (filter #(zero? (rem n %)))
