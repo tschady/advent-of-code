@@ -4,14 +4,11 @@
    [aoc.string-util :as s]
    [clojure.string :as str]))
 
-(def input (f/read-chunks "2025/d05.txt"))
+(def input (f/parse-chunks "2025/d05.txt"
+                           [[:rngs #(map s/ints-pos (str/split-lines %))]
+                            [:ids #(s/ints %)]]))
 
 (defn fresh? [id [a b]] (<= a id b))
-
-(defn part-1 [input]
-  (let [rngs (map s/ints-pos (str/split-lines (first input)))
-        ids (s/ints (second input))]
-    (count (keep #(some (partial fresh? %) rngs) ids))))
 
 (defn overlap? [[lo1 hi1] [lo2 hi2]]
   (or (<= lo1 lo2 hi1)
@@ -26,10 +23,12 @@
       (conj (pop ranges) (merge-overlap r1 r2))
       (conj ranges r2))))
 
-(defn part-2 [input]
-  (let [rngs (map s/ints-pos (str/split-lines (first input)))]
-    (->> (rest rngs)
-         (sort-by (juxt first second))
-         (reduce merge-ranges [(first rngs)])
-         (map #(inc (- (second %) (first %))))
-         (reduce +))))
+(defn part-1 [{:keys [rngs ids]}]
+  (count (keep #(some (partial fresh? %) rngs) ids)))
+
+(defn part-2 [{:keys [rngs]}]
+  (->> (rest rngs)
+       (sort-by (juxt first second))
+       (reduce merge-ranges [(first rngs)])
+       (map #(inc (- (second %) (first %))))
+       (reduce +)))
