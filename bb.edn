@@ -21,4 +21,6 @@
          test     {:doc  "Run test suite, skipping those with 'slow' metadata."
                    :task (clojure "-M:test --skip-meta :slow")}
          test-all {:doc  "Run all tests."
-                   :task (clojure "-M:test")}}}
+                   :task (clojure "-M:test")}
+         update-session {:doc "Pull session var from safari cookies and store in local env"
+                         :task (shell "script/update-session.sh")}}}

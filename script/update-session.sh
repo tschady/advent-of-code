@@ -1,0 +1,1 @@
+sed -i '' 's/AOC_SESSION=.*/AOC_SESSION='"$(safari_cookies.py -f ~/Library/Containers/com.apple.Safari/Data/Library/Cookies/Cookies.binarycookies -u adventofcode.com -n session -o json | jq '.[].value')"'/' .envrc && direnv allow
