@@ -6,15 +6,15 @@
    [clojure.set :as set]
    [clojure.string :as str]))
 
-(def input (f/parse-chunks "2024/d05.txt" [[:rules parse-rules]
-                                           [:updates parse-updates]]))
-
 (defn parse-rules [s] (->> (s/ints s)
                            (partition 2)
                            (map (fn [[k v]] {k #{v}}))
                            (apply merge-with into)))
 
 (defn parse-updates [s] (mapv (comp vec s/ints) (str/split-lines s)))
+
+(def input (f/parse-chunks "2024/d05.txt" [[:rules parse-rules]
+                                           [:updates parse-updates]]))
 
 (defn by-rules-order [rules a b]
   (if (contains? (rules b) a) 1 -1))

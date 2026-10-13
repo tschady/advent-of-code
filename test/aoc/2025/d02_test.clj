@@ -1,7 +1,8 @@
 (ns aoc.2025.d02-test
-    (:require
-     [aoc.2025.d02 :as sut]
-     [clojure.test :refer :all]))
+  (:require
+   [aoc.2025.d02 :as sut]
+   [aoc.string-util :as s]
+   [clojure.test :refer :all]))
 
 (def example
   (partition 2(s/ints-pos "1-22,95-115,998-1012,1188511880-1188511890,222220-222224,
