@@ -7,7 +7,8 @@
 (defn- react?
   "Two units react if they're the same type (letter), but different polarity (case).  `nil` inputs do not react with anything."
   [a b]
-  (and (and (some? a) (some? b))
+  (and (some? a)
+       (some? b)
        (not= a b)
        (= (str/lower-case a) (str/lower-case b))))
 

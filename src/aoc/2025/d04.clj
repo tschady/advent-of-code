@@ -8,7 +8,7 @@
 
 (defn grid [input] (remove-vals #{\.} (g/build-grid input identity)))
 
-(defn forklift-step [[total-removed last-removed grid]]
+(defn forklift-step [[total-removed _last-removed grid]]
   (let [next-remove (keys (filter #(> 4 (count (g/neighbors grid (first %)))) grid))]
     [(+ total-removed (count next-remove))
      total-removed

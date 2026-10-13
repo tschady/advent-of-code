@@ -5,7 +5,6 @@
    [aoc.string-util :as s]
    [clojure.core.matrix :as m]
    [clojure.string :as str]
-   [clojure2d.core :as c2d :refer :all]
    [fastmath.core :as math]))
 
 (math/use-primitive-operators)

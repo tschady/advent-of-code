@@ -1,8 +1,9 @@
 (ns aoc.coll-util
   (:require clojure.set))
 
-(defn count-truthy [coll]
+(defn count-truthy
   "Returns the count of truthy items in `coll`"
+  [coll]
   ;; does not create an intermediate collection like `filter true?`
   (reduce (fn [n val] (if val (inc n) n)) 0 coll))
 

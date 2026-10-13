@@ -1,7 +1,7 @@
 (ns aoc.2020.d21
   (:refer-clojure :exclude [==])
   (:require [aoc.file-util :as file-util]
-            [clojure.core.logic :refer :all]
+            [clojure.core.logic :refer [== distincto everyg lvar membero run*]]
             [clojure.set :as set]
             [clojure.string :as str]))
 

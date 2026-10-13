@@ -42,7 +42,7 @@
                        diskmap)))
 
 (defn pack2 [diskmap]
-  (reduce (fn [packed {:keys [id len] :as entry}]
+  (reduce (fn [packed {:keys [_id len] :as entry}]
             (let [i (.indexOf packed entry)
                   i' (find-first-earlier-empty packed len i)]
               (if (nil? i')
@@ -54,7 +54,7 @@
           (reverse (remove #(nil? (:id %)) diskmap))))
 
 (defn checksum [packed]
-  (:sum (reduce (fn [{:keys [i sum] :as acc} {:keys [id len]}]
+  (:sum (reduce (fn [{:keys [i _sum] :as acc} {:keys [id len]}]
                   (-> acc
                       (update :sum + (* (or id 0) (series-sum i (dec (+ len i)))))
                       (update :i + len)))

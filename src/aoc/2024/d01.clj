@@ -1,7 +1,6 @@
 (ns aoc.2024.d01
-    (:require
-     [aoc.file-util :as f]
-     [aoc.string-util :as s]))
+  (:require
+   [aoc.file-util :as f]))
 
 (def input (f/read-ints "2024/d01.txt"))
 

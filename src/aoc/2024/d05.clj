@@ -3,7 +3,6 @@
    [aoc.coll-util :as c :refer [midpoint]]
    [aoc.file-util :as f]
    [aoc.string-util :as s]
-   [clojure.set :as set]
    [clojure.string :as str]))
 
 (defn parse-rules [s] (->> (s/ints s)

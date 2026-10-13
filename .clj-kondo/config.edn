@@ -3,6 +3,7 @@
   :refer-all                    {:exclude [clojure.test clojure.core.logic]}
   :unresolved-symbol            {:exclude [(clojure.core.logic/run*)
                                            (clojure.core.logic/run)
-                                           lvar]}
+                                           lvar
+                                           (plumbing.core/for-map)]}
   :unsorted-required-namespaces {:level :warning}
   :unused-binding               {:exclude-destructured-as true}}}

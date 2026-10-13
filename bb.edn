@@ -3,10 +3,10 @@
                    :task (exec 'tasks/update-badges)}
          clean    {:doc  "Clean all temp build files"
                    :task (shell "rm -rf .cpcache target")}
-         doc      {:doc  "Generate blog from source for input year"
-                   :task (clojure "-M:doc" *command-line-args*)}
          download {:doc  "Download problem input for -y YYYY -d D, default today."
                    :task (exec 'tasks/download-input)}
+         gen-doc  {:doc  "Generate blog from source for input year"
+                   :task (clojure "-M:doc" *command-line-args*)}
          go       {:doc  "Quickstart: download data, open REPL/editor to problem template, open browser."
                    :depends [download template]
                    :task (exec 'tasks/open-apps)}
