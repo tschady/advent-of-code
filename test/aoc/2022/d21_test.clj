@@ -21,7 +21,7 @@ hmdt: 32")
 
 (deftest examples
   (is (= 152 (sut/part-1 example)))
-  (is (= 301 (sut/part-1 example))))
+  (is (= 301 (sut/part-2 example))))
 
 (deftest challenges
   (is (= 80326079210554 (sut/part-1 sut/input)))
