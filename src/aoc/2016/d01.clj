@@ -1,9 +1,10 @@
 (ns aoc.2016.d01
   (:require [aoc.coll-util :refer [first-duplicate]]
             [aoc.file-util :as file-util]
-            [aoc.grid :as grid]))
+            [aoc.grid :as grid]
+            [clojure.string :as str]))
 
-(def input (first (file-util/read-csv "2016/d01.txt")))
+(def input (map str/trim (first (file-util/read-csv "2016/d01.txt"))))
 
 (defn part-1
   "Return Manhattan distance from origin determined by walking input."
