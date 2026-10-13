@@ -2,6 +2,6 @@
   (:require [aoc.2016.d19 :as sut]
             [clojure.test :refer :all]))
 
-(deftest challenge
+(deftest ^:slow challenge
   (is (= 1842613 (sut/part-1 sut/input)))
   (is (= 1424135 (sut/part-2 sut/input))))
