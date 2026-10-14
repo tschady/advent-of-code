@@ -1,4 +1,4 @@
-{:deps    {aysylu/loom                    {:mvn/version "1.0.2"}
+{:deps    {aysylu/loom                    {:mvn/version "1.2.3"}
            clojure2d/clojure2d            {:mvn/version "1.4.5"}
            com.rpl/specter                {:mvn/version "1.1.6"}
            digest/digest                  {:mvn/version "1.4.10"}
@@ -8,15 +8,15 @@
            medley/medley                  {:mvn/version "1.4.0"}
            net.mikera/core.matrix         {:mvn/version "0.63.0"}
            org.clj-commons/hickory        {:mvn/version "0.7.7"}
-           org.clojure/clojure            {:mvn/version "1.12.3"}
-           org.clojure/core.logic         {:mvn/version "1.1.0"}
-           org.clojure/core.match         {:mvn/version "1.1.0"}
-           org.clojure/data.csv           {:mvn/version "1.1.0"}
-           org.clojure/data.finger-tree   {:mvn/version "0.1.0"}
-           org.clojure/data.json          {:mvn/version "2.5.1"}
-           org.clojure/data.priority-map  {:mvn/version "1.2.0"}
-           org.clojure/math.combinatorics {:mvn/version "0.3.0"}
-           org.clojure/math.numeric-tower {:mvn/version "0.1.0"}
+           org.clojure/clojure            {:mvn/version "1.12.6"}
+           org.clojure/core.logic         {:mvn/version "1.1.1"}
+           org.clojure/core.match         {:mvn/version "1.1.1"}
+           org.clojure/data.csv           {:mvn/version "1.1.1"}
+           org.clojure/data.finger-tree   {:mvn/version "0.1.1"}
+           org.clojure/data.json          {:mvn/version "2.5.2"}
+           org.clojure/data.priority-map  {:mvn/version "1.2.1"}
+           org.clojure/math.combinatorics {:mvn/version "0.3.2"}
+           org.clojure/math.numeric-tower {:mvn/version "0.1.1"}
            org.flatland/ordered           {:mvn/version "1.15.12"}
            org.slf4j/slf4j-nop            {:mvn/version "RELEASE"}
            pandect/pandect                {:mvn/version "1.0.2"}
