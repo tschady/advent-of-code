@@ -3,15 +3,15 @@
    [aoc.file-util :as f]
    [clojure.math.combinatorics :as combo]
    [clojure.string :as str]
-   [ubergraph.alg :as alg]
-   [ubergraph.core :as uber]))
+   [loom.alg]
+   [loom.graph]))
 
 (def input (f/read-file "2024/d23.txt"))
 
 (defn parse [s] (map #(str/split % #"-") (str/split-lines s)))
 
 (defn cliques [input]
-  (alg/maximal-cliques (apply uber/graph (parse input))))
+  (loom.alg/maximal-cliques (apply loom.graph/graph (parse input))))
 
 (defn part-1 [input]
   (->> (cliques input)
